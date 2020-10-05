@@ -28,3 +28,9 @@
 ### Asteroids
 
 + http://dotmos.org/?p=288
+
+### Youtube (vídeos de interés)
+
++ https://www.youtube.com/watch?v=lctXaT9pxA0
++ https://www.youtube.com/watch?v=wbpMiKiSKm8
++ https://www.youtube.com/watch?v=zXsWftRdsvU
