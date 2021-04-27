@@ -19,6 +19,10 @@ class MyScene extends THREE.Scene {
 		this.menu = new MyMenu();
 		this.add (this.menu);
 
+		// Y unos ejes. Imprescindibles para orientarnos sobre dónde están las cosas
+   this.axis = new THREE.AxesHelper (10);
+   this.add (this.axis);
+
 		this.pickableObjects = [];
 		this.pickableObjects.push(this.menu.keyPLAY);
 
@@ -40,12 +44,18 @@ class MyScene extends THREE.Scene {
 	}
 
  	createCamera () {
-		// 	Para crear una cámara le indicamos
-		//		El ángulo del campo de visión en grados sexagesimales
-		//   	La razón de aspecto ancho/alto
-		//   	Los planos de recorte cercano y lejano
-		// 	También se indica dónde se coloca
-		// 	Y hacia dónde mira
+		// Para crear una cámara le indicamos
+    //   El ángulo del campo de visión en grados sexagesimales
+    //   La razón de aspecto ancho/alto
+    //   Los planos de recorte cercano y lejano
+    this.freeCam = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
+    // También se indica dónde se coloca
+    this.freeCam.position.set (6, 10.5, 35);
+    // Y hacia dónde mira
+    var lookFree = new THREE.Vector3 (6, 0, 0);
+    this.freeCam.lookAt(lookFree);
+
+    this.add (this.freeCam);
 
 		this.frontCam = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
 		this.frontCam.position.set (6, 10.5, 35);
@@ -60,6 +70,15 @@ class MyScene extends THREE.Scene {
 		this.sideCam.lookAt(lookSide);
 
 		this.add (this.sideCam);
+
+		// Para el control de cámara usamos una clase que ya tiene implementado los movimientos de órbita
+    this.cameraControl = new THREE.TrackballControls (this.freeCam, this.renderer.domElement);
+    // Se configuran las velocidades de los movimientos
+    this.cameraControl.rotateSpeed = 5;
+    this.cameraControl.zoomSpeed = -2;
+    this.cameraControl.panSpeed = 0.5;
+    // Debe orbitar con respecto al punto de mira de la cámara
+    this.cameraControl.target = lookFree;
 	}
 
 	createLights () {
@@ -103,9 +122,12 @@ class MyScene extends THREE.Scene {
 		var cam;
 		switch (this.camera){
 			case 1:
-				cam = this.frontCam;
+				cam = this.freeCam;
 			break;
 			case 2:
+				cam = this.frontCam;
+			break;
+			case 3:
 				cam = this.sideCam;
 			break;
 		}
@@ -142,6 +164,7 @@ class MyScene extends THREE.Scene {
 
 		if (key == 49 ){this.changeCamera(1);}
 		else if (key == 50 ){this.changeCamera(2);}
+		else if (key == 51 ){this.changeCamera(3);}
 
 		else {this.controls.manager(key, this.game);}
 	}
@@ -195,7 +218,7 @@ class MyScene extends THREE.Scene {
 		requestAnimationFrame(() => this.update());
 
 		// Se actualiza la posición de la cámara según su controlador
-		//this.cameraControl.update();
+		this.cameraControl.update();
 
 		this.game.update();
 		this.menu.update();
