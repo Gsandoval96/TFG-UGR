@@ -24,6 +24,7 @@ class MyGame extends THREE.Object3D {
   update(){
 		if(this.start){
 			this.pacman.movePacman();
+			this.pacman.update();
 		}
   }
 }

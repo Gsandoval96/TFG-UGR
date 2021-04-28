@@ -2,6 +2,8 @@ class MyTitle extends THREE.Object3D {
   constructor(pos, size, animated) {
     super();
 
+	 this.animated = animated;
+
     var posP = new THREE.Vector3(pos.x, pos.y, pos.z);
     var posA1 = new THREE.Vector3(pos.x+size*0.75, pos.y, pos.z);
     var posC = new THREE.Vector3(pos.x+size*1.75, pos.y, pos.z);
@@ -32,7 +34,7 @@ class MyTitle extends THREE.Object3D {
     this.add(this.pacman);
 
     //Animaciones con TWEEN
-    if(animated){
+    if(this.animated){
       var origin = { p : -size/10 } ;
       var destiny = { p : size/10 } ;
       var that = this;
@@ -67,6 +69,6 @@ class MyTitle extends THREE.Object3D {
   }
 
   update(){
-    TWEEN.update();
+	 if(this.animated) TWEEN.update();
   }
 }

@@ -106,7 +106,6 @@ class MyPacman extends THREE.Object3D {
   }
 
   update(){
-	  console.log("PACMAN UPDATE");
-  	//TWEEN.update();
+	  TWEEN.update();
   }
 }

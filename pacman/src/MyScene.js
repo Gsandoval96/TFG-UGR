@@ -19,6 +19,8 @@ class MyScene extends THREE.Scene {
 		this.menu = new MyMenu();
 		this.add (this.menu);
 
+		this.status = "MENU";
+
 		// Y unos ejes. Imprescindibles para orientarnos sobre dónde están las cosas
    this.axis = new THREE.AxesHelper (10);
    this.add (this.axis);
@@ -52,17 +54,17 @@ class MyScene extends THREE.Scene {
     // También se indica dónde se coloca
     this.freeCam.position.set (6, 10.5, 35);
     // Y hacia dónde mira
-    var lookFree = new THREE.Vector3 (6, 0, 0);
+    var lookFree = new THREE.Vector3 (6, 11, 0);
     this.freeCam.lookAt(lookFree);
 
     this.add (this.freeCam);
 
-		this.frontCam = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
-		this.frontCam.position.set (6, 10.5, 35);
+		this.topCam = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
+		this.topCam.position.set (6, 10.5, 35);
 		var lookFront = new THREE.Vector3 (6, 10.5, 0);
-		this.frontCam.lookAt(lookFront);
+		this.topCam.lookAt(lookFront);
 
-		this.add (this.frontCam);
+		this.add (this.topCam);
 
 		this.sideCam = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
 		this.sideCam.position.set (20, 10.5, 35);
@@ -125,7 +127,7 @@ class MyScene extends THREE.Scene {
 				cam = this.freeCam;
 			break;
 			case 2:
-				cam = this.frontCam;
+				cam = this.topCam;
 			break;
 			case 3:
 				cam = this.sideCam;
@@ -205,6 +207,7 @@ class MyScene extends THREE.Scene {
 			this.remove(this.menu);
 			this.game.startGame();
 			this.add(this.game);
+			this.status = "PACMAN";
 		}
 	}
 
@@ -220,8 +223,9 @@ class MyScene extends THREE.Scene {
 		// Se actualiza la posición de la cámara según su controlador
 		this.cameraControl.update();
 
-		this.game.update();
-		this.menu.update();
+
+		if(this.status == "PACMAN") this.game.update();
+		else if(this.status == "MENU") this.menu.update();
 
 		// Le decimos al renderizador "visualiza la escena que te indico usando la cámara que te estoy pasando"
 		this.renderer.render (this, this.getCamera());
