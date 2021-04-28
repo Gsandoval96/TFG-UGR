@@ -4,6 +4,8 @@ class MyGame extends THREE.Object3D {
   constructor(){
     super();
 
+	 this.start = false;
+
     // Title
 
     var titlePos = new THREE.Vector3(-0.5, 22, 0.5);
@@ -16,9 +18,12 @@ class MyGame extends THREE.Object3D {
   }
 
   startGame(){
+	  this.start = true;
   }
 
   update(){
-	  this.pacman.update();
+		if(this.start){
+			this.pacman.movePacman();
+		}
   }
 }

@@ -2,7 +2,7 @@ class MyPacman extends THREE.Object3D {
   constructor(pos, size) {
     super();
 
-	 this.animated = true;
+	this.animated = true;
 
 	var sphereGeom = new THREE.SphereGeometry(size, 20.0, 20.0, 0.0, Math.PI);
 	var circleGeom = new THREE.CircleGeometry(size, 20.0, 0.0, Math.PI);
@@ -52,7 +52,7 @@ class MyPacman extends THREE.Object3D {
       var that = this;
 
       var animation = new TWEEN.Tween(origin)
-        .to(destiny, 250) //0.25 segundo
+        .to(destiny, 500) //0.5 segundo
         .onUpdate (function(){
 			  that.crearNuevo(5,origin.p);
         })
@@ -70,11 +70,43 @@ class MyPacman extends THREE.Object3D {
 	 this.downCircle.rotation.y = rot;
   }
 
-  move(){
-	  
+  rotatePacman(dir){
+	  switch (dir) {
+	  	case "l":
+			this.pacman.rotation.y = Math.PI;
+	  	break;
+		case "r":
+			this.pacman.rotation.y = 0;
+	  	break;
+		case "u":
+			this.pacman.rotation.y = Math.PI / 2;
+	  	break;
+		case "d":
+			this.pacman.rotation.y = 3 * Math.PI / 2;
+	  	break;
+	  }
+  }
+
+  movePacman(){
+	  switch (this.pacman.rotation.y) {
+	  	case 0:
+	  		this.pacman.position.x += 0.1;
+	  	break;
+		case Math.PI / 2:
+	  		this.pacman.position.z -= 0.1;
+	  	break;
+		case Math.PI:
+	  		this.pacman.position.x -= 0.1;
+	  	break;
+		case 3 * Math.PI / 2:
+	  		this.pacman.position.z += 0.1;
+	  	break;
+
+	  }
   }
 
   update(){
-  	TWEEN.update();
+	  console.log("PACMAN UPDATE");
+  	//TWEEN.update();
   }
 }
