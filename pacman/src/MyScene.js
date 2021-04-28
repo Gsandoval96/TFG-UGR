@@ -22,8 +22,8 @@ class MyScene extends THREE.Scene {
 		this.status = "MENU";
 
 		// Y unos ejes. Imprescindibles para orientarnos sobre dónde están las cosas
-   this.axis = new THREE.AxesHelper (10);
-   this.add (this.axis);
+   	this.axis = new THREE.AxesHelper (10);
+   	this.add (this.axis);
 
 		this.pickableObjects = [];
 		this.pickableObjects.push(this.menu.keyPLAY);
@@ -60,8 +60,8 @@ class MyScene extends THREE.Scene {
     this.add (this.freeCam);
 
 		this.topCam = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
-		this.topCam.position.set (6, 10.5, 35);
-		var lookFront = new THREE.Vector3 (6, 10.5, 0);
+		this.topCam.position.set (0, 250, 250);
+		var lookFront = new THREE.Vector3 (0, 0, 0);
 		this.topCam.lookAt(lookFront);
 
 		this.add (this.topCam);
@@ -222,6 +222,8 @@ class MyScene extends THREE.Scene {
 
 		// Se actualiza la posición de la cámara según su controlador
 		this.cameraControl.update();
+
+		this.game.title.lookAt(this.getCamera().position); // el titulo mira a la camara
 
 
 		if(this.status == "PACMAN") this.game.update();

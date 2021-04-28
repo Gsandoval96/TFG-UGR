@@ -52,7 +52,7 @@ class MyPacman extends THREE.Object3D {
       var that = this;
 
       var animation = new TWEEN.Tween(origin)
-        .to(destiny, 500) //0.5 segundo
+        .to(destiny, 200) //0.2 segundo
         .onUpdate (function(){
 			  that.crearNuevo(5,origin.p);
         })
@@ -90,16 +90,16 @@ class MyPacman extends THREE.Object3D {
   movePacman(){
 	  switch (this.pacman.rotation.y) {
 	  	case 0:
-	  		this.pacman.position.x += 0.1;
+	  		this.pacman.position.x += 0.5;
 	  	break;
 		case Math.PI / 2:
-	  		this.pacman.position.z -= 0.1;
+	  		this.pacman.position.z -= 0.5;
 	  	break;
 		case Math.PI:
-	  		this.pacman.position.x -= 0.1;
+	  		this.pacman.position.x -= 0.5;
 	  	break;
 		case 3 * Math.PI / 2:
-	  		this.pacman.position.z += 0.1;
+	  		this.pacman.position.z += 0.5;
 	  	break;
 
 	  }
@@ -107,5 +107,6 @@ class MyPacman extends THREE.Object3D {
 
   update(){
 	  TWEEN.update();
+	  //this.movePacman();
   }
 }
