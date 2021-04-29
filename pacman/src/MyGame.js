@@ -12,7 +12,7 @@ class MyGame extends THREE.Object3D {
     this.title = new MyTitle(titlePos, 5, false);
     this.add(this.title);
 
-	 var pacmanPos = new THREE.Vector3(2, 0, 2);
+	 var pacmanPos = new THREE.Vector3(1, 0, 1);
 	 this.pacman = new MyPacman(pacmanPos,MyConstant.PACMAN_SIZE);
 	 this.add(this.pacman);
 
@@ -25,7 +25,16 @@ class MyGame extends THREE.Object3D {
   }
 
   collisionManager(){
-	   this.maze.checkCollision(this.pacman.getCollisionBox());
+	  var pacmanPos = this.pacman.getPosition();
+	  var pacmanDir = this.pacman.getDirection();
+
+	  var pacmanX = ((pacmanPos.x / MyConstant.BOX_SIZE) | 0) + pacmanDir.x;
+	  var pacmanZ = ((pacmanPos.z / MyConstant.BOX_SIZE) | 0) + pacmanDir.y;
+	  console.log("PACMAN MIRANDO: ", pacmanX, ", ", pacmanZ);
+	  var collision = this.maze.checkCollision(this.pacman.getCollisionBox(), pacmanX, pacmanZ);
+
+
+	  this.pacman.setCollision(collision);
   }
 
   update(){

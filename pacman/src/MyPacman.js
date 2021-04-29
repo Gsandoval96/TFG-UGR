@@ -2,8 +2,10 @@ class MyPacman extends THREE.Object3D {
   constructor(pos, size) {
     super();
 
+	this.collision=false;
+
 	this.Bbox = new THREE.Box3();
-	this.Bbox.setFromCenterAndSize( new THREE.Vector3( 0, 0, 0 ), new THREE.Vector3( MyConstant.BOX_SIZE*0.5, MyConstant.BOX_SIZE*0.5, MyConstant.BOX_SIZE*0.5 ) );
+	this.Bbox.setFromCenterAndSize( new THREE.Vector3( 0, 0, 0 ), new THREE.Vector3( MyConstant.BOX_SIZE, MyConstant.BOX_SIZE, MyConstant.BOX_SIZE ) );
 
 	this.helper = new THREE.Box3Helper( this.Bbox, 0xffff00 );
 	this.add( this.helper );
@@ -48,7 +50,6 @@ class MyPacman extends THREE.Object3D {
 
 	this.add(this.pacman);
 	this.position.set(pos.x * MyConstant.BOX_SIZE, pos.y* MyConstant.BOX_SIZE, pos.z* MyConstant.BOX_SIZE);
-	console.log("Posición PACMAN: ", this.position);
 
     //Animaciones con TWEEN
     if(this.animated){
@@ -65,6 +66,14 @@ class MyPacman extends THREE.Object3D {
         .yoyo(true)
         .start();
     }
+  }
+
+  getPosition(){
+	  return this.position;
+  }
+
+  setCollision(collision){
+	  this.collision = collision;
   }
 
   crearNuevo(size,rot){
@@ -92,19 +101,41 @@ class MyPacman extends THREE.Object3D {
 	  }
   }
 
+  getDirection(){
+	  var dir = new THREE.Vector2(0,0);
+	  switch (this.pacman.rotation.y) {
+	   case Math.PI:
+			dir.x = -1;
+	   break;
+	   case 0:
+			dir.x = 1;
+	   break;
+	   case Math.PI / 2:
+			dir.y = -1;
+	   break;
+	   case 3 * Math.PI / 2:
+			dir.y = 1;
+	   break;
+	  }
+	  return dir;
+  }
   movePacman(){
 	  switch (this.pacman.rotation.y) {
 	  	case 0:
 	  		this.position.x += 0.15;
+			this.collision = false;
 	  	break;
 		case Math.PI / 2:
 	  		this.position.z -= 0.15;
+			this.collision = false;
 	  	break;
 		case Math.PI:
 	  		this.position.x -= 0.15;
+			this.collision = false;
 	  	break;
 		case 3 * Math.PI / 2:
 	  		this.position.z += 0.15;
+			this.collision = false;
 	  	break;
 
 	  }
@@ -116,7 +147,6 @@ class MyPacman extends THREE.Object3D {
 
   update(){
 	  TWEEN.update();
-	  //console.log("BOX POS: ", this);
-	  this.movePacman();
+	  if(!this.collision) this.movePacman();
   }
 }
