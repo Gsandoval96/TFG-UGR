@@ -54,7 +54,7 @@ class MyPacman extends THREE.Object3D {
       var animation = new TWEEN.Tween(origin)
         .to(destiny, 200) //0.2 segundo
         .onUpdate (function(){
-			  that.crearNuevo(5,origin.p);
+			  that.crearNuevo(size,origin.p);
         })
         .repeat(Infinity)
         .yoyo(true)
