@@ -90,16 +90,16 @@ class MyPacman extends THREE.Object3D {
   movePacman(){
 	  switch (this.pacman.rotation.y) {
 	  	case 0:
-	  		this.pacman.position.x += 0.5;
+	  		this.pacman.position.x += 0.15;
 	  	break;
 		case Math.PI / 2:
-	  		this.pacman.position.z -= 0.5;
+	  		this.pacman.position.z -= 0.15;
 	  	break;
 		case Math.PI:
-	  		this.pacman.position.x -= 0.5;
+	  		this.pacman.position.x -= 0.15;
 	  	break;
 		case 3 * Math.PI / 2:
-	  		this.pacman.position.z += 0.5;
+	  		this.pacman.position.z += 0.15;
 	  	break;
 
 	  }
@@ -107,6 +107,6 @@ class MyPacman extends THREE.Object3D {
 
   update(){
 	  TWEEN.update();
-	  //this.movePacman();
+	  this.movePacman();
   }
 }
