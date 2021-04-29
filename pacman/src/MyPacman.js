@@ -3,6 +3,8 @@ class MyPacman extends THREE.Object3D {
     super();
 
 	this.collision=false;
+	this.dirX = 1;
+	this.dirY = 0;
 
 	this.Bbox = new THREE.Box3();
 	this.Bbox.setFromCenterAndSize( new THREE.Vector3( 0, 0, 0 ), new THREE.Vector3( MyConstant.BOX_SIZE, MyConstant.BOX_SIZE, MyConstant.BOX_SIZE ) );
@@ -88,54 +90,47 @@ class MyPacman extends THREE.Object3D {
 	  switch (dir) {
 	  	case "l":
 			this.pacman.rotation.y = Math.PI;
+			this.setDirection(0, 0);
 	  	break;
 		case "r":
 			this.pacman.rotation.y = 0;
+			this.setDirection(1, 0);
 	  	break;
 		case "u":
 			this.pacman.rotation.y = Math.PI / 2;
+			this.setDirection(0, 0);
 	  	break;
 		case "d":
 			this.pacman.rotation.y = 3 * Math.PI / 2;
+			this.setDirection(0, 1);
 	  	break;
 	  }
   }
 
   getDirection(){
-	  var dir = new THREE.Vector2(0,0);
-	  switch (this.pacman.rotation.y) {
-	   case Math.PI:
-			dir.x = -1;
-	   break;
-	   case 0:
-			dir.x = 1;
-	   break;
-	   case Math.PI / 2:
-			dir.y = -1;
-	   break;
-	   case 3 * Math.PI / 2:
-			dir.y = 1;
-	   break;
-	  }
+	  var dir = new THREE.Vector2(this.dirX, this.dirZ);
 	  return dir;
   }
+
+  setDirection(dirX, dirZ){
+	  this.dirX = dirX;
+	  this.dirZ = dirZ;
+  }
+
+
   movePacman(){
 	  switch (this.pacman.rotation.y) {
 	  	case 0:
-	  		this.position.x += 0.15;
-			this.collision = false;
+	  		this.position.x += 0.1;
 	  	break;
 		case Math.PI / 2:
-	  		this.position.z -= 0.15;
-			this.collision = false;
+	  		this.position.z -= 0.1;
 	  	break;
 		case Math.PI:
-	  		this.position.x -= 0.15;
-			this.collision = false;
+	  		this.position.x -= 0.1;
 	  	break;
 		case 3 * Math.PI / 2:
-	  		this.position.z += 0.15;
-			this.collision = false;
+	  		this.position.z += 0.1;
 	  	break;
 
 	  }
