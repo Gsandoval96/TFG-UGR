@@ -22,7 +22,6 @@ class MyPacman extends THREE.Object3D {
 	this.upHalf = new THREE.Object3D();
 	this.upHalf.add(this.upSphere);
 	this.upHalf.add(this.upCircle);
-	this.upHalf.position.set(pos.x, pos.y, pos.z);
 
 	// Ya podemos construir el Mesh
 	this.downSphere = new THREE.Mesh (sphereGeom, material);
@@ -35,7 +34,6 @@ class MyPacman extends THREE.Object3D {
 	this.downHalf = new THREE.Object3D();
 	this.downHalf.add(this.downSphere);
 	this.downHalf.add(this.downCircle);
-	this.downHalf.position.set(pos.x, pos.y, pos.z);
 
 	this.pacman = new THREE.Object3D();
 	this.pacman.add(this.upHalf);
@@ -44,6 +42,8 @@ class MyPacman extends THREE.Object3D {
 	//this.pacman.add(this.downHalf);
 
 	this.add(this.pacman);
+	this.position.set(pos.x, pos.y, pos.z);
+	console.log("Posición PACMAN: ", this.position);
 
     //Animaciones con TWEEN
     if(this.animated){
@@ -90,16 +90,16 @@ class MyPacman extends THREE.Object3D {
   movePacman(){
 	  switch (this.pacman.rotation.y) {
 	  	case 0:
-	  		this.pacman.position.x += 0.15;
+	  		this.position.x += 0.15;
 	  	break;
 		case Math.PI / 2:
-	  		this.pacman.position.z -= 0.15;
+	  		this.position.z -= 0.15;
 	  	break;
 		case Math.PI:
-	  		this.pacman.position.x -= 0.15;
+	  		this.position.x -= 0.15;
 	  	break;
 		case 3 * Math.PI / 2:
-	  		this.pacman.position.z += 0.15;
+	  		this.position.z += 0.15;
 	  	break;
 
 	  }

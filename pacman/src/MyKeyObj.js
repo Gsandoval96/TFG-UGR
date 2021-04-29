@@ -39,8 +39,8 @@ class MyKeyObj extends THREE.Object3D {
   }
 
   select(){
-    this.keyText.children[0].material= MyMaterial.BLACK;
-    this.roundBlack.children[0].material= MyMaterial.WHITE;
+    this.keyText.children[0].material = MyMaterial.BLACK;
+    this.roundBlack.children[0].material = MyMaterial.WHITE;
     this.selected = true;
   }
 

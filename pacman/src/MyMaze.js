@@ -1,13 +1,8 @@
 class MyMaze extends THREE.Object3D {
-	static WIDTH = 28;
-	static HEIGHT = 31;
-
-	static insideMat = new THREE.MeshStandardMaterial({color: 0xFFFFFF, opacity:0.25,transparent:true});;
-
 	constructor(cubeSize) {
 		super();
 
-		var mazeData = [
+		this.mazeData = [
 			[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
 			[1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1],
 			[1,0,1,1,1,1,0,1,1,1,1,1,0,1,1,0,1,1,1,1,1,0,1,1,1,1,0,1],
@@ -43,14 +38,14 @@ class MyMaze extends THREE.Object3D {
 
 		// Board
 
-		for(var i = 0; i < MyMaze.HEIGHT; i++){
-			for(var j = 0; j < MyMaze.WIDTH; j++){
+		for(var i = 0; i < MyConstant.MAZE_HEIGHT; i++){
+			for(var j = 0; j < MyConstant.MAZE_WIDTH; j++){
 				var position = new THREE.Vector3(j*cubeSize, 0, i*cubeSize);
 				var cube;
 
-				switch (mazeData[i][j]) {
+				switch (this.mazeData[i][j]) {
 					case 0:
-						cube = new MyCube(position, MyMaze.insideMat, cubeSize);
+						cube = new MyCube(position, MyMaterial.TRANSPARENT, cubeSize);
 					break;
 					case 1:
 						cube = new MyCube(position, MyMaterial.RED, cubeSize);
@@ -61,12 +56,13 @@ class MyMaze extends THREE.Object3D {
 			}
 		}
 
-		this.translateX(-MyMaze.WIDTH/2 * cubeSize + cubeSize/2);
-		this.translateZ(-MyMaze.HEIGHT/2 * cubeSize + cubeSize/2);
+
 
 	}
 
-
+	checkWallCollision(posX, posY){
+		return this.mazeData[i][j] == 1;
+	}
 
 	update(){
 	}

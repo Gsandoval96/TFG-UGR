@@ -60,8 +60,8 @@ class MyScene extends THREE.Scene {
     this.add (this.freeCam);
 
 		this.topCam = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
-		this.topCam.position.set (0, 65, 45);
-		var lookFront = new THREE.Vector3 (0, 0, 0);
+		this.topCam.position.set (MyConstant.MAZE_WIDTH/2 * MyConstant.BOX_SIZE, 80, MyConstant.MAZE_HEIGHT/2 * MyConstant.BOX_SIZE);
+		var lookFront = new THREE.Vector3 (MyConstant.MAZE_WIDTH/2 * MyConstant.BOX_SIZE, 0, MyConstant.MAZE_HEIGHT/2 * MyConstant.BOX_SIZE);
 		this.topCam.lookAt(lookFront);
 
 		this.add (this.topCam);
