@@ -30,8 +30,8 @@ class MyMaze extends THREE.Object3D {
 			[1,0,0,0,1,1,0,1,1,0,1,1,1,1,1,1,1,1,0,1,1,0,1,1,0,0,0,1],
 			[1,1,1,0,1,1,0,1,1,0,1,1,1,1,1,1,1,1,0,1,1,0,1,1,0,1,1,1],
 			[1,0,0,0,0,0,0,1,1,0,0,0,0,1,1,0,0,0,0,1,1,0,0,0,0,0,0,1],
-			[1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1],
-			[1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1],
+			[1,0,1,1,1,1,1,1,1,1,1,1,0,2,2,0,1,1,1,1,1,1,1,1,1,1,0,1],
+			[1,0,1,1,1,1,1,1,1,1,1,1,0,2,2,0,1,1,1,1,1,1,1,1,1,1,0,1],
 			[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
 			[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
 		];
@@ -45,23 +45,36 @@ class MyMaze extends THREE.Object3D {
 
 				switch (this.mazeData[i][j]) {
 					case 0:
-						cube = new MyCube(position, MyMaterial.TRANSPARENT, cubeSize);
+						cube = new MyCube(position, MyMaterial.TRANSPARENT, cubeSize, false);
 					break;
 					case 1:
-						cube = new MyCube(position, MyMaterial.RED, cubeSize);
+						cube = new MyCube(position, MyMaterial.BLUE, cubeSize, false);
+					break;
+					case 2:
+						cube = new MyCube(position, MyMaterial.BLUE, cubeSize, true);
 					break;
 				}
 
 				this.add(cube);
 			}
 		}
-
-
-
 	}
 
-	checkWallCollision(posX, posY){
-		return this.mazeData[i][j] == 1;
+	checkCollision(hitbox){
+		var collision = false;
+		for(var i = 0; i < MyConstant.MAZE_HEIGHT && !collision; i++){
+			for(var j = 0; j < MyConstant.MAZE_WIDTH && !collision; j++){
+				var pos = i * (MyConstant.MAZE_WIDTH) + j;
+				console.log("COMPROBANDO: ", pos);
+				if(this.children[pos].hitbox){
+					console.log();
+    				var box = this.children[pos].getCollisionBox();
+					collision = box.intersectsBox(hitbox);
+				}
+			}
+		}
+		//console.log("COMPROBANDO: ", collision);
+		return collision;
 	}
 
 	update(){

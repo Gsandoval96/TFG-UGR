@@ -2,6 +2,12 @@ class MyPacman extends THREE.Object3D {
   constructor(pos, size) {
     super();
 
+	this.Bbox = new THREE.Box3();
+	this.Bbox.setFromCenterAndSize( new THREE.Vector3( 0, 0, 0 ), new THREE.Vector3( MyConstant.BOX_SIZE*0.5, MyConstant.BOX_SIZE*0.5, MyConstant.BOX_SIZE*0.5 ) );
+
+	this.helper = new THREE.Box3Helper( this.Bbox, 0xffff00 );
+	this.add( this.helper );
+
 	this.animated = true;
 
 	var sphereGeom = new THREE.SphereGeometry(size, 20.0, 20.0, 0.0, Math.PI);
@@ -39,10 +45,9 @@ class MyPacman extends THREE.Object3D {
 	this.pacman.add(this.upHalf);
 	this.pacman.add(this.downHalf);
 
-	//this.pacman.add(this.downHalf);
 
 	this.add(this.pacman);
-	this.position.set(pos.x, pos.y, pos.z);
+	this.position.set(pos.x * MyConstant.BOX_SIZE, pos.y* MyConstant.BOX_SIZE, pos.z* MyConstant.BOX_SIZE);
 	console.log("Posición PACMAN: ", this.position);
 
     //Animaciones con TWEEN
@@ -105,8 +110,13 @@ class MyPacman extends THREE.Object3D {
 	  }
   }
 
+  getCollisionBox(){
+	  return this.Bbox;
+  }
+
   update(){
 	  TWEEN.update();
+	  //console.log("BOX POS: ", this);
 	  this.movePacman();
   }
 }
