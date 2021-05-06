@@ -1,15 +1,15 @@
 class MyPacman extends THREE.Object3D {
   constructor(pos, size) {
-    super();
+   super();
 
-	this.collision=false;
 	this.dirX = 1;
-	this.dirY = 0;
+	this.dirZ = 0;
 
-	this.Bbox = new THREE.Box3();
-	this.Bbox.setFromCenterAndSize( new THREE.Vector3( 0, 0, 0 ), new THREE.Vector3( MyConstant.BOX_SIZE, MyConstant.BOX_SIZE, MyConstant.BOX_SIZE ) );
+	this.hitbox = new THREE.Box3();
+	var hitbox_size = MyConstant.BOX_SIZE * 0.75;
+	this.hitbox.setFromCenterAndSize(new THREE.Vector3( 0, 0, 0 ), new THREE.Vector3(hitbox_size, hitbox_size, hitbox_size));
 
-	this.helper = new THREE.Box3Helper( this.Bbox, 0xffff00 );
+	this.helper = new THREE.Box3Helper( this.hitbox, 0xffff00 );
 	this.add( this.helper );
 
 	this.animated = true;
@@ -74,8 +74,8 @@ class MyPacman extends THREE.Object3D {
 	  return this.position;
   }
 
-  setCollision(collision){
-	  this.collision = collision;
+  serPosition(pos){
+	  this.position = pos;
   }
 
   crearNuevo(size,rot){
@@ -90,31 +90,31 @@ class MyPacman extends THREE.Object3D {
 	  switch (dir) {
 	  	case "l":
 			this.pacman.rotation.y = Math.PI;
-			this.setDirection(0, 0);
+			this.setDir(-1,0);
 	  	break;
 		case "r":
 			this.pacman.rotation.y = 0;
-			this.setDirection(1, 0);
+			this.setDir(1,0);
 	  	break;
 		case "u":
 			this.pacman.rotation.y = Math.PI / 2;
-			this.setDirection(0, 0);
+			this.setDir(0,-1);
 	  	break;
 		case "d":
 			this.pacman.rotation.y = 3 * Math.PI / 2;
-			this.setDirection(0, 1);
+			this.setDir(0,1);
 	  	break;
 	  }
   }
 
-  getDirection(){
-	  var dir = new THREE.Vector2(this.dirX, this.dirZ);
-	  return dir;
-  }
-
-  setDirection(dirX, dirZ){
+  setDir(dirX, dirZ){
 	  this.dirX = dirX;
 	  this.dirZ = dirZ;
+  }
+
+  setPosition(posX, posZ){
+	  this.position.x = posX;
+	  this.position.z = posZ;
   }
 
 
@@ -137,11 +137,11 @@ class MyPacman extends THREE.Object3D {
   }
 
   getCollisionBox(){
-	  return this.Bbox;
+	  return this.hitbox;
   }
 
   update(){
 	  TWEEN.update();
-	  if(!this.collision) this.movePacman();
+	  this.movePacman();
   }
 }

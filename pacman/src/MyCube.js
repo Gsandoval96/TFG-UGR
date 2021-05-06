@@ -1,10 +1,10 @@
 class MyCube extends THREE.Object3D {
-  constructor(pos, material, size, hitbox){
+  constructor(pos, material, size, has_hitbox){
     super();
 
-	 this.hitbox = hitbox;
+	 this.has_hitbox = has_hitbox;
 
-	 if(this.hitbox){
+	 if(this.has_hitbox){
 
 		this.Bbox = new THREE.Box3();
 		this.Bbox.setFromCenterAndSize( new THREE.Vector3( 0, 0, 0 ), new THREE.Vector3( MyConstant.BOX_SIZE, MyConstant.BOX_SIZE, MyConstant.BOX_SIZE ) );

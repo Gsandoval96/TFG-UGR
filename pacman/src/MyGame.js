@@ -25,21 +25,59 @@ class MyGame extends THREE.Object3D {
   }
 
   collisionManager(){
-	  var pacmanPos = this.pacman.getPosition();
-	  var pacmanDir = this.pacman.getDirection();
+	  var last_pacmanPosX = this.pacman.getPosition().x;
+	  var last_pacmanPosZ = this.pacman.getPosition().z;
+	  var last_pacmanDir = new THREE.Vector2();
+	  last_pacmanDir.x = this.pacman.dirX;
+	  last_pacmanDir.y = this.pacman.dirZ;
 
-	  var pacmanX = ((pacmanPos.x / MyConstant.BOX_SIZE) | 0) + pacmanDir.x;
-	  var pacmanZ = ((pacmanPos.z / MyConstant.BOX_SIZE) | 0) + pacmanDir.y;
-	  console.log("PACMAN MIRANDO: ", pacmanX, ", ", pacmanZ);
-	  var collision = this.maze.checkCollision(this.pacman.getCollisionBox(), pacmanX, pacmanZ);
+	  this.pacman.update();
+
+	  var pacmanPosX = this.pacman.getPosition().x / MyConstant.BOX_SIZE;
+	  var pacmanPosZ = this.pacman.getPosition().z / MyConstant.BOX_SIZE;
+	  var pacmanDir = new THREE.Vector2();
+	  pacmanDir.x = this.pacman.dirX;
+	  pacmanDir.y = this.pacman.dirZ;
+
+	  if(pacmanDir.x == 1){// || (pacmanDir.x == 0 && last_pacmanDir.x == -1)){
+		  pacmanPosX = Math.ceil(pacmanPosX);
+	  }
+	  else if(pacmanDir.x == -1){
+	  	  pacmanPosX = Math.floor(pacmanPosX);
+	  }
+	  else{
+		  pacmanPosX = Math.round(pacmanPosX);
+	  }
+
+	  if(pacmanDir.y == 1){
+		  pacmanPosZ = Math.ceil(pacmanPosZ);
+	  }
+	  else if(pacmanDir.y == -1){
+	  	  pacmanPosZ = Math.floor(pacmanPosZ);
+	  }
+	  else{
+		  pacmanPosZ = Math.round(pacmanPosZ);
+	  }
+
+	  var collision = this.maze.checkCollision(this.pacman.getCollisionBox(), pacmanPosX, pacmanPosZ);
 
 
-	  this.pacman.setCollision(collision);
+	  if(collision){
+		  this.pacman.setPosition(last_pacmanPosX, last_pacmanPosZ);
+	  }
+	  // var pacmanPos = this.pacman.getPosition();
+	  // var pacmanDir = this.pacman.getDirection();
+	  //
+	  //
+	  // //console.log("PACMAN MIRANDO: ", pacmanX, ", ", pacmanZ);
+	  // var collision = this.maze.checkCollision(this.pacman.getCollisionBox(), pacmanX, pacmanZ);
+	  //
+	  //
+	  // this.pacman.setCollision(collision);
   }
 
   update(){
 		if(this.start){
-			this.pacman.update();
 			this.collisionManager();
 		}
   }
