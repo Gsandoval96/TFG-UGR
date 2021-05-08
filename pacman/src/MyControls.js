@@ -27,6 +27,6 @@ class MyControls{
     if (keyCode == this.moveDownKey ){dir = "d";} //Flecha Abajo
 	 if (keyCode == this.moveUpKey ){dir = "u";} //Flecha Arriba
 
-	 if (dir != null) game.pacman.rotatePacman(dir);
+	 if (dir != null) game.pacman.rotate(dir);
   }
 }

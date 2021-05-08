@@ -2,7 +2,7 @@ class MyCharacter extends THREE.Object3D {
   constructor(pos, size) {
    super();
 
-	this.dirX = 1;
+	this.dirX = 0;
 	this.dirZ = 0;
 
 	this.hitbox = new THREE.Box3();
@@ -11,7 +11,7 @@ class MyCharacter extends THREE.Object3D {
 	this.hitbox.setFromCenterAndSize(hitbox_pos, this.hitbox_size);
 
 	this.helper = new THREE.Box3Helper( this.hitbox, 0xffff00 );
-	this.add( this.helper );
+	//this.add( this.helper );
 
 	this.animated = true;
 
@@ -30,7 +30,7 @@ class MyCharacter extends THREE.Object3D {
 	 this.downCircle.rotation.y = rot;
   }
 
-  rotatePacman(dir){
+  rotate(dir){
 	  switch (dir) {
 	  	case "l":
 			this.model.rotation.y = Math.PI;
