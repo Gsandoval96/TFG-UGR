@@ -26,5 +26,5 @@ class MyMaterial {
   static WHITE = new THREE.MeshStandardMaterial({color: 0xFFFFFF});
   static BLACK = new THREE.MeshStandardMaterial({color: 0x000000});
 
-  static TRANSPARENT = new THREE.MeshStandardMaterial({color: 0xFFFFFF, opacity:0.25,transparent:true});
+  static TRANSPARENT = new THREE.MeshStandardMaterial({color: 0xFFFFFF, opacity:0.1,transparent:true});
 }
