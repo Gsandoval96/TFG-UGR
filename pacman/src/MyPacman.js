@@ -109,7 +109,7 @@ class MyPacman extends THREE.Object3D {
 	  this.dirZ = dirZ;
   }
 
-  setPosition(posX, posZ){
+  setPosition2D(posX, posZ){
 	  this.pacman.position.x = posX;
 	  this.pacman.position.z = posZ;
   }

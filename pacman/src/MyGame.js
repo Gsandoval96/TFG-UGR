@@ -63,7 +63,7 @@ class MyGame extends THREE.Object3D {
 
 
 	  if(collision){
-		  this.pacman.setPosition(last_pacmanPosX, last_pacmanPosZ);
+		  this.pacman.setPosition2D(last_pacmanPosX, last_pacmanPosZ);
 	  }
   }
 

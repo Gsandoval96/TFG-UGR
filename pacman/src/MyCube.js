@@ -3,12 +3,13 @@ class MyCube extends THREE.Object3D {
     super();
 
 	 this.has_hitbox = has_hitbox;
+    var edgeSize = size/10;
 
 	 if(this.has_hitbox){
 
 		this.hitbox = new THREE.Box3();
 		var hitbox_pos = new THREE.Vector3(pos.x, pos.y, pos.z);
-		var hitbox_size = new THREE.Vector3( MyConstant.BOX_SIZE, MyConstant.BOX_SIZE, MyConstant.BOX_SIZE );
+		var hitbox_size = new THREE.Vector3( size-edgeSize,size-edgeSize,size-edgeSize );
 		this.hitbox.setFromCenterAndSize( hitbox_pos, hitbox_size );
 
 		this.helper = new THREE.Box3Helper( this.hitbox, 0xff0000 );
@@ -16,7 +17,6 @@ class MyCube extends THREE.Object3D {
 	}
 
     //var SIZE = 1;
-    var edgeSize = size/10;
 
     // Creamos la geometría y la colocamos en el 0,0,0
     var boxGeom = new THREE.BoxGeometry (size-edgeSize,size-edgeSize,size-edgeSize);
