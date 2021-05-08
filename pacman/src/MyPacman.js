@@ -1,19 +1,6 @@
-class MyPacman extends THREE.Object3D {
+class MyPacman extends MyCharacter {
   constructor(pos, size) {
-   super();
-
-	this.dirX = 1;
-	this.dirZ = 0;
-
-	this.hitbox = new THREE.Box3();
-	var hitbox_pos = new THREE.Vector3( pos.x * MyConstant.BOX_SIZE, pos.y* MyConstant.BOX_SIZE, pos.z* MyConstant.BOX_SIZE );
-	this.hitbox_size = new THREE.Vector3(MyConstant.BOX_SIZE * 0.75, MyConstant.BOX_SIZE * 0.75, MyConstant.BOX_SIZE * 0.75);
-	this.hitbox.setFromCenterAndSize(hitbox_pos, this.hitbox_size);
-
-	this.helper = new THREE.Box3Helper( this.hitbox, 0xffff00 );
-	this.add( this.helper );
-
-	this.animated = true;
+   super(pos, size);
 
 	var sphereGeom = new THREE.SphereGeometry(size, 20.0, 20.0, 0.0, Math.PI);
 	var circleGeom = new THREE.CircleGeometry(size, 20.0, 0.0, Math.PI);
@@ -46,13 +33,13 @@ class MyPacman extends THREE.Object3D {
 	this.downHalf.add(this.downSphere);
 	this.downHalf.add(this.downCircle);
 
-	this.pacman = new THREE.Object3D();
-	this.pacman.add(this.upHalf);
-	this.pacman.add(this.downHalf);
+	//this.model = new THREE.Object3D();
+	this.model.add(this.upHalf);
+	this.model.add(this.downHalf);
 
-	this.pacman.position.set(pos.x * MyConstant.BOX_SIZE, pos.y* MyConstant.BOX_SIZE, pos.z* MyConstant.BOX_SIZE);
+	this.model.position.set(pos.x * MyConstant.BOX_SIZE, pos.y* MyConstant.BOX_SIZE, pos.z* MyConstant.BOX_SIZE);
 
-	this.add(this.pacman);
+	this.add(this.model);
 
     //Animaciones con TWEEN
     if(this.animated){
@@ -71,10 +58,6 @@ class MyPacman extends THREE.Object3D {
     }
   }
 
-  getPosition(){
-	  return this.pacman.position;
-  }
-
   crearNuevo(size,rot){
     var sphereGeom = new THREE.SphereGeometry(size, 20.0, 20.0, 0, Math.PI - rot);
 	 this.upSphere.geometry = sphereGeom;
@@ -83,64 +66,8 @@ class MyPacman extends THREE.Object3D {
 	 this.downCircle.rotation.y = rot;
   }
 
-  rotatePacman(dir){
-	  switch (dir) {
-	  	case "l":
-			this.pacman.rotation.y = Math.PI;
-			this.setDir(-1,0);
-	  	break;
-		case "r":
-			this.pacman.rotation.y = 0;
-			this.setDir(1,0);
-	  	break;
-		case "u":
-			this.pacman.rotation.y = Math.PI / 2;
-			this.setDir(0,-1);
-	  	break;
-		case "d":
-			this.pacman.rotation.y = 3 * Math.PI / 2;
-			this.setDir(0,1);
-	  	break;
-	  }
-  }
-
-  setDir(dirX, dirZ){
-	  this.dirX = dirX;
-	  this.dirZ = dirZ;
-  }
-
-  setPosition2D(posX, posZ){
-	  this.pacman.position.x = posX;
-	  this.pacman.position.z = posZ;
-  }
-
-
-  movePacman(){
-	  switch (this.pacman.rotation.y) {
-	  	case 0:
-	  		this.pacman.position.x += 0.1;
-	  	break;
-		case Math.PI / 2:
-	  		this.pacman.position.z -= 0.1;
-	  	break;
-		case Math.PI:
-	  		this.pacman.position.x -= 0.1;
-	  	break;
-		case 3 * Math.PI / 2:
-	  		this.pacman.position.z += 0.1;
-	  	break;
-	  }
-
-	  var hitbox_pos = new THREE.Vector3( this.pacman.position.x, this.pacman.position.y, this.pacman.position.z );
-	  this.hitbox.setFromCenterAndSize(hitbox_pos, this.hitbox_size);
-  }
-
-  getCollisionBox(){
-	  return this.hitbox;
-  }
-
   update(){
+	  super.update();
 	  TWEEN.update();
-	  this.movePacman();
   }
 }
