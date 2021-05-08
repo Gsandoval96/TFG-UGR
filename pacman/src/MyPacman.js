@@ -119,26 +119,20 @@ class MyPacman extends THREE.Object3D {
 	  switch (this.pacman.rotation.y) {
 	  	case 0:
 	  		this.pacman.position.x += 0.1;
-			var hitbox_pos = new THREE.Vector3( this.pacman.position.x, this.pacman.position.y, this.pacman.position.z );
-			this.hitbox.setFromCenterAndSize(hitbox_pos, this.hitbox_size);
 	  	break;
 		case Math.PI / 2:
 	  		this.pacman.position.z -= 0.1;
-			var hitbox_pos = new THREE.Vector3( this.pacman.position.x, this.pacman.position.y, this.pacman.position.z );
-			this.hitbox.setFromCenterAndSize(hitbox_pos, this.hitbox_size);
 	  	break;
 		case Math.PI:
 	  		this.pacman.position.x -= 0.1;
-			var hitbox_pos = new THREE.Vector3( this.pacman.position.x, this.pacman.position.y, this.pacman.position.z );
-			this.hitbox.setFromCenterAndSize(hitbox_pos, this.hitbox_size);
 	  	break;
 		case 3 * Math.PI / 2:
 	  		this.pacman.position.z += 0.1;
-			var hitbox_pos = new THREE.Vector3( this.pacman.position.x, this.pacman.position.y, this.pacman.position.z );
-			this.hitbox.setFromCenterAndSize(hitbox_pos, this.hitbox_size);
 	  	break;
-
 	  }
+
+	  var hitbox_pos = new THREE.Vector3( this.pacman.position.x, this.pacman.position.y, this.pacman.position.z );
+	  this.hitbox.setFromCenterAndSize(hitbox_pos, this.hitbox_size);
   }
 
   getCollisionBox(){

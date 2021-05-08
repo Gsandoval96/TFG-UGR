@@ -59,7 +59,7 @@ class MyGame extends THREE.Object3D {
 		  pacmanPosZ = Math.round(pacmanPosZ);
 	  }
 
-	  var collision = this.maze.checkCollision(this.pacman.getCollisionBox(), pacmanPosX, pacmanPosZ);
+	  var collision = this.maze.checkCollision(this.pacman.getCollisionBox(), pacmanPosX, pacmanPosZ, pacmanDir);
 
 
 	  if(collision){

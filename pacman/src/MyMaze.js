@@ -57,19 +57,34 @@ class MyMaze extends THREE.Object3D {
 		}
 	}
 
-	checkCollision(hitbox, posX, posY){
+	checkCollision(hitbox, posX, posY, dir){
 		var collision = false;
-		var pos = posY * (MyConstant.MAZE_WIDTH) + posX;
+		var pos_check; //posY * (MyConstant.MAZE_WIDTH) + posX;
+		var pos_aux;
 
-		//console.log("PACMAN POS: ", posX, ", ", posY);
-		// console.log("MAZE POS: ", pos);
-
-		if(this.children[pos].has_hitbox){
-			var box = this.children[pos].getCollisionBox();
-			collision = box.intersectsBox(hitbox);
-			this.children[pos].box.material = MyMaterial.GREEN;
-			//console.log("collision");
+		if(dir.x != 0){
+			pos_aux = posY;
 		}
+		else{
+			pos_aux = posX;
+		}
+
+		for(var i = pos_aux - 1; i <= pos_aux + 1 && !collision; i++){
+			if(dir.x != 0){
+				pos_check = i * (MyConstant.MAZE_WIDTH) + posX;
+			}
+			else{
+				pos_check = posY * (MyConstant.MAZE_WIDTH) + i;
+			}
+
+			if(this.children[pos_check].has_hitbox){
+				var box = this.children[pos_check].getCollisionBox();
+				collision = box.intersectsBox(hitbox);
+				this.children[pos_check].box.material = MyMaterial.GREEN;
+			}
+		}
+
+
 
 		return collision;
 	}
