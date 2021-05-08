@@ -45,7 +45,7 @@ class MyMaze extends THREE.Object3D {
 
 				switch (this.mazeData[i][j]) {
 					case 0:
-						cube = new MyCube(position, MyMaterial.TRANSPARENT, cubeSize, false);
+						cube = new MyCube(position, MyMaterial.INVISIBLE, cubeSize, false);
 					break;
 					case 1:
 						cube = new MyCube(position, MyMaterial.BLUE, cubeSize, true);

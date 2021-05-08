@@ -21,10 +21,14 @@ class MyMaterial {
   static YELLOW = new THREE.MeshStandardMaterial({color: 0xFFFF00});
   static PURPLE = new THREE.MeshStandardMaterial({color: 0xFF00FF});
 
-  static ORANGE = new THREE.MeshStandardMaterial({color: 0xFF8000});
-
   static WHITE = new THREE.MeshStandardMaterial({color: 0xFFFFFF});
   static BLACK = new THREE.MeshStandardMaterial({color: 0x000000});
 
+  static RED_GHOST = new THREE.MeshStandardMaterial({color: 0xFF0000});
+  static PINK_GHOST = new THREE.MeshStandardMaterial({color: 0xFFB8FF});
+  static BLUE_GHOST = new THREE.MeshStandardMaterial({color: 0x00FFFF});
+  static ORANGE_GHOST = new THREE.MeshStandardMaterial({color: 0xFFB852});
+
   static TRANSPARENT = new THREE.MeshStandardMaterial({color: 0xFFFFFF, opacity:0.1,transparent:true});
+  static INVISIBLE = new THREE.MeshStandardMaterial({color: 0xFFFFFF, opacity:0.0,transparent:true});
 }
