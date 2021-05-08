@@ -67,8 +67,8 @@ class MyScene extends THREE.Scene {
 		this.add (this.topCam);
 
 		this.sideCam = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
-		this.sideCam.position.set (20, 10.5, 35);
-		var lookSide = new THREE.Vector3 (5, 10.5, 0);
+		this.sideCam.position.set (30, 2, 2);
+		var lookSide = new THREE.Vector3 (0, 2, 2);
 		this.sideCam.lookAt(lookSide);
 
 		this.add (this.sideCam);
