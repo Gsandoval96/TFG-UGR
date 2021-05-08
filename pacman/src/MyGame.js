@@ -13,7 +13,7 @@ class MyGame extends THREE.Object3D {
     this.add(this.title);
 
 	 var pacmanPos = new THREE.Vector3(1, 0, 1);
-	 this.pacman = new MyPacman(pacmanPos,MyConstant.PACMAN_SIZE);
+	 this.pacman = new MyGhost(pacmanPos,MyConstant.PACMAN_SIZE);
 	 this.add(this.pacman);
 
 	 this.maze = new MyMaze(MyConstant.BOX_SIZE);
