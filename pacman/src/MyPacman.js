@@ -6,8 +6,9 @@ class MyPacman extends THREE.Object3D {
 	this.dirZ = 0;
 
 	this.hitbox = new THREE.Box3();
-	var hitbox_size = MyConstant.BOX_SIZE * 0.75;
-	this.hitbox.setFromCenterAndSize(new THREE.Vector3( 0, 0, 0 ), new THREE.Vector3(hitbox_size, hitbox_size, hitbox_size));
+	var hitbox_pos = new THREE.Vector3( pos.x * MyConstant.BOX_SIZE, pos.y* MyConstant.BOX_SIZE, pos.z* MyConstant.BOX_SIZE );
+	this.hitbox_size = new THREE.Vector3(MyConstant.BOX_SIZE * 0.75, MyConstant.BOX_SIZE * 0.75, MyConstant.BOX_SIZE * 0.75);
+	this.hitbox.setFromCenterAndSize(hitbox_pos, this.hitbox_size);
 
 	this.helper = new THREE.Box3Helper( this.hitbox, 0xffff00 );
 	this.add( this.helper );
@@ -49,9 +50,9 @@ class MyPacman extends THREE.Object3D {
 	this.pacman.add(this.upHalf);
 	this.pacman.add(this.downHalf);
 
+	this.pacman.position.set(pos.x * MyConstant.BOX_SIZE, pos.y* MyConstant.BOX_SIZE, pos.z* MyConstant.BOX_SIZE);
 
 	this.add(this.pacman);
-	this.position.set(pos.x * MyConstant.BOX_SIZE, pos.y* MyConstant.BOX_SIZE, pos.z* MyConstant.BOX_SIZE);
 
     //Animaciones con TWEEN
     if(this.animated){
@@ -71,11 +72,7 @@ class MyPacman extends THREE.Object3D {
   }
 
   getPosition(){
-	  return this.position;
-  }
-
-  serPosition(pos){
-	  this.position = pos;
+	  return this.pacman.position;
   }
 
   crearNuevo(size,rot){
@@ -113,24 +110,32 @@ class MyPacman extends THREE.Object3D {
   }
 
   setPosition(posX, posZ){
-	  this.position.x = posX;
-	  this.position.z = posZ;
+	  this.pacman.position.x = posX;
+	  this.pacman.position.z = posZ;
   }
 
 
   movePacman(){
 	  switch (this.pacman.rotation.y) {
 	  	case 0:
-	  		this.position.x += 0.1;
+	  		this.pacman.position.x += 0.1;
+			var hitbox_pos = new THREE.Vector3( this.pacman.position.x, this.pacman.position.y, this.pacman.position.z );
+			this.hitbox.setFromCenterAndSize(hitbox_pos, this.hitbox_size);
 	  	break;
 		case Math.PI / 2:
-	  		this.position.z -= 0.1;
+	  		this.pacman.position.z -= 0.1;
+			var hitbox_pos = new THREE.Vector3( this.pacman.position.x, this.pacman.position.y, this.pacman.position.z );
+			this.hitbox.setFromCenterAndSize(hitbox_pos, this.hitbox_size);
 	  	break;
 		case Math.PI:
-	  		this.position.x -= 0.1;
+	  		this.pacman.position.x -= 0.1;
+			var hitbox_pos = new THREE.Vector3( this.pacman.position.x, this.pacman.position.y, this.pacman.position.z );
+			this.hitbox.setFromCenterAndSize(hitbox_pos, this.hitbox_size);
 	  	break;
 		case 3 * Math.PI / 2:
-	  		this.position.z += 0.1;
+	  		this.pacman.position.z += 0.1;
+			var hitbox_pos = new THREE.Vector3( this.pacman.position.x, this.pacman.position.y, this.pacman.position.z );
+			this.hitbox.setFromCenterAndSize(hitbox_pos, this.hitbox_size);
 	  	break;
 
 	  }

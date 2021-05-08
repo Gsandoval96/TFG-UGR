@@ -6,10 +6,12 @@ class MyCube extends THREE.Object3D {
 
 	 if(this.has_hitbox){
 
-		this.Bbox = new THREE.Box3();
-		this.Bbox.setFromCenterAndSize( new THREE.Vector3( 0, 0, 0 ), new THREE.Vector3( MyConstant.BOX_SIZE, MyConstant.BOX_SIZE, MyConstant.BOX_SIZE ) );
+		this.hitbox = new THREE.Box3();
+		var hitbox_pos = new THREE.Vector3(pos.x, pos.y, pos.z);
+		var hitbox_size = new THREE.Vector3( MyConstant.BOX_SIZE, MyConstant.BOX_SIZE, MyConstant.BOX_SIZE );
+		this.hitbox.setFromCenterAndSize( hitbox_pos, hitbox_size );
 
-		this.helper = new THREE.Box3Helper( this.Bbox, 0xff0000 );
+		this.helper = new THREE.Box3Helper( this.hitbox, 0xff0000 );
 		this.add( this.helper );
 	}
 
@@ -22,13 +24,15 @@ class MyCube extends THREE.Object3D {
     // Ya podemos construir el Mesh
     this.box = new THREE.Mesh (boxGeom, material);
 
+	 this.box.position.set(pos.x, pos.y, pos.z);
+
     // Y añadirlo como hijo del Object3D
     this.add (this.box);
 
-	 this.position.set(pos.x, pos.y, pos.z);
+
   }
 
   getCollisionBox(){
-	  return this.Bbox;
+	  return this.hitbox;
   }
 }

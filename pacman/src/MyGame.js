@@ -65,15 +65,6 @@ class MyGame extends THREE.Object3D {
 	  if(collision){
 		  this.pacman.setPosition(last_pacmanPosX, last_pacmanPosZ);
 	  }
-	  // var pacmanPos = this.pacman.getPosition();
-	  // var pacmanDir = this.pacman.getDirection();
-	  //
-	  //
-	  // //console.log("PACMAN MIRANDO: ", pacmanX, ", ", pacmanZ);
-	  // var collision = this.maze.checkCollision(this.pacman.getCollisionBox(), pacmanX, pacmanZ);
-	  //
-	  //
-	  // this.pacman.setCollision(collision);
   }
 
   update(){

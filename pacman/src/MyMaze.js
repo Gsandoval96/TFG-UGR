@@ -61,14 +61,14 @@ class MyMaze extends THREE.Object3D {
 		var collision = false;
 		var pos = posY * (MyConstant.MAZE_WIDTH) + posX;
 
-		console.log("PACMAN POS: ", posX, ", ", posY);
+		//console.log("PACMAN POS: ", posX, ", ", posY);
 		// console.log("MAZE POS: ", pos);
 
 		if(this.children[pos].has_hitbox){
 			var box = this.children[pos].getCollisionBox();
 			collision = box.intersectsBox(hitbox);
 			this.children[pos].box.material = MyMaterial.GREEN;
-			console.log("collision");
+			//console.log("collision");
 		}
 
 		return collision;
