@@ -2,6 +2,8 @@ class MyGhost extends MyCharacter {
   constructor(pos, size, dir, material) {
    super(pos, size);
 
+	this.path = [];
+
 	this.dirX = dir.x;
 	this.dirZ = dir.y;
 
@@ -80,7 +82,6 @@ class MyGhost extends MyCharacter {
       var animation = new TWEEN.Tween(origin)
         .to(destiny, 1000) //1 segundo
         .onUpdate (function(){
-			  //that.crearNuevo(size,origin.p);
 			  that.model.position.y = origin.p;
         })
         .repeat(Infinity)
@@ -89,15 +90,54 @@ class MyGhost extends MyCharacter {
     }
   }
 
-  crearNuevo(size,rot){
-    // var sphereGeom = new THREE.SphereGeometry(size, 20.0, 20.0, 0, Math.PI - rot);
-	 // this.upSphere.geometry = sphereGeom;
-	 // this.upCircle.rotation.y = rot;
-	 // this.downSphere.geometry = sphereGeom;
-	 // this.downCircle.rotation.y = rot;
-  }
+	executePath(){
+		if(this.path.length != 0){
+			let pos = new THREE.Vector2(this.getPosition().x / MyConstant.BOX_SIZE, this.getPosition().z / MyConstant.BOX_SIZE);
+			let dir = new THREE.Vector2(this.dirX, this.dirZ);
+
+			pos = this.adjustPosition(pos, dir);
+
+			if(pos.x == this.path[0].x && pos.y == this.path[0].y){
+				this.path.shift();
+			}
+
+			if(this.path.length != 0){
+				this.dirX = this.path[0].x - pos.x;
+				this.dirZ = pos.y - this.path[0].y;
+			}
+		}
+
+	}
+
+	adjustPosition(pos, dir){
+
+		var adjustedPosition = new THREE.Vector2(pos.x, pos.y);
+
+		if(dir.x == 1){
+			adjustedPosition.x = Math.ceil(pos.x);
+		}
+		else if(dir.x == -1){
+			adjustedPosition.x = Math.floor(pos.x);
+		}
+		else{
+			adjustedPosition.x = Math.round(pos.x);
+		}
+		if(dir.y == 1){
+			adjustedPosition.y = Math.ceil(pos.y);
+		}
+		else if(dir.y == -1){
+			adjustedPosition.y = Math.floor(pos.y);
+		}
+		else{
+			adjustedPosition.y = Math.round(pos.y);
+		}
+
+		return adjustedPosition;
+
+	}
 
   update(){
+	  this.executePath();
 	  super.update();
 	  TWEEN.update();
   }
