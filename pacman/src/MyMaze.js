@@ -57,24 +57,24 @@ class MyMaze extends THREE.Object3D {
 		}
 	}
 
-	checkCollision(hitbox, posX, posY, dir){
+	checkCollision(hitbox, pos, dir){
 		var collision = false;
 		var pos_check; //posY * (MyConstant.MAZE_WIDTH) + posX;
 		var pos_aux;
 
 		if(dir.x != 0){
-			pos_aux = posY;
+			pos_aux = pos.y;
 		}
 		else{
-			pos_aux = posX;
+			pos_aux = pos.x;
 		}
 
 		for(var i = pos_aux - 1; i <= pos_aux + 1 && !collision; i++){
 			if(dir.x != 0){
-				pos_check = i * (MyConstant.MAZE_WIDTH) + posX;
+				pos_check = i * (MyConstant.MAZE_WIDTH) + pos.x;
 			}
 			else{
-				pos_check = posY * (MyConstant.MAZE_WIDTH) + i;
+				pos_check = pos.y * (MyConstant.MAZE_WIDTH) + i;
 			}
 
 			if(this.children[pos_check].has_hitbox){
@@ -83,8 +83,6 @@ class MyMaze extends THREE.Object3D {
 				//this.children[pos_check].box.material = MyMaterial.GREEN;
 			}
 		}
-
-
 
 		return collision;
 	}

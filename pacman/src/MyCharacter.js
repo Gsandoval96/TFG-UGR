@@ -56,9 +56,9 @@ class MyCharacter extends THREE.Object3D {
 	  this.dirZ = dirZ;
   }
 
-  setPosition2D(posX, posZ){
-	  this.model.position.x = posX;
-	  this.model.position.z = posZ;
+  setPosition2D(pos2D){
+	  this.model.position.x = pos2D.x;
+	  this.model.position.z = pos2D.y;
   }
 
 
