@@ -56,6 +56,8 @@ class MyGame extends THREE.Object3D {
 
 	collisionManager(){
 
+		var types = ['l','r','u','d'];
+
 		for(let character of this.charaters){
 			let lastPos = new THREE.Vector2(character.getPosition().x, character.getPosition().z);
 			character.update();
@@ -64,8 +66,14 @@ class MyGame extends THREE.Object3D {
 
 			pos = this.adjustPosition(pos, dir);
 
-			if(this.maze.checkCollision(character.getCollisionBox(), pos, dir))
+			if(this.maze.checkCollision(character.getCollisionBox(), pos, dir)){
 			 	character.setPosition2D(lastPos);
+				if(character != this.charaters[0]){
+    				var random = Math.round(Math.random()*3);
+					character.rotate(types[random]);
+				}
+			}
+
 		}
 	}
 
