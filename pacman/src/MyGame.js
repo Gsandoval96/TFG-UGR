@@ -35,14 +35,16 @@ class MyGame extends THREE.Object3D {
 		// this.add(this.blueGhost);
 		// this.add(this.orangeGhost);
 
-		this.charaters = [];
-		this.charaters.push(pacman);
-		this.charaters.push(redGhost);
-		this.charaters.push(pinkGhost);
-		this.charaters.push(blueGhost);
-		this.charaters.push(orangeGhost);
+		this.characters = [];
+		this.characters.push(pacman);
+		this.characters.push(redGhost);
+		this.characters.push(pinkGhost);
+		this.characters.push(blueGhost);
+		this.characters.push(orangeGhost);
 
-		for (var character of this.charaters) {
+		this.check = true;
+
+		for (var character of this.characters) {
 			this.add(character);
 		}
 
@@ -58,7 +60,7 @@ class MyGame extends THREE.Object3D {
 
 		var types = ['l','r','u','d'];
 
-		for(let character of this.charaters){
+		for(let character of this.characters){
 			let lastPos = new THREE.Vector2(character.getPosition().x, character.getPosition().z);
 			character.update();
 			let pos = new THREE.Vector2(character.getPosition().x / MyConstant.BOX_SIZE, character.getPosition().z / MyConstant.BOX_SIZE);
@@ -68,12 +70,27 @@ class MyGame extends THREE.Object3D {
 
 			if(this.maze.checkCollision(character.getCollisionBox(), pos, dir)){
 			 	character.setPosition2D(lastPos);
-				if(character != this.charaters[0]){
+				if(character != this.characters[0] && character != this.characters[1] ){
     				var random = Math.round(Math.random()*3);
 					character.rotate(types[random]);
 				}
 			}
+		}
+	}
 
+	moveAI(){
+		var character = this.characters[1];
+		if(this.check){//character.path.length == 0){
+			let pos = new THREE.Vector2(character.getPosition().x / MyConstant.BOX_SIZE, character.getPosition().z / MyConstant.BOX_SIZE);
+			let dir = new THREE.Vector2(character.dirX, character.dirZ);
+
+			pos = this.adjustPosition(pos, dir);
+
+
+			var aStar = new MyAStar();
+			var end = new THREE.Vector2(21,4);
+			character.path = aStar.getPath(this.maze.mazeData, pos, end);
+			this.check = false;
 		}
 	}
 
@@ -107,6 +124,9 @@ class MyGame extends THREE.Object3D {
 	update(){
 		if(this.start){
 			this.collisionManager();
+			//this.moveAI();
+			console.log("POSICION (0, 4): ", this.maze.mazeData[0][4]);
+			console.log("POSICION (4, 0): ", this.maze.mazeData[4][0]);
 		}
 	}
 }
