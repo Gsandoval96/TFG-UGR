@@ -5,6 +5,8 @@ class MyCharacter extends THREE.Object3D {
 	this.dirX = 0;
 	this.dirZ = 0;
 
+	this.speed = 2;
+
 	this.hitbox = new THREE.Box3();
 	var hitbox_pos = new THREE.Vector3( pos.x * MyConstant.BOX_SIZE, pos.y* MyConstant.BOX_SIZE, pos.z* MyConstant.BOX_SIZE );
 	this.hitbox_size = new THREE.Vector3(MyConstant.BOX_SIZE * 0.75, MyConstant.BOX_SIZE * 0.75, MyConstant.BOX_SIZE * 0.75);
@@ -62,16 +64,16 @@ class MyCharacter extends THREE.Object3D {
   move(){
 	  switch (this.model.rotation.y) {
 	  	case 0:
-	  		this.model.position.x += 0.1;
+	  		this.model.position.x += this.speed;
 	  	break;
 		case Math.PI / 2:
-	  		this.model.position.z -= 0.1;
+	  		this.model.position.z -= this.speed;
 	  	break;
 		case Math.PI:
-	  		this.model.position.x -= 0.1;
+	  		this.model.position.x -= this.speed;
 	  	break;
 		case 3 * Math.PI / 2:
-	  		this.model.position.z += 0.1;
+	  		this.model.position.z += this.speed;
 	  	break;
 	  }
 
