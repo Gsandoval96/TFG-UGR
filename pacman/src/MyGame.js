@@ -126,19 +126,19 @@ class MyGame extends THREE.Object3D {
 		var adjustedPosition = new THREE.Vector2(pos.x, pos.y);
 
 		if(dir.x == 1){
-			adjustedPosition.x = Math.ceil(pos.x);
+			adjustedPosition.x = Math.floor(pos.x);
 		}
 		else if(dir.x == -1){
-			adjustedPosition.x = Math.floor(pos.x);
+			adjustedPosition.x = Math.ceil(pos.x);
 		}
 		else{
 			adjustedPosition.x = Math.round(pos.x);
 		}
 		if(dir.y == 1){
-			adjustedPosition.y = Math.ceil(pos.y);
+			adjustedPosition.y = Math.floor(pos.y);
 		}
 		else if(dir.y == -1){
-			adjustedPosition.y = Math.floor(pos.y);
+			adjustedPosition.y = Math.ceil(pos.y);
 		}
 		else{
 			adjustedPosition.y = Math.round(pos.y);

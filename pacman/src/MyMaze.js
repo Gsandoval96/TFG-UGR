@@ -86,10 +86,10 @@ class MyMaze extends THREE.Object3D {
 
 		for(var i = pos_aux - 1; i <= pos_aux + 1 && !collision; i++){
 			if(dir.x != 0){
-				pos_check = i * (MyConstant.MAZE_WIDTH) + pos.x;
+				pos_check = i * (MyConstant.MAZE_WIDTH) + (pos.x + dir.x);
 			}
 			else{
-				pos_check = pos.y * (MyConstant.MAZE_WIDTH) + i;
+				pos_check = (pos.y + dir.y) * (MyConstant.MAZE_WIDTH) + i;
 			}
 
 			if(this.children[pos_check].has_hitbox){
