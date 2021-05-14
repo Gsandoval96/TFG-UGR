@@ -36,20 +36,23 @@ class MyCharacter extends THREE.Object3D {
 
   rotate(dir){
 
-	  if(dir.x == 1){
-		  this.model.rotation.y = 0;
-	  }
-	  else if (dir.x == -1){
-		  this.model.rotation.y = Math.PI;
-	  }
-	  else if (dir.y == 1){
-		  this.model.rotation.y = 3 * Math.PI / 2;
-	  }
-	  else if (dir.y == -1){
-		  this.model.rotation.y = Math.PI / 2;
-	  }
+	  if(dir.x != this.dirX || dir.y != this.dirZ){
 
-	  this.setDir(dir);
+		  if(dir.x == 1){
+			  this.model.rotation.y = 0;
+		  }
+		  else if (dir.x == -1){
+			  this.model.rotation.y = Math.PI;
+		  }
+		  else if (dir.y == 1){
+			  this.model.rotation.y = 3 * Math.PI / 2;
+		  }
+		  else if (dir.y == -1){
+			  this.model.rotation.y = Math.PI / 2;
+		  }
+
+		  this.setDir(dir);
+	  }
   }
 
   setDir(dir){
