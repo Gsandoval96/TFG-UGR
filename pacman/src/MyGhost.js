@@ -2,7 +2,7 @@ class MyGhost extends MyCharacter {
   constructor(pos, size, dir, material) {
    super(pos, size);
 
-	this.path = [];
+	this.path = null;
 
 	this.dirX = dir.x;
 	this.dirZ = dir.y;
@@ -11,13 +11,13 @@ class MyGhost extends MyCharacter {
 	var eyeGeom = new THREE.SphereGeometry(size * 6/25, 20.0, 20.0, 0.0);
 	var pupilGeom = new THREE.SphereGeometry(size * 2/25, 20.0, 20.0, 0.0);
 	var cylinderGeom = new THREE.CylinderGeometry(size * 4/5, size * 4/5, size*4/3, 20.0);
-   var material = material;
+   this.material = material;
 	//material.side = THREE.DoubleSide;
 
    // Ya podemos construir el Mesh de la parte superior
-   this.cylinder = new THREE.Mesh (cylinderGeom, material);
+   this.cylinder = new THREE.Mesh (cylinderGeom, this.material);
 
-	this.sphere = new THREE.Mesh (sphereGeom, material);
+	this.sphere = new THREE.Mesh (sphereGeom, this.material);
 	this.sphere.position.y = size*2/3 - 0.1 ;
 	this.sphere.rotation.x = -Math.PI / 2 ;
 
@@ -57,7 +57,7 @@ class MyGhost extends MyCharacter {
 
 	this.feet = new THREE.Object3D();
 	for(var i=0; i<16; i++){
-		var mesh = new THREE.Mesh (geometry, material);
+		var mesh = new THREE.Mesh (geometry, this.material);
 		mesh.rotation.y = i * (Math.PI / 8);
 		this.feet.add(mesh);
 	}
@@ -91,19 +91,23 @@ class MyGhost extends MyCharacter {
   }
 
 	executePath(){
-		if(this.path.length != 0){
+		if(this.path != null){
 			let pos = new THREE.Vector2(this.getPosition().x / MyConstant.BOX_SIZE, this.getPosition().z / MyConstant.BOX_SIZE);
 			let dir = new THREE.Vector2(this.dirX, this.dirZ);
 
 			pos = this.adjustPosition(pos, dir);
 
-			if(pos.x == this.path[0].x && pos.y == this.path[0].y){
+			if(pos.x == this.path[0].y && pos.y == this.path[0].x){
+				//console.log("Limpiando cola");
 				this.path.shift();
+				if(this.path.length == 0) this.path = null;
 			}
 
-			if(this.path.length != 0){
-				this.dirX = this.path[0].x - pos.x;
-				this.dirZ = pos.y - this.path[0].y;
+			if(this.path != null){
+				var dirX = this.path[0].y - pos.x;
+				var dirZ = this.path[0].x - pos.y ;
+				var new_dir = new THREE.Vector2(dirX, dirZ);
+				this.rotate(new_dir);
 			}
 		}
 
