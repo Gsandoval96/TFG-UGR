@@ -20,13 +20,15 @@ class MyControls{
 	 //
     // if (keyCode == this.hardDropKey ){game.hardDrop();} //Espacio
     // if (keyCode == this.savePieceKey ){game.board.holdPiece();} //W
-	 var dir = null;
+	 var dir = new THREE.Vector2(0,0);
 
-    if (keyCode == this.moveLeftKey ){dir = "l";} //Flecha Izquierda
-    if (keyCode == this.moveRightKey ){dir = "r";} //Flecha Derecha
-    if (keyCode == this.moveDownKey ){dir = "d";} //Flecha Abajo
-	 if (keyCode == this.moveUpKey ){dir = "u";} //Flecha Arriba
+    if (keyCode == this.moveLeftKey ){dir.x = -1;} //Flecha Izquierda
+    if (keyCode == this.moveRightKey ){dir.x = 1;} //Flecha Derecha
+    if (keyCode == this.moveDownKey ){dir.y = 1;} //Flecha Abajo
+	 if (keyCode == this.moveUpKey ){dir.y = -1;} //Flecha Arriba
 
-	 if (dir != null) game.charaters[0].rotate(dir);
+	 if (dir.x != 0 || dir.y != 0){
+		 game.characters[0].rotate(dir);
+	 }
   }
 }

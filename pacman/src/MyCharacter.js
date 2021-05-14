@@ -31,29 +31,26 @@ class MyCharacter extends THREE.Object3D {
   }
 
   rotate(dir){
-	  switch (dir) {
-	  	case "l":
-			this.model.rotation.y = Math.PI;
-			this.setDir(-1,0);
-	  	break;
-		case "r":
-			this.model.rotation.y = 0;
-			this.setDir(1,0);
-	  	break;
-		case "u":
-			this.model.rotation.y = Math.PI / 2;
-			this.setDir(0,-1);
-	  	break;
-		case "d":
-			this.model.rotation.y = 3 * Math.PI / 2;
-			this.setDir(0,1);
-	  	break;
+
+	  if(dir.x == 1){
+		  this.model.rotation.y = 0;
 	  }
+	  else if (dir.x == -1){
+		  this.model.rotation.y = Math.PI;
+	  }
+	  else if (dir.y == 1){
+		  this.model.rotation.y = 3 * Math.PI / 2;
+	  }
+	  else if (dir.y == -1){
+		  this.model.rotation.y = Math.PI / 2;
+	  }
+
+	  this.setDir(dir);
   }
 
-  setDir(dirX, dirZ){
-	  this.dirX = dirX;
-	  this.dirZ = dirZ;
+  setDir(dir){
+	  this.dirX = dir.x;
+	  this.dirZ = dir.y;
   }
 
   setPosition2D(pos2D){
