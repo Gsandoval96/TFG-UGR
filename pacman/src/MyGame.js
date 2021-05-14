@@ -42,8 +42,6 @@ class MyGame extends THREE.Object3D {
 		this.characters.push(blueGhost);
 		this.characters.push(orangeGhost);
 
-		this.check = true;
-
 		for (var character of this.characters) {
 			this.add(character);
 		}
@@ -70,28 +68,60 @@ class MyGame extends THREE.Object3D {
 
 			if(this.maze.checkCollision(character.getCollisionBox(), pos, dir)){
 			 	character.setPosition2D(lastPos);
-				if(character != this.characters[0] && character != this.characters[1] ){
-    				var random = Math.round(Math.random()*3);
-					character.rotate(types[random]);
-				}
+				// if(character != this.characters[0] && character != this.characters[1] ){
+    			// 	var random = Math.round(Math.random()*3);
+				// 	character.rotate(types[random]);
+				// }
 			}
 		}
 	}
 
+	generateRandomValidPosition(){
+		var position = new THREE.Vector2(0,0);
+
+		do{
+			var types = ['l','r','u','d'];
+			position.x = Math.round(Math.random()* (MyConstant.MAZE_WIDTH - 1));
+			position.y = Math.round(Math.random()* (MyConstant.MAZE_HEIGHT - 1));
+		} while(!this.maze.isValid(position));
+
+		return position;
+	}
+
 	moveAI(){
-		var character = this.characters[1];
-		if(this.check){//character.path.length == 0){
-			let pos = new THREE.Vector2(character.getPosition().x / MyConstant.BOX_SIZE, character.getPosition().z / MyConstant.BOX_SIZE);
-			let dir = new THREE.Vector2(character.dirX, character.dirZ);
+		for(var i = 1; i < this.characters.length; i++){
+			var character = this.characters[i];
+			if(character.path == null){
+				this.maze.clearColor(character.material);
 
-			pos = this.adjustPosition(pos, dir);
+				let pos = new THREE.Vector2(character.getPosition().x / MyConstant.BOX_SIZE, character.getPosition().z / MyConstant.BOX_SIZE);
+				let dir = new THREE.Vector2(character.dirX, character.dirZ);
 
+				pos = this.adjustPosition(pos, dir);
 
-			var aStar = new MyAStar();
-			var end = new THREE.Vector2(21,4);
-			character.path = aStar.getPath(this.maze.mazeData, pos, end);
-			this.check = false;
+				var graph = new Graph(this.maze.mazeData);
+				var start = graph.grid[pos.y][pos.x];
+
+				var random = this.generateRandomValidPosition();
+				//console.log("POSICION RANDOM:", random);
+				var end = graph.grid[random.x][random.y];
+				//console.log("END: ", end);
+				var result = astar.search(graph, start, end);
+
+				if(result.length == 0) result = null;
+				else{
+					for(let path of result){
+						var posA = path.x;
+						var posB = path.y;
+						var pos_check = posA * (MyConstant.MAZE_WIDTH) + posB;
+						this.maze.children[pos_check].box.material = character.material;
+					}
+				}
+
+				character.path = result;
+			}
 		}
+
 	}
 
 	adjustPosition(pos, dir){
@@ -123,10 +153,10 @@ class MyGame extends THREE.Object3D {
 
 	update(){
 		if(this.start){
+			this.moveAI();
 			this.collisionManager();
-			//this.moveAI();
-			console.log("POSICION (0, 4): ", this.maze.mazeData[0][4]);
-			console.log("POSICION (4, 0): ", this.maze.mazeData[4][0]);
+			// console.log("POSICION (0, 4): ", this.maze.mazeData[0][4]);
+			// console.log("POSICION (4, 0): ", this.maze.mazeData[4][0]);
 		}
 	}
 }
