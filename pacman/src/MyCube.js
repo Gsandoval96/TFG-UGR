@@ -12,8 +12,11 @@ class MyCube extends THREE.Object3D {
 		var hitbox_size = new THREE.Vector3( size-edgeSize,size-edgeSize,size-edgeSize );
 		this.hitbox.setFromCenterAndSize( hitbox_pos, hitbox_size );
 
-		this.helper = new THREE.Box3Helper( this.hitbox, 0xff0000 );
-		this.add( this.helper );
+		if(MyConstant.SHOW_HITBOX){
+			var helper = new THREE.Box3Helper( this.hitbox, 0xff0000 );
+			this.add(helper);
+		}
+
 	}
 
     //var SIZE = 1;

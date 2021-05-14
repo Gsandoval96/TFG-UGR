@@ -5,15 +5,17 @@ class MyCharacter extends THREE.Object3D {
 	this.dirX = 0;
 	this.dirZ = 0;
 
-	this.speed = 2;
+	this.speed = 0.25;
 
 	this.hitbox = new THREE.Box3();
 	var hitbox_pos = new THREE.Vector3( pos.x * MyConstant.BOX_SIZE, pos.y* MyConstant.BOX_SIZE, pos.z* MyConstant.BOX_SIZE );
 	this.hitbox_size = new THREE.Vector3(MyConstant.BOX_SIZE * 0.75, MyConstant.BOX_SIZE * 0.75, MyConstant.BOX_SIZE * 0.75);
 	this.hitbox.setFromCenterAndSize(hitbox_pos, this.hitbox_size);
 
-	this.helper = new THREE.Box3Helper( this.hitbox, 0xffff00 );
-	//this.add( this.helper );
+	if(MyConstant.SHOW_HITBOX){
+		var helper = new THREE.Box3Helper( this.hitbox, 0xff0000 );
+		this.add(helper);
+	}
 
 	this.animated = true;
 
