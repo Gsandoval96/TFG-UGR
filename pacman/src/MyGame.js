@@ -84,13 +84,28 @@ class MyGame extends THREE.Object3D {
 				let pos = new THREE.Vector2(character.getPosition().x / MyConstant.BOX_SIZE, character.getPosition().z / MyConstant.BOX_SIZE);
 				let dir = new THREE.Vector2(character.dirX, character.dirZ);
 
-				pos = this.adjustPosition(pos, dir);
+				pos = character.adjustPositionForPath(pos, dir);
 
 				var graph = new Graph(this.maze.mazeData);
 				var start = graph.grid[pos.y][pos.x];
 
-				var random = this.generateRandomValidPosition();
-				var end = graph.grid[random.x][random.y];
+				var random = this.maze.getRandomValidPosition(); //random end
+
+				//pacman end
+				var pPos = new THREE.Vector2(this.characters[0].getPosition().x / MyConstant.BOX_SIZE, this.characters[0].getPosition().z / MyConstant.BOX_SIZE);
+				var pDir = new THREE.Vector2(this.characters[0].dirX, this.characters[0].dirZ);
+
+				pPos = this.adjustPosition(pPos, pDir);
+
+				//choose end
+				var end;
+
+				if(i<=2){
+					end = graph.grid[pPos.y][pPos.x];
+				}
+				else {
+					end = graph.grid[random.x][random.y];
+				}
 				var result = astar.search(graph, start, end);
 
 				if(result.length == 0) result = null;
