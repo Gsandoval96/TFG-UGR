@@ -36,6 +36,8 @@ class MyMaze extends THREE.Object3D {
 			[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 		];
 
+		this.validPositions = [];
+
 		// Board
 
 		for(var i = 0; i < MyConstant.MAZE_HEIGHT; i++){
@@ -49,6 +51,8 @@ class MyMaze extends THREE.Object3D {
 					break;
 					case 1:
 						cube = new MyCube(position, MyMaterial.INVISIBLE, cubeSize, false);
+						var validPosition = new THREE.Vector2(i, j);
+						this.validPositions.push(validPosition);
 					break;
 				}
 
@@ -57,14 +61,15 @@ class MyMaze extends THREE.Object3D {
 		}
 	}
 
-	isValid(position){
-		return this.mazeData[position.x][position.y];
+	getRandomValidPosition(){
+		var random = Math.round(Math.random() * (this.validPositions.length - 1));
+		return this.validPositions[random];
 	}
 
 	clearColor(material){
 		for(var i = 0; i < MyConstant.MAZE_HEIGHT; i++){
 			for(var j = 0; j < MyConstant.MAZE_WIDTH; j++){
-				var pos_check = j * (MyConstant.MAZE_WIDTH) + i;
+				var pos_check = i * (MyConstant.MAZE_WIDTH) + j;
 				if(this.children[pos_check].box.material == material){
 					this.children[pos_check].box.material = MyMaterial.INVISIBLE;
 				}

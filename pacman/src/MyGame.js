@@ -75,18 +75,6 @@ class MyGame extends THREE.Object3D {
 		}
 	}
 
-	generateRandomValidPosition(){
-		var position = new THREE.Vector2(0,0);
-
-		do{
-			var types = ['l','r','u','d'];
-			position.x = Math.round(Math.random()* (MyConstant.MAZE_WIDTH - 1));
-			position.y = Math.round(Math.random()* (MyConstant.MAZE_HEIGHT - 1));
-		} while(!this.maze.isValid(position));
-
-		return position;
-	}
-
 	moveAI(){
 		for(var i = 1; i < this.characters.length; i++){
 			var character = this.characters[i];
