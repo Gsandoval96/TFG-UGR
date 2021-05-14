@@ -57,6 +57,21 @@ class MyMaze extends THREE.Object3D {
 		}
 	}
 
+	isValid(position){
+		return this.mazeData[position.x][position.y];
+	}
+
+	clearColor(material){
+		for(var i = 0; i < MyConstant.MAZE_HEIGHT; i++){
+			for(var j = 0; j < MyConstant.MAZE_WIDTH; j++){
+				var pos_check = j * (MyConstant.MAZE_WIDTH) + i;
+				if(this.children[pos_check].box.material == material){
+					this.children[pos_check].box.material = MyMaterial.INVISIBLE;
+				}
+			}
+		}
+	}
+
 	checkCollision(hitbox, pos, dir){
 		var collision = false;
 		var pos_check; //posY * (MyConstant.MAZE_WIDTH) + posX;
