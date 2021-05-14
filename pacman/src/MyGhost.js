@@ -98,7 +98,6 @@ class MyGhost extends MyCharacter {
 			pos = this.adjustPosition(pos, dir);
 
 			if(pos.x == this.path[0].y && pos.y == this.path[0].x){
-				//console.log("Limpiando cola");
 				this.path.shift();
 				if(this.path.length == 0) this.path = null;
 			}

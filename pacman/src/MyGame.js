@@ -103,9 +103,7 @@ class MyGame extends THREE.Object3D {
 				var start = graph.grid[pos.y][pos.x];
 
 				var random = this.generateRandomValidPosition();
-				//console.log("POSICION RANDOM:", random);
 				var end = graph.grid[random.x][random.y];
-				//console.log("END: ", end);
 				var result = astar.search(graph, start, end);
 
 				if(result.length == 0) result = null;
@@ -155,8 +153,6 @@ class MyGame extends THREE.Object3D {
 		if(this.start){
 			this.moveAI();
 			this.collisionManager();
-			// console.log("POSICION (0, 4): ", this.maze.mazeData[0][4]);
-			// console.log("POSICION (4, 0): ", this.maze.mazeData[4][0]);
 		}
 	}
 }
