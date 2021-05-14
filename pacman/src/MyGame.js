@@ -68,10 +68,9 @@ class MyGame extends THREE.Object3D {
 
 			if(this.maze.checkCollision(character.getCollisionBox(), pos, dir)){
 			 	character.setPosition2D(lastPos);
-				// if(character != this.characters[0] && character != this.characters[1] ){
-    			// 	var random = Math.round(Math.random()*3);
-				// 	character.rotate(types[random]);
-				// }
+				if(character != this.characters[0]){
+    				character.path = null;
+				}
 			}
 		}
 	}
