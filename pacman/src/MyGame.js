@@ -68,7 +68,7 @@ class MyGame extends THREE.Object3D {
 
 			if(this.maze.checkCollision(character.getCollisionBox(), pos, dir)){
 			 	character.setPosition2D(lastPos);
-				if(character != this.characters[0]){
+				if(character != this.characters[0]){ //No debería ocurrir nunca, pero para prevenir errores
     				character.path = null;
 				}
 			}
