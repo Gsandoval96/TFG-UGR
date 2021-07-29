@@ -29,12 +29,6 @@ class MyGame extends THREE.Object3D {
 		var orangeGhost = new MyGhost(orangeGhostPos, MyConstant.CHARACTER_SIZE, orangeGhostDir, MyMaterial.ORANGE_GHOST);
 		orangeGhost.rotate("d");
 
-		// this.add(this.pacman);
-		// this.add(this.redGhost);
-		// this.add(this.pinkGhost);
-		// this.add(this.blueGhost);
-		// this.add(this.orangeGhost);
-
 		this.characters = [];
 		this.characters.push(pacman);
 		this.characters.push(redGhost);
@@ -67,7 +61,13 @@ class MyGame extends THREE.Object3D {
 			pos = this.adjustPosition(pos, dir);
 
 			if(this.maze.checkCollision(character.getCollisionBox(), pos, dir)){
-			 	character.setPosition2D(lastPos);
+				let collisionType = this.maze.collisionType(pos, dir);
+				if(collisionType == 2){
+					console.log("TELETRANSPORTE");
+					let teleportPos = this.maze.getOtherTeleport(pos, dir);
+					lastPos = new THREE.Vector2(teleportPos.y * MyConstant.BOX_SIZE, teleportPos.x * MyConstant.BOX_SIZE);
+				}
+				character.setPosition2D(lastPos);
 				if(character != this.characters[0]){ //No debería ocurrir nunca, pero para prevenir errores
     				character.path = null;
 				}
@@ -100,7 +100,7 @@ class MyGame extends THREE.Object3D {
 				//choose end
 				var end;
 
-				if(i<=2){
+				if(i<=4){ //usar el A*, ahora mismo la usan todos los fantasmas
 					end = graph.grid[pPos.y][pPos.x];
 				}
 				else {

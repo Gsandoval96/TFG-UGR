@@ -17,7 +17,7 @@ class MyMaze extends THREE.Object3D {
 			[0,1,1,1,1,0,1,0,0,1,1,1,1,1,1,1,1,1,1,0,0,1,0,1,1,1,1,0],
 			[0,1,1,1,1,0,1,0,0,1,0,0,0,1,1,0,0,0,1,0,0,1,0,1,1,1,1,0],
 			[0,0,0,0,0,0,1,0,0,1,0,1,1,1,1,1,1,0,1,0,0,1,0,0,0,0,0,0],
-			[0,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,0],
+			[2,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,2],
 			[0,0,0,0,0,0,1,0,0,1,0,1,1,1,1,1,1,0,1,0,0,1,0,0,0,0,0,0],
 			[0,1,1,1,1,0,1,0,0,1,0,0,0,0,0,0,0,0,1,0,0,1,0,1,1,1,1,0],
 			[0,1,1,1,1,0,1,0,0,1,1,1,1,1,1,1,1,1,1,0,0,1,0,1,1,1,1,0],
@@ -36,6 +36,8 @@ class MyMaze extends THREE.Object3D {
 			[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 		];
 
+		this.teleportPositions = [];
+
 		this.validPositions = [];
 
 		// Board
@@ -51,8 +53,13 @@ class MyMaze extends THREE.Object3D {
 					break;
 					case 1:
 						cube = new MyCube(position, MyMaterial.INVISIBLE, cubeSize, false);
-						var validPosition = new THREE.Vector2(i, j);
+						let validPosition = new THREE.Vector2(i, j);
 						this.validPositions.push(validPosition);
+					break;
+					case 2:
+						cube = new MyCube(position, MyMaterial.GREEN, cubeSize, true);
+						let teleportPosition = new THREE.Vector2(i, j);
+						this.teleportPositions.push(teleportPosition);
 					break;
 				}
 
@@ -75,6 +82,24 @@ class MyMaze extends THREE.Object3D {
 				}
 			}
 		}
+	}
+
+	getOtherTeleport(pos,dir){
+		var newPos;
+
+		//Comparamos al revés por la distribución de la matriz
+		if(pos.x + dir.x == this.teleportPositions[0].y && pos.y + dir.y == this.teleportPositions[0].x){
+			newPos = new THREE.Vector2(this.teleportPositions[1].x, this.teleportPositions[1].y);
+		}
+		else{
+			newPos = new THREE.Vector2(this.teleportPositions[0].x, this.teleportPositions[0].y);
+		}
+		return newPos;
+	}
+
+	collisionType(pos, dir){
+		var pos_check = new THREE.Vector2(pos.x + dir.x, pos.y + dir.y);
+		return this.mazeData[pos_check.y][pos_check.x];
 	}
 
 	checkCollision(hitbox, pos, dir){
