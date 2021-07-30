@@ -62,7 +62,7 @@ class MyGame extends THREE.Object3D {
 
 			if(this.maze.checkCollision(character.getCollisionBox(), pos, dir)){
 				let collisionType = this.maze.collisionType(pos, dir);
-				if(collisionType == 2){
+				if(collisionType == 4){
 					let teleportPos = this.maze.getOtherTeleport(pos, dir);
 					lastPos = new THREE.Vector2(teleportPos.y * MyConstant.BOX_SIZE + dir.x * MyConstant.BOX_SIZE/2, teleportPos.x * MyConstant.BOX_SIZE);
 				}

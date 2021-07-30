@@ -22,6 +22,8 @@ class MyTile extends THREE.Object3D {
 	this.cube;
 	switch (type) {
 		case "empty":
+		case "dot":
+		case "pill":
 			this.cube = new MyCube(position, MyMaterial.INVISIBLE, size);
 		break;
 		case "wall":
@@ -30,9 +32,24 @@ class MyTile extends THREE.Object3D {
 		case "teleport":
 			this.cube = new MyCube(position, MyMaterial.GREEN, size);
 		break;
-
 	}
 	this.add(this.cube);
+
+	var dot;
+	switch (type) {
+		case "dot":
+			var sphereGeom = new THREE.SphereGeometry( size/6, 20.0, 20.0);
+			dot = new THREE.Mesh (sphereGeom, MyMaterial.WHITE);
+			dot.position.set(position.x, position.y, position.z);
+			this.add(dot);
+		break;
+		case "pill":
+			var sphereGeom = new THREE.SphereGeometry( size/3, 20.0, 20.0);
+			dot = new THREE.Mesh (sphereGeom, MyMaterial.WHITE);
+			dot.position.set(position.x, position.y, position.z);
+			this.add(dot);
+		break;
+	}
 
 
   }
