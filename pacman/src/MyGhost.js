@@ -2,6 +2,8 @@ class MyGhost extends MyCharacter {
   constructor(pos, size, dir, material) {
    super(pos, size);
 
+	this.speed = this.speed * 0.75; //los fantasmas se mueven más lento
+
 	this.path = null;
 
 	this.dirX = dir.x;
