@@ -49,15 +49,15 @@ class MyMaze extends THREE.Object3D {
 
 				switch (this.mazeData[i][j]) {
 					case 0:
-						cube = new MyCube(position, MyMaterial.BLUE, cubeSize, true);
+						cube = new MyTile(position, "wall", cubeSize, true);
 					break;
 					case 1:
-						cube = new MyCube(position, MyMaterial.INVISIBLE, cubeSize, false);
+						cube = new MyTile(position, "empty", cubeSize, false);
 						let validPosition = new THREE.Vector2(i, j);
 						this.validPositions.push(validPosition);
 					break;
 					case 2:
-						cube = new MyCube(position, MyMaterial.GREEN, cubeSize, true);
+						cube = new MyTile(position, "teleport", cubeSize, true);
 						let teleportPosition = new THREE.Vector2(i, j);
 						this.teleportPositions.push(teleportPosition);
 					break;
@@ -77,8 +77,8 @@ class MyMaze extends THREE.Object3D {
 		for(var i = 0; i < MyConstant.MAZE_HEIGHT; i++){
 			for(var j = 0; j < MyConstant.MAZE_WIDTH; j++){
 				var pos_check = i * (MyConstant.MAZE_WIDTH) + j;
-				if(this.children[pos_check].box.material == material){
-					this.children[pos_check].box.material = MyMaterial.INVISIBLE;
+				if(this.children[pos_check].cube.box.material == material){
+					this.children[pos_check].cube.box.material = MyMaterial.INVISIBLE;
 				}
 			}
 		}

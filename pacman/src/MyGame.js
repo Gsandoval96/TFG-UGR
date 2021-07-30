@@ -113,7 +113,7 @@ class MyGame extends THREE.Object3D {
 						var posA = path.x;
 						var posB = path.y;
 						var pos_check = posA * (MyConstant.MAZE_WIDTH) + posB;
-						this.maze.children[pos_check].box.material = character.material;
+						this.maze.children[pos_check].cube.box.material = character.material;
 					}
 				}
 

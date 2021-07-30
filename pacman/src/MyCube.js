@@ -1,23 +1,8 @@
 class MyCube extends THREE.Object3D {
-  constructor(pos, material, size, has_hitbox){
+  constructor(pos, material, size){
     super();
 
-	 this.has_hitbox = has_hitbox;
     var edgeSize = size/10;
-
-	 if(this.has_hitbox){
-
-		this.hitbox = new THREE.Box3();
-		var hitbox_pos = new THREE.Vector3(pos.x, pos.y, pos.z);
-		var hitbox_size = new THREE.Vector3( size-edgeSize,size-edgeSize,size-edgeSize );
-		this.hitbox.setFromCenterAndSize( hitbox_pos, hitbox_size );
-
-		if(MyConstant.SHOW_HITBOX){
-			var helper = new THREE.Box3Helper( this.hitbox, 0xff0000 );
-			this.add(helper);
-		}
-
-	}
 
     //var SIZE = 1;
 
@@ -33,9 +18,5 @@ class MyCube extends THREE.Object3D {
     this.add (this.box);
 
 
-  }
-
-  getCollisionBox(){
-	  return this.hitbox;
   }
 }
