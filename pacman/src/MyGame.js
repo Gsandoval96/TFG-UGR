@@ -5,11 +5,12 @@ class MyGame extends THREE.Object3D {
 		this.start = false;
 
 		// Title
-
 		var titlePos = new THREE.Vector3(-16, 24, 0);
 		this.title = new MyTitle(titlePos, 5, false);
 		this.add(this.title);
 
+		// Ghost and Pacman
+		var pacmanDir = new THREE.Vector2(1,0);
 		var redGhostDir = new THREE.Vector2(1,0);
 		var pinkGhostDir = new THREE.Vector2(1,0);
 		var blueGhostDir = new THREE.Vector2(1,0);
@@ -21,7 +22,7 @@ class MyGame extends THREE.Object3D {
 		var blueGhostPos = new THREE.Vector3(6, 0, 26);
 		var orangeGhostPos = new THREE.Vector3(21, 0, 1);
 
-		var pacman = new MyPacman(pacmanPos, MyConstant.CHARACTER_SIZE);
+		var pacman = new MyPacman(pacmanPos, MyConstant.CHARACTER_SIZE, pacmanDir);
 		var redGhost = new MyGhost(redGhostPos, MyConstant.CHARACTER_SIZE, redGhostDir, MyMaterial.RED_GHOST);
 		var pinkGhost = new MyGhost(pinkGhostPos, MyConstant.CHARACTER_SIZE, pinkGhostDir, MyMaterial.PINK_GHOST);
 		var blueGhost = new MyGhost(blueGhostPos, MyConstant.CHARACTER_SIZE, blueGhostDir, MyMaterial.BLUE_GHOST);
@@ -31,26 +32,48 @@ class MyGame extends THREE.Object3D {
 
 		this.characters = [];
 		this.characters.push(pacman);
-		this.characters.push(redGhost);
-		this.characters.push(pinkGhost);
-		this.characters.push(blueGhost);
-		this.characters.push(orangeGhost);
+		// this.characters.push(redGhost);
+		// this.characters.push(pinkGhost);
+		// this.characters.push(blueGhost);
+		// this.characters.push(orangeGhost);
 
 		for (var character of this.characters) {
 			this.add(character);
 		}
 
+		// Maze
+
 		this.maze = new MyMaze(MyConstant.BOX_SIZE);
 		this.add(this.maze);
+
+		// Score
+		this.score = 0;
+		console.log(this.score);
+
 	}
 
 	startGame(){
 		this.start = true;
 	}
 
-	collisionManager(){
+	controlTile(){
+		this.characters[0].update();
+		let pos = new THREE.Vector2(this.characters[0].getPosition().x / MyConstant.BOX_SIZE, this.characters[0].getPosition().z / MyConstant.BOX_SIZE);
+		let dir = new THREE.Vector2(this.characters[0].dirX, this.characters[0].dirZ);
 
-		var types = ['l','r','u','d'];
+		pos = this.adjustPosition(pos, dir);
+
+		let tyleTipe = this.maze.getTileType(pos);
+		if(tyleTipe == 2){ //Standing on dot
+			this.maze.removeDot(pos);
+			this.score += 1;
+			console.log(this.score);
+		}
+
+		//TODO: ARREGLAR
+	}
+
+	collisionManager(){
 
 		for(let character of this.characters){
 			let lastPos = new THREE.Vector2(character.getPosition().x, character.getPosition().z);
@@ -62,11 +85,15 @@ class MyGame extends THREE.Object3D {
 
 			if(this.maze.checkCollision(character.getCollisionBox(), pos, dir)){
 				let collisionType = this.maze.collisionType(pos, dir);
-				if(collisionType == 4){
+
+				if(collisionType == 4){ //Teleport
 					let teleportPos = this.maze.getOtherTeleport(pos, dir);
 					lastPos = new THREE.Vector2(teleportPos.y * MyConstant.BOX_SIZE + dir.x * MyConstant.BOX_SIZE/2, teleportPos.x * MyConstant.BOX_SIZE);
+					character.setPosition2D(teleportPos);
 				}
+
 				character.setPosition2D(lastPos);
+
 				if(character != this.characters[0]){ //No debería ocurrir nunca, pero para prevenir errores
     				character.path = null;
 				}
@@ -154,6 +181,7 @@ class MyGame extends THREE.Object3D {
 		if(this.start){
 			this.moveAI();
 			this.collisionManager();
+			this.controlTile();
 		}
 	}
 }

@@ -3,9 +3,11 @@ class MyTile extends THREE.Object3D {
     super();
 
 	 this.has_hitbox = has_hitbox;
+	 this.size = size;
+
     var edgeSize = size/10;
 
-	if(this.has_hitbox){
+	 if(has_hitbox){
 
 		this.hitbox = new THREE.Box3();
 		var hitbox_pos = new THREE.Vector3(position.x, position.y, position.z);

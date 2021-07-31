@@ -113,6 +113,19 @@ class MyMaze extends THREE.Object3D {
 		return this.mazeData[pos_check.y][pos_check.x];
 	}
 
+	getTileType(pos){
+		var pos_check = pos.y * (MyConstant.MAZE_WIDTH) + pos.x;
+		return this.mazeData[pos_check.y][pos_check.x];
+	}
+
+	removeDot(pos){
+		var pos_check = pos.y * (MyConstant.MAZE_WIDTH) + pos.x;
+
+		var position = this.children[pos_check].position;
+		var cubeSize = this.children[pos_check].size;
+		this.children[pos_check] = new MyTile(position, "empty", cubeSize, false);
+	}
+
 	checkCollision(hitbox, pos, dir){
 		var collision = false;
 		var pos_check; //posY * (MyConstant.MAZE_WIDTH) + posX;

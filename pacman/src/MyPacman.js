@@ -1,6 +1,9 @@
 class MyPacman extends MyCharacter {
-  constructor(pos, size) {
+  constructor(pos, size, dir) {
    super(pos, size);
+
+	this.dirX = dir.x;
+	this.dirZ = dir.y;
 
 	var sphereGeom = new THREE.SphereGeometry(size, 20.0, 20.0, 0.0, Math.PI);
 	var circleGeom = new THREE.CircleGeometry(size, 20.0, 0.0, Math.PI);
