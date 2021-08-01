@@ -114,7 +114,7 @@ class MyMaze extends THREE.Object3D {
 	}
 
 	getTileType(pos){
-		var pos_check = pos.y * (MyConstant.MAZE_WIDTH) + pos.x;
+		var pos_check = new THREE.Vector2(pos.x, pos.y);
 		return this.mazeData[pos_check.y][pos_check.x];
 	}
 

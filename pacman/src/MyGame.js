@@ -57,20 +57,18 @@ class MyGame extends THREE.Object3D {
 	}
 
 	controlTile(){
-		this.characters[0].update();
 		let pos = new THREE.Vector2(this.characters[0].getPosition().x / MyConstant.BOX_SIZE, this.characters[0].getPosition().z / MyConstant.BOX_SIZE);
 		let dir = new THREE.Vector2(this.characters[0].dirX, this.characters[0].dirZ);
 
 		pos = this.adjustPosition(pos, dir);
 
 		let tyleTipe = this.maze.getTileType(pos);
+
 		if(tyleTipe == 2){ //Standing on dot
 			this.maze.removeDot(pos);
 			this.score += 1;
 			console.log(this.score);
 		}
-
-		//TODO: ARREGLAR
 	}
 
 	collisionManager(){
