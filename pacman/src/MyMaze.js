@@ -124,6 +124,7 @@ class MyMaze extends THREE.Object3D {
 		var position = this.children[pos_check].position;
 		var cubeSize = this.children[pos_check].size;
 		this.children[pos_check] = new MyTile(position, "empty", cubeSize, false);
+		this.mazeData[pos.y][pos.x] = 1;
 	}
 
 	checkCollision(hitbox, pos, dir){
