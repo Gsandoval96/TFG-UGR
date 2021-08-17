@@ -7,7 +7,10 @@ class MyGame extends THREE.Object3D {
 		// Title
 		var titlePos = new THREE.Vector3(-16, 24, 0);
 		this.title = new MyTitle(titlePos, 5, false);
-		this.add(this.title);
+		//this.add(this.title);
+
+		// Score
+		this.score = 0;
 
 		// Ghost and Pacman
 		var pacmanDir = new THREE.Vector2(1,0);
@@ -48,7 +51,7 @@ class MyGame extends THREE.Object3D {
 
 		// Score
 		this.score = 0;
-		console.log(this.score);
+		console.log("SCORE: ", this.score);
 
 	}
 
@@ -67,7 +70,7 @@ class MyGame extends THREE.Object3D {
 		if(tyleTipe == 2){ //Standing on dot
 			this.maze.removeDot(pos);
 			this.score += 1;
-			console.log(this.score);
+			console.log("SCORE: ", this.score);
 		}
 	}
 
