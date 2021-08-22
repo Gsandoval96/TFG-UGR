@@ -35,7 +35,7 @@ class MyGame extends THREE.Object3D {
 
 		this.characters = [];
 		this.characters.push(pacman);
-		// this.characters.push(redGhost);
+		this.characters.push(redGhost);
 		// this.characters.push(pinkGhost);
 		// this.characters.push(blueGhost);
 		// this.characters.push(orangeGhost);
@@ -71,6 +71,14 @@ class MyGame extends THREE.Object3D {
 			this.maze.removeDot(pos);
 			this.score += 1;
 			console.log("SCORE: ", this.score);
+		}
+		else if(tyleTipe == 3){ //Standing on a pill
+			this.maze.removeDot(pos);
+
+			for(let character of this.characters){
+				if(character != this.characters[0])
+					character.scare();
+			}
 		}
 	}
 
