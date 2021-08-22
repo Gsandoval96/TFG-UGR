@@ -135,10 +135,10 @@ class MyGame extends THREE.Object3D {
 				//choose end
 				var end;
 
-				if(i<=4){ //usar el A*, ahora mismo la usan todos los fantasmas
+				if(character.behaviour == "chase"){ //usar el A* para perseguir a Pacman
 					end = graph.grid[pPos.y][pPos.x];
 				}
-				else {
+				else if (character.behaviour == "scape") {
 					end = graph.grid[random.x][random.y];
 				}
 				var result = astar.search(graph, start, end);

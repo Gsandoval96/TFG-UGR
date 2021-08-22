@@ -2,6 +2,8 @@ class MyGhost extends MyCharacter {
   constructor(pos, size, dir, material) {
    super(pos, size);
 
+	this.behaviour = "chase";
+
 	this.speed = this.speed * 0.75; //los fantasmas se mueven más lento
 
 	this.path = null;
@@ -112,6 +114,19 @@ class MyGhost extends MyCharacter {
 			}
 		}
 
+	}
+
+	scare(){
+		this.changeColor(MyMaterial.BLUE);
+		this.behaviour = "scape";
+	}
+
+	changeColor(material){
+		this.cylinder.material = material;
+		this.sphere.material = material;
+		for(let mesh of this.feet.children){
+			mesh.material = material;
+		}
 	}
 
 	adjustPositionForPath(pos, dir){
