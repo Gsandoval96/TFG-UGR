@@ -88,8 +88,8 @@ class MyMaze extends THREE.Object3D {
 		for(var i = 0; i < MyConstant.MAZE_HEIGHT; i++){
 			for(var j = 0; j < MyConstant.MAZE_WIDTH; j++){
 				var pos_check = i * (MyConstant.MAZE_WIDTH) + j;
-				if(this.children[pos_check].cube.box.material == material){
-					this.children[pos_check].cube.box.material = MyMaterial.INVISIBLE;
+				if(this.children[pos_check].square.material == material){
+					this.children[pos_check].square.material = MyMaterial.INVISIBLE;
 				}
 			}
 		}

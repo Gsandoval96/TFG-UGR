@@ -21,6 +21,12 @@ class MyTile extends THREE.Object3D {
 
 	}
 
+	var geometry = new THREE.PlaneGeometry( size-edgeSize, size-edgeSize )
+	this.square = new THREE.Mesh(geometry, MyMaterial.INVISIBLE);
+	this.square.rotation.x = -Math.PI/2;
+	this.square.position.set(position.x, position.y-size/2, position.z);
+	this.add (this.square);
+
 	this.cube;
 	switch (type) {
 		case "empty":
