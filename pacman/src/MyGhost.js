@@ -119,6 +119,7 @@ class MyGhost extends MyCharacter {
 	scare(){
 		this.changeColor(MyMaterial.BLUE);
 		this.behaviour = "scape";
+		this.path = null;
 	}
 
 	changeColor(material){
