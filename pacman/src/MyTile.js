@@ -43,19 +43,19 @@ class MyTile extends THREE.Object3D {
 	}
 	this.add(this.cube);
 
-	var dot;
+	this.dot;
 	switch (type) {
 		case "dot":
 			var sphereGeom = new THREE.SphereGeometry( size/6, 20.0, 20.0);
-			dot = new THREE.Mesh (sphereGeom, MyMaterial.WHITE);
-			dot.position.set(position.x, position.y, position.z);
-			this.add(dot);
+			this.dot = new THREE.Mesh (sphereGeom, MyMaterial.WHITE);
+			this.dot.position.set(position.x, position.y, position.z);
+			this.add(this.dot);
 		break;
 		case "pill":
 			var sphereGeom = new THREE.SphereGeometry( size/3, 20.0, 20.0);
-			dot = new THREE.Mesh (sphereGeom, MyMaterial.WHITE);
-			dot.position.set(position.x, position.y, position.z);
-			this.add(dot);
+			this.dot = new THREE.Mesh (sphereGeom, MyMaterial.WHITE);
+			this.dot.position.set(position.x, position.y, position.z);
+			this.add(this.dot);
 		break;
 	}
 
