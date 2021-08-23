@@ -2,6 +2,10 @@ class MyPacman extends MyCharacter {
   constructor(pos, size, dir) {
    super(pos, size);
 
+	this.status = "alive";
+
+	this.size = size;
+
 	this.dirX = dir.x;
 	this.dirZ = dir.y;
 
@@ -47,10 +51,10 @@ class MyPacman extends MyCharacter {
     //Animaciones con TWEEN
     if(this.animated){
       var origin = { p : 0 } ;
-      var destiny = { p : Math.PI / 4 } ;
+      var destiny = { p : Math.PI/4 } ;
       var that = this;
 
-      var animation = new TWEEN.Tween(origin)
+      this.moveAnimation = new TWEEN.Tween(origin)
         .to(destiny, 200) //0.2 segundo
         .onUpdate (function(){
 			  that.crearNuevo(size,origin.p);
@@ -61,16 +65,37 @@ class MyPacman extends MyCharacter {
     }
   }
 
-  crearNuevo(size,rot){
-    var sphereGeom = new THREE.SphereGeometry(size, 20.0, 20.0, 0, Math.PI - rot);
-	 this.upSphere.geometry = sphereGeom;
-	 this.upCircle.rotation.y = rot;
-	 this.downSphere.geometry = sphereGeom;
-	 this.downCircle.rotation.y = rot;
-  }
+	deathAnimation(){
+		var origin = { p : 0 } ;
+		var destiny = { p : Math.PI } ;
+		var that = this;
 
-  update(){
+		var deathAnimation = new TWEEN.Tween(origin)
+		.to(destiny, 2000) //1 segundo
+		.onUpdate(function(){
+		 that.crearNuevo(this.size,origin.p);
+		})
+		.onComplete(function(){
+		 that.status = "dead";
+		})
+		.start();
+   }
+
+	die(){
+		this.moveAnimation.stop();
+		this.deathAnimation();
+	}
+
+	crearNuevo(size,rot){
+		var sphereGeom = new THREE.SphereGeometry(size, 20.0, 20.0, 0, Math.PI - rot);
+		this.upSphere.geometry = sphereGeom;
+		this.upCircle.rotation.y = rot;
+		this.downSphere.geometry = sphereGeom;
+		this.downCircle.rotation.y = rot;
+	}
+
+	update(){
 	  super.update();
 	  TWEEN.update();
-  }
+	}
 }

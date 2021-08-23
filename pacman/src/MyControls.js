@@ -26,6 +26,10 @@ class MyControls{
     if (keyCode == this.moveRightKey ){dir.x = 1;} //Flecha Derecha
     if (keyCode == this.moveDownKey ){dir.y = 1;} //Flecha Abajo
 	 if (keyCode == this.moveUpKey ){dir.y = -1;} //Flecha Arriba
+	 if (keyCode == this.hardDropKey ){
+		 game.characters[0].die();
+		 console.log("RESPAWN");
+	 }
 
 	 if (dir.x != 0 || dir.y != 0){
 		 game.characters[0].rotate(dir);
