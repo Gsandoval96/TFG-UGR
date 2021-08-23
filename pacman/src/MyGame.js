@@ -14,35 +14,30 @@ class MyGame extends THREE.Object3D {
 
 		// Ghost and Pacman
 		var pacmanDir = new THREE.Vector2(1,0);
-		var redGhostDir = new THREE.Vector2(1,0);
-		var pinkGhostDir = new THREE.Vector2(1,0);
-		var blueGhostDir = new THREE.Vector2(1,0);
-		var orangeGhostDir = new THREE.Vector2(0,-1);
 
+		this.charactersPosition = [];
 		var pacmanPos = new THREE.Vector3(1, 0, 1);
-		var redGhostPos = new THREE.Vector3(1, 0, 20);
-		var pinkGhostPos = new THREE.Vector3(1, 0, 29);
-		var blueGhostPos = new THREE.Vector3(6, 0, 26);
-		var orangeGhostPos = new THREE.Vector3(21, 0, 1);
-
-		var pacman = new MyPacman(pacmanPos, MyConstant.CHARACTER_SIZE, pacmanDir);
-		var redGhost = new MyGhost(redGhostPos, MyConstant.CHARACTER_SIZE, redGhostDir, MyMaterial.RED_GHOST);
-		var pinkGhost = new MyGhost(pinkGhostPos, MyConstant.CHARACTER_SIZE, pinkGhostDir, MyMaterial.PINK_GHOST);
-		var blueGhost = new MyGhost(blueGhostPos, MyConstant.CHARACTER_SIZE, blueGhostDir, MyMaterial.BLUE_GHOST);
-		blueGhost.rotate("u");
-		var orangeGhost = new MyGhost(orangeGhostPos, MyConstant.CHARACTER_SIZE, orangeGhostDir, MyMaterial.ORANGE_GHOST);
-		orangeGhost.rotate("d");
+		this.charactersPosition.push(pacmanPos);
 
 		this.characters = [];
+		var pacman = new MyPacman(pacmanPos, MyConstant.CHARACTER_SIZE, pacmanDir);
 		this.characters.push(pacman);
-		this.characters.push(redGhost);
-		// this.characters.push(pinkGhost);
-		// this.characters.push(blueGhost);
-		// this.characters.push(orangeGhost);
+
+		var ghostMaterial = [MyMaterial.RED_GHOST, MyMaterial.PINK_GHOST, MyMaterial.BLUE_GHOST, MyMaterial.ORANGE_GHOST];
+
+		for (var i = 1; i < 5; i++) {
+			var position = new THREE.Vector3(11+i, 0, 14);
+			var direction = new THREE.Vector2(0,1);
+			this.charactersPosition.push(position);
+			var ghost = new MyGhost(position, MyConstant.CHARACTER_SIZE, direction, ghostMaterial[i-1]);
+			//ghost.rotate("u");
+		   this.characters.push(ghost);
+		}
 
 		for (var character of this.characters) {
 			this.add(character);
 		}
+
 
 		// Maze
 
