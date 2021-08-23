@@ -46,7 +46,7 @@ class MyGame extends THREE.Object3D {
 
 		// Score
 		this.score = 0;
-		console.log("SCORE: ", this.score);
+		//console.log("SCORE: ", this.score);
 
 	}
 
@@ -65,7 +65,7 @@ class MyGame extends THREE.Object3D {
 		if(tyleTipe == 2){ //Standing on dot
 			this.maze.removeDot(pos);
 			this.score += 1;
-			console.log("SCORE: ", this.score);
+			//console.log("SCORE: ", this.score);
 		}
 		else if(tyleTipe == 3){ //Standing on a pill
 			this.maze.removeDot(pos);
