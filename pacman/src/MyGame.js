@@ -103,6 +103,18 @@ class MyGame extends THREE.Object3D {
 				}
 			}
 		}
+
+		var haunted = false;
+		for(var i = 1; i<5 && !haunted; i++){
+			if(this.characters[i].hitbox.intersectsBox(this.characters[0].hitbox)){
+				haunted = true;
+				for(var j = 1; j<5; j++){
+					this.characters[j].status = "freeze";
+				}
+				this.characters[0].die();
+			}
+		}
+
 	}
 
 	moveAI(){
@@ -217,5 +229,6 @@ class MyGame extends THREE.Object3D {
 		else if(this.characters[0].status == "dead"){
 			this.respawn();
 		}
+		TWEEN.update();
 	}
 }

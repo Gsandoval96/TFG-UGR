@@ -71,23 +71,26 @@ class MyPacman extends MyCharacter {
 		var that = this;
 
 		var deathAnimation = new TWEEN.Tween(origin)
-		.to(destiny, 2000) //1 segundo
+		.to(destiny, 1500) //1.5 segundos
 		.onUpdate(function(){
-		 that.crearNuevo(this.size,origin.p);
+			that.crearNuevo(that.size,origin.p);
 		})
 		.onComplete(function(){
-		 that.status = "dead";
+			that.status = "dead";
 		})
 		.start();
    }
 
 	die(){
-		this.moveAnimation.stop();
-		this.deathAnimation();
+		if(this.status != "dying"){
+			this.moveAnimation.stop();
+			this.status = "dying";
+			this.deathAnimation();
+		}
 	}
 
 	crearNuevo(size,rot){
-		var sphereGeom = new THREE.SphereGeometry(size, 20.0, 20.0, 0, Math.PI - rot);
+		var sphereGeom = new THREE.SphereGeometry(size, 20.0, 20.0, 0.0, Math.PI - rot);
 		this.upSphere.geometry = sphereGeom;
 		this.upCircle.rotation.y = rot;
 		this.downSphere.geometry = sphereGeom;

@@ -157,9 +157,11 @@ class MyGhost extends MyCharacter {
 
 	}
 
-  update(){
-	  this.executePath();
-	  super.update();
-	  TWEEN.update();
-  }
+	update(){
+		if(this.status != "freeze"){
+		  this.executePath();
+		  super.update();
+		  TWEEN.update();
+	  }
+	}
 }
