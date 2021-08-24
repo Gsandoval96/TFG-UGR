@@ -26,14 +26,6 @@ class MyCharacter extends THREE.Object3D {
 	  return this.model.position;
   }
 
-  crearNuevo(size,rot){
-    var sphereGeom = new THREE.SphereGeometry(size, 20.0, 20.0, 0, Math.PI - rot);
-	 this.upSphere.geometry = sphereGeom;
-	 this.upCircle.rotation.y = rot;
-	 this.downSphere.geometry = sphereGeom;
-	 this.downCircle.rotation.y = rot;
-  }
-
   rotate(dir){
 
 	  if(dir.x != this.dirX || dir.y != this.dirZ){
