@@ -13,30 +13,21 @@ class MyGame extends THREE.Object3D {
 		this.score = 0;
 
 		// Ghost and Pacman
-		var pacmanDir = new THREE.Vector2(1,0);
 
 		this.charactersPosition = [];
+
 		var pacmanPos = new THREE.Vector3(1, 0, 1);
 		this.charactersPosition.push(pacmanPos);
 
-		this.characters = [];
-		var pacman = new MyPacman(pacmanPos, MyConstant.CHARACTER_SIZE, pacmanDir);
-		this.characters.push(pacman);
-
-		var ghostMaterial = [MyMaterial.RED_GHOST, MyMaterial.PINK_GHOST, MyMaterial.BLUE_GHOST, MyMaterial.ORANGE_GHOST];
-
-		for (var i = 1; i < 5; i++) {
-			var position = new THREE.Vector3(11+i, 0, 14);
-			var direction = new THREE.Vector2(0,1);
+		for (var i = 0; i < 4; i++) {
+			var position = new THREE.Vector3(12+i, 0, 14);
 			this.charactersPosition.push(position);
-			var ghost = new MyGhost(position, MyConstant.CHARACTER_SIZE, direction, ghostMaterial[i-1]);
-			//ghost.rotate("u");
-		   this.characters.push(ghost);
 		}
 
-		for (var character of this.characters) {
-			this.add(character);
-		}
+		this.characters = [];
+		this.createCharacters();
+
+
 
 
 		// Maze
@@ -48,6 +39,25 @@ class MyGame extends THREE.Object3D {
 		this.score = 0;
 		//console.log("SCORE: ", this.score);
 
+	}
+
+	createCharacters(){
+		var pacmanDir = new THREE.Vector2(1,0);
+		var pacman = new MyPacman(this.charactersPosition[0], MyConstant.CHARACTER_SIZE, pacmanDir);
+		this.characters.push(pacman);
+
+		var ghostMaterial = [MyMaterial.RED_GHOST, MyMaterial.PINK_GHOST, MyMaterial.BLUE_GHOST, MyMaterial.ORANGE_GHOST];
+
+		var direction = new THREE.Vector2(0,1);
+		for (var i = 0; i < 4; i++) {
+			var ghost = new MyGhost(this.charactersPosition[i+1], MyConstant.CHARACTER_SIZE, direction, ghostMaterial[i]);
+			//ghost.rotate("u");
+		   this.characters.push(ghost);
+		}
+
+		for (var character of this.characters) {
+			this.add(character);
+		}
 	}
 
 	startGame(){
@@ -200,24 +210,7 @@ class MyGame extends THREE.Object3D {
 			this.characters.shift();
 		}
 
-		var pacmanDir = new THREE.Vector2(1,0);
-		var pacman = new MyPacman(this.charactersPosition[0], MyConstant.CHARACTER_SIZE, pacmanDir);
-		this.characters.push(pacman);
-
-		var ghostMaterial = [MyMaterial.RED_GHOST, MyMaterial.PINK_GHOST, MyMaterial.BLUE_GHOST, MyMaterial.ORANGE_GHOST];
-
-		for (var i = 1; i < 5; i++) {
-			var position = new THREE.Vector3(11+i, 0, 14);
-			var direction = new THREE.Vector2(0,1);
-			this.charactersPosition.push(position);
-			var ghost = new MyGhost(position, MyConstant.CHARACTER_SIZE, direction, ghostMaterial[i-1]);
-			ghost.rotate("u");
-		   this.characters.push(ghost);
-		}
-
-		for (var character of this.characters) {
-			this.add(character);
-		}
+		this.createCharacters();
 	}
 
 	update(){
