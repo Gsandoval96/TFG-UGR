@@ -115,7 +115,7 @@ class MyMaze extends THREE.Object3D {
 					tetris3[i*3 + 1 ][j*3 + k] = 0;
 					tetris3[i*3 + 2 ][j*3 + k] = 0;
 				}
-				
+
 				tetris3[i*3][j*3 + 2] = up | right;
 				tetris3[i*3 + 1 ][j*3 + 2] = right;
 				tetris3[i*3 + 2 ][j*3 + 2] = right;
@@ -123,7 +123,11 @@ class MyMaze extends THREE.Object3D {
 			}
 		}
 
-		console.log(tetris3);
+		for(let i = 0; i < 27; i++){
+			tetris3[i].shift();
+		}
+
+		//console.log(tetris3);
 
 		return tetris3;
 	}
@@ -146,6 +150,11 @@ class MyMaze extends THREE.Object3D {
 			else
 				maze.push([...row]);
 		}
+
+		for(let i = 0; i < 27 ; i++){
+			maze[i+1] = ([...tetris[i]].reverse()).concat(tetris[i]);
+		}
+
 
 		return maze;
 	}
