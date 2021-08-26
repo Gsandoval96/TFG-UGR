@@ -95,6 +95,7 @@ class MyMaze extends THREE.Object3D {
 		for(let j = 0; j < 10; j++){
 			tetris.push([...row]);
 		}
+
 		tetris[0][0] = cellUp;
 		tetris[0][1] = cell;
 		tetris[0][2] = cell;
@@ -103,7 +104,7 @@ class MyMaze extends THREE.Object3D {
 
 		tetris[1][0] = cellRight;
 		tetris[1][1] = cell;
-		tetris[1][2] = empty;/////
+		tetris[1][2] = empty;
 		tetris[1][3] = cellUp;
 		tetris[1][4] = cell;
 
@@ -149,6 +150,36 @@ class MyMaze extends THREE.Object3D {
 		tetris[8][3] = cell;
 		tetris[8][4] = cellRight;
 
+		tetris[9][0] = cellUp;
+		tetris[9][1] = cellUp;
+		tetris[9][2] = cellUp;
+		tetris[9][3] = empty;
+		tetris[9][4] = cellUp;
+
+		var adjustable = [];
+		var adjustableRow = [];
+		for(let i = 0; i < 9; i++){
+			adjustable.push([...adjustableRow]);
+			for(let j = 1; j < 5; j++){
+				var up = tetris[i][j].x;
+				var right = tetris[i][j].y;
+				var down = tetris[i+1][j].x;
+				var left = tetris[i][j-1].y;
+
+				var isAdjustable =
+					(up && right && down && !left) || //C invertida
+					(up && !right && down && left) || //C
+					(j == 4 && !right && left && ( down ? !up: up )); //última fila con L o L girada 90º (agujas reloj)
+
+				if(isAdjustable){
+					var par = new THREE.Vector2(i,j);
+					adjustable[i].push(par);
+				}
+			}
+		}
+
+		console.log(adjustable);
+
 		var tetris3 = [];
 		var row3 = [];
 
@@ -156,12 +187,12 @@ class MyMaze extends THREE.Object3D {
 			row3.push(0);
 		}
 
-		for(let j = 0; j < 27; j++){
+		for(let j = 0; j < 30; j++){
 			tetris3.push([...row3]);
 		}
 
 		//Traducir de 1x1 a 3x3
-		for(let i = 0; i < 9; i++){
+		for(let i = 0; i < 10; i++){
 			for(let j = 0; j < 5; j++){
 
 				var up = tetris[i][j].x;
@@ -188,10 +219,6 @@ class MyMaze extends THREE.Object3D {
 			}
 		}
 
-		tetris3.push([...row3]);
-		for(let i = 0; i<15;i++)
-			tetris3[27][i] = 1;
-
 
 		//Limpiar el centro spawn de los fantasmas de bloques
 
@@ -204,12 +231,33 @@ class MyMaze extends THREE.Object3D {
 		tetris3[10][1] = 1;
 
 
+		//Ajustes de tamaño para que sea 28x14
 
-		for(let i = 0; i < 27; i++){
+		//Eliminamos una columna por celda, escogida entre las posibles ajustables
+
+		var adjustable =
+
+		for(let i = 0; i < 9; i++){
+
+		}
+
+		//Eliminamos la primera columna
+		for(let i = 0; i < 30; i++){
 			tetris3[i].shift();
 		}
 
-		return tetris3;
+		//Y añadimos una al final de muro
+		for(let i = 0; i < 30; i++){
+			tetris3[i].push(0);
+		}
+
+		//Eliminasmos las dos últimas filas
+		tetris3.pop();
+		tetris3.pop();
+
+		console.log(tetris3);
+
+		return tetris3; //Devolvemos una matriz 28x14
 	}
 
 	mazeGenerator(){
@@ -224,20 +272,15 @@ class MyMaze extends THREE.Object3D {
 			wall.push(0); //Fila llena de muro
 		}
 
-		for(let j = 0; j < 31; j++){
-			if(j == 0 || j == 30)
+		for(let j = 0; j < 30; j++){
+			if(j == 0 || j == 29)
 				maze.push([...wall]);
 			else
 				maze.push([...row]);
 		}
 
-		for(let i = 0; i < 27 ; i++){
+		for(let i = 0; i < 28 ; i++){
 			maze[i+1] = ([...tetris[i]].reverse()).concat(tetris[i]);
-		}
-
-		for(let i = 0; i < 31; i++){
-			maze[i][0] = 0;
-			maze[i][27] = 0;
 		}
 
 
