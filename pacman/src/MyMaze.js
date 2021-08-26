@@ -84,14 +84,70 @@ class MyMaze extends THREE.Object3D {
 		var tetris = [];
 		var row = [];
 		var cell = new THREE.Vector2(1,1);
+		var empty = new THREE.Vector2(0,0);
+		var cellUp = new THREE.Vector2(1,0);
+		var cellRight = new THREE.Vector2(0,1);
 
 		for(let i = 0; i < 5; i++){
 			row.push(cell);
 		}
 
-		for(let j = 0; j < 9; j++){
+		for(let j = 0; j < 10; j++){
 			tetris.push([...row]);
 		}
+		tetris[0][0] = cellUp;
+		tetris[0][1] = cell;
+		tetris[0][2] = cell;
+		tetris[0][3] = cellUp;
+		tetris[0][4] = cell;
+
+		tetris[1][0] = cellRight;
+		tetris[1][1] = cell;
+		tetris[1][2] = empty;/////
+		tetris[1][3] = cellUp;
+		tetris[1][4] = cell;
+
+		tetris[2][0] = cellUp;
+		tetris[2][1] = cellRight;
+		tetris[2][2] = cellRight;
+		tetris[2][3] = cellUp;
+		tetris[2][4] = cell;
+
+		tetris[3][0] = cellUp;
+		tetris[3][1] = cell;
+		tetris[3][2] = cell;
+		tetris[3][3] = cellRight;
+		tetris[3][4] = cellUp;
+
+		tetris[4][0] = empty;
+		tetris[4][1] = cellRight;
+		tetris[4][2] = empty;
+		tetris[4][3] = cell;
+		tetris[4][4] = empty;
+
+		tetris[5][0] = cell;
+		tetris[5][1] = cellUp;
+		tetris[5][2] = cell;
+		tetris[5][3] = cellUp;
+		tetris[5][4] = cell;
+
+		tetris[6][0] = empty;
+		tetris[6][1] = cell;
+		tetris[6][2] = cellRight;
+		tetris[6][3] = cellRight;
+		tetris[6][4] = cell;
+
+		tetris[7][0] = cellUp;
+		tetris[7][1] = cell;
+		tetris[7][2] = cell;
+		tetris[7][3] = cellUp;
+		tetris[7][4] = cellRight;
+
+		tetris[8][0] = cellRight;
+		tetris[8][1] = cellUp;
+		tetris[8][2] = cellRight;
+		tetris[8][3] = cell;
+		tetris[8][4] = cellRight;
 
 		var tetris3 = [];
 		var row3 = [];
@@ -104,6 +160,7 @@ class MyMaze extends THREE.Object3D {
 			tetris3.push([...row3]);
 		}
 
+		//Traducir de 1x1 a 3x3
 		for(let i = 0; i < 9; i++){
 			for(let j = 0; j < 5; j++){
 
@@ -120,14 +177,37 @@ class MyMaze extends THREE.Object3D {
 				tetris3[i*3 + 1 ][j*3 + 2] = right;
 				tetris3[i*3 + 2 ][j*3 + 2] = right;
 
+				if(up == 0 && right == 0){
+					var upCell = tetris.at(i-1);
+					var rightCell = tetris[i].at(j+1);
+					if(upCell != undefined && rightCell != undefined ){
+						upCell = upCell[j];
+						tetris3[i*3][j*3 + 2] = upCell.y | rightCell.x;
+					}
+				}
 			}
 		}
+
+		tetris3.push([...row3]);
+		for(let i = 0; i<15;i++)
+			tetris3[27][i] = 1;
+
+
+		//Limpiar el centro spawn de los fantasmas de bloques
+
+		for(let i = 11; i < 14; i++){
+			for(let j = 1; j < 4; j++){
+				tetris3[i][j] = 1;
+			}
+		}
+
+		tetris3[10][1] = 1;
+
+
 
 		for(let i = 0; i < 27; i++){
 			tetris3[i].shift();
 		}
-
-		//console.log(tetris3);
 
 		return tetris3;
 	}
@@ -153,6 +233,11 @@ class MyMaze extends THREE.Object3D {
 
 		for(let i = 0; i < 27 ; i++){
 			maze[i+1] = ([...tetris[i]].reverse()).concat(tetris[i]);
+		}
+
+		for(let i = 0; i < 31; i++){
+			maze[i][0] = 0;
+			maze[i][27] = 0;
 		}
 
 
