@@ -136,19 +136,36 @@ class MyMaze extends THREE.Object3D {
 			var random = to_explore[pos];
 			to_explore.splice(pos, 1);
 
-			//asignar pieza -- TODO
-			tetris[random][col] = [...empty];
-			map[random][col] = false;
+			//Asignar pieza -- TODO
+
+			//var piece = this.selectPiece(random, col, map);
+
+			var piece = [
+				[0,0,[...cellUp]],[0,1,[...cell]]
+			];
+
+			if(col == 4){
+				var piece = [
+					[0,0,[...cell]]
+				];
+			}
+
+			//Recorre la pieza y asigna los valores en tetris y map
+			for(var part of piece){
+				tetris[random + part[0]][col + part[1]] = part[2];
+				map[random + part[0]][col + part[1]] = false;
+			}
 
 			//Pasamos a la siguiente columna cuando no nos queda nada más por explorar
 			if(to_explore.length == 0){
-				col++;
-				for(let l = 0; l < 9; l++){
-					if(map[l][col])
-						to_explore.push(l);
+				while(to_explore.length == 0 && col < 5){
+					col++;
+					for(let l = 0; l < 9; l++){
+						if(map[l][col])
+							to_explore.push(l);
+					}
 				}
 			}
-
 		}
 
 		//Cerramos el centro y aseguramos el spawn de pacman
