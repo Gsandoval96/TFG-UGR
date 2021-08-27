@@ -81,6 +81,51 @@ class MyMaze extends THREE.Object3D {
 		}
 	}
 
+	pieceGenerator(row, col, map){
+
+		var cell = [1,1];
+		var empty = [0,0];
+		var cellUp = [1,0];
+		var cellRight = [0,1];
+
+		var piece = [[0,0,[...cell]]]; //Pieza [] por defecto
+
+		//TODO: convertirlas en constantes
+		var pieces = [
+			[	[0,0,[...empty]],	[0,1,[...cell]],		[-1,0,[...cell]]		], //L1
+			[	[0,0,[...cellUp]],[0,1,[...cell]],		[1,0,[...cellRight]]	], //L2
+			[	[0,0,[...cellUp]],[0,1,[...cellRight]],[-1,1,[...cell]]		], //L3
+			[	[0,0,[...cellUp]],[0,1,[...cell]],		[1,1,[...cellRight]]	], //L4
+			[	[0,0,[...cellUp]],[0,1,[...cell]]									],    //[][] 1
+			[	[0,0,[...cellUp]],[1,0,[...cellRight]]								],		//[][] 2
+		];
+
+		var valid_pieces = [];
+
+		for(var p of pieces){
+			var valid = true;
+			for(var i = 1; i < p.length && valid; i++){
+				if(row + p[i][0] >=0 && row + p[i][0] <=8 &&
+					col + p[i][1] >=0 && col + p[i][1] <=4){
+					valid = map[row + p[i][0]][col + p[i][1]];
+				}
+				else{
+					valid = false
+				}
+			}
+			if(valid) valid_pieces.push([...p]);
+		}
+
+		console.log(valid_pieces);
+
+		if(valid_pieces.length != 0){
+			piece = valid_pieces[Math.floor(Math.random()*valid_pieces.length)];
+		}
+
+		return piece;
+
+	}
+
 	tetrisGenerator(){
 		var tetris = [];
 		var row = [];
@@ -138,17 +183,18 @@ class MyMaze extends THREE.Object3D {
 
 			//Asignar pieza -- TODO
 
-			//var piece = this.selectPiece(random, col, map);
+			var piece = this.pieceGenerator(random, col, map);
 
-			var piece = [
-				[0,0,[...cellUp]],[0,1,[...cell]]
-			];
-
-			if(col == 4){
-				var piece = [
-					[0,0,[...cell]]
-				];
-			}
+			// Ejemplo de rellenado solo usando piezas del estilo [][] y []
+			// piece = [
+			// 	[0,0,[...cellUp]],[0,1,[...cell]]
+			// ];
+			//
+			// if(col == 4){
+			// 	piece = [
+			// 		[0,0,[...cell]]
+			// 	];
+			// }
 
 			//Recorre la pieza y asigna los valores en tetris y map
 			for(var part of piece){
@@ -229,10 +275,16 @@ class MyMaze extends THREE.Object3D {
 		// tetris[8][3] = [...cell];
 		// tetris[8][4] = [...cellRight];
 		//
+		// tetris[9][0] = [...cellUp];
+		// tetris[9][1] = [...cellUp];
+		// tetris[9][2] = [...cellUp];
+		// tetris[9][3] = [...empty];
+		// tetris[9][4] = [...cellUp];
+
 		tetris[9][0] = [...cellUp];
 		tetris[9][1] = [...cellUp];
 		tetris[9][2] = [...cellUp];
-		tetris[9][3] = [...empty];
+		tetris[9][3] = [...cellUp];
 		tetris[9][4] = [...cellUp];
 
 		console.log(tetris);
