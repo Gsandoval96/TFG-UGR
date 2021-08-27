@@ -20,7 +20,7 @@ class MyGame extends THREE.Object3D {
 		this.charactersPosition.push(pacmanPos);
 
 		for (var i = 0; i < 4; i++) {
-			var position = new THREE.Vector3(12+i, 0, 14);
+			var position = new THREE.Vector3(13+i, 0, 13);
 			this.charactersPosition.push(position);
 		}
 
