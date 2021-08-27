@@ -84,84 +84,153 @@ class MyMaze extends THREE.Object3D {
 	tetrisGenerator(){
 		var tetris = [];
 		var row = [];
-		var cell = new THREE.Vector2(1,1);
-		var empty = new THREE.Vector2(0,0);
-		var cellUp = new THREE.Vector2(1,0);
-		var cellRight = new THREE.Vector2(0,1);
+
+		var cell = [1,1];
+		var empty = [0,0];
+		var cellUp = [1,0];
+		var cellRight = [0,1];
+		var aux = ["*", "*"];
 
 		for(let i = 0; i < 5; i++){
-			row.push(cell);
+			row.push([...aux]);
 		}
 
 		for(let j = 0; j < 10; j++){
 			tetris.push([...row]);
 		}
 
-		tetris[0][0] = cellUp;
-		tetris[0][1] = cell;
-		tetris[0][2] = cell;
-		tetris[0][3] = cellUp;
-		tetris[0][4] = cell;
+		var map = [];
+		var mapRow = [];
 
-		tetris[1][0] = cellRight;
-		tetris[1][1] = cell;
-		tetris[1][2] = empty;
-		tetris[1][3] = cellUp;
-		tetris[1][4] = cell;
+		for(let i = 0; i < 5; i++){
+			mapRow.push(i);
+		}
 
-		tetris[2][0] = cellUp;
-		tetris[2][1] = cellRight;
-		tetris[2][2] = cellRight;
-		tetris[2][3] = cellUp;
-		tetris[2][4] = cell;
+		[
+			[0,1,2,3,4],
+			[0,1,2,3,4],
+			[0,1,2,3,4],
+			[0,1,2,3,4],
+			[0,1,2,3,4]
+		]
 
-		tetris[3][0] = cellUp;
-		tetris[3][1] = cell;
-		tetris[3][2] = cell;
-		tetris[3][3] = cellRight;
-		tetris[3][4] = cellUp;
+		for(let j = 0; j < 10; j++){
+			map.push([...mapRow]);
+		}
 
-		tetris[4][0] = empty;
-		tetris[4][1] = cellRight;
-		tetris[4][2] = empty;
-		tetris[4][3] = cell;
-		tetris[4][4] = empty;
+		//Obligamos a que el centro deje espacio para los fantasmas
+		tetris[3][0] = [...cellUp];
+		tetris[3][1] = [...cell];
+		map[3].splice(0,2);
+		tetris[4][0] = [...empty];
+		tetris[4][1] = [...cellRight];
+		map[4].splice(0,2);
 
-		tetris[5][0] = cell;
-		tetris[5][1] = cellUp;
-		tetris[5][2] = cell;
-		tetris[5][3] = cellUp;
-		tetris[5][4] = cell;
+		//Seleccionamos una casilla de la primera columna libre más a la izquierda
 
-		tetris[6][0] = empty;
-		tetris[6][1] = cell;
-		tetris[6][2] = cellRight;
-		tetris[6][3] = cellRight;
-		tetris[6][4] = cell;
+		var clear = false;
+		var col = 0;
 
-		tetris[7][0] = cellUp;
-		tetris[7][1] = cell;
-		tetris[7][2] = cell;
-		tetris[7][3] = cellUp;
-		tetris[7][4] = cellRight;
+		var positions = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+		var to_explore = [...positions];
+		to_explore.splice(3,2);
 
-		tetris[8][0] = cellRight;
-		tetris[8][1] = cellUp;
-		tetris[8][2] = cellRight;
-		tetris[8][3] = cell;
-		tetris[8][4] = cellRight;
+		while(col < 5){
 
-		tetris[9][0] = cellUp;
-		tetris[9][1] = cellUp;
-		tetris[9][2] = cellUp;
-		tetris[9][3] = empty;
-		tetris[9][4] = cellUp;
+			//Cogemos un valor aleatorio de los por explorar
+			var pos = Math.floor(Math.random()*to_explore.length);
+			var random = to_explore[pos];
+			to_explore.splice(pos, 1);
 
+			//asignar pieza -- TODO
+			tetris[random][col] = [...empty];
+			map[random].splice(0,1);
+
+			//Pasamos a la siguiente columna cuando no nos queda nada más por explorar
+			if(to_explore.length == 0){
+				col++;
+				for(let l = 0; l < 9; l++){
+					if(map[l].includes(col))
+						to_explore.push(l);
+				}
+			}
+
+		}
+
+		//Cerramos el centro y aseguramos el spawn de pacman
+
+		tetris[5][0][0] = 1;
+		tetris[5][1][0] = 1;
+
+		tetris[7][0][0] = 1;
+
+		// tetris[0][0] = [...cellUp];
+		// tetris[0][1] = [...cell];
+		// tetris[0][2] = [...cell];
+		// tetris[0][3] = [...cellUp];
+		// tetris[0][4] = [...cell];
+		//
+		// tetris[1][0] = [...cellRight];
+		// tetris[1][1] = [...cell];
+		// tetris[1][2] = [...empty];
+		// tetris[1][3] = [...cellUp];
+		// tetris[1][4] = [...cell];
+		//
+		// tetris[2][0] = [...cellUp];
+		// tetris[2][1] = [...cellRight];
+		// tetris[2][2] = [...cellRight];
+		// tetris[2][3] = [...cellUp];
+		// tetris[2][4] = [...cell];
+		//
+		// tetris[3][0] = [...cellUp];
+		// tetris[3][1] = [...cell];
+		// tetris[3][2] = [...cell];
+		// tetris[3][3] = [...cellRight];
+		// tetris[3][4] = [...cellUp];
+		//
+		// tetris[4][0] = [...empty];
+		// tetris[4][1] = [...cellRight];
+		// tetris[4][2] = [...empty];
+		// tetris[4][3] = [...cell];
+		// tetris[4][4] = [...empty];
+		//
+		// tetris[5][0] = [...cell];
+		// tetris[5][1] = [...cellUp];
+		// tetris[5][2] = [...cell];
+		// tetris[5][3] = [...cellUp];
+		// tetris[5][4] = [...cell];
+		//
+		// tetris[6][0] = [...empty];
+		// tetris[6][1] = [...cell];
+		// tetris[6][2] = [...cellRight];
+		// tetris[6][3] = [...cellRight];
+		// tetris[6][4] = [...cell];
+		//
+		// tetris[7][0] = [...cellUp];
+		// tetris[7][1] = [...cell];
+		// tetris[7][2] = [...cell];
+		// tetris[7][3] = [...cellUp];
+		// tetris[7][4] = [...cellRight];
+		//
+		// tetris[8][0] = [...cellRight];
+		// tetris[8][1] = [...cellUp];
+		// tetris[8][2] = [...cellRight];
+		// tetris[8][3] = [...cell];
+		// tetris[8][4] = [...cellRight];
+		//
+		tetris[9][0] = [...cellUp];
+		tetris[9][1] = [...cellUp];
+		tetris[9][2] = [...cellUp];
+		tetris[9][3] = [...empty];
+		tetris[9][4] = [...cellUp];
+
+		console.log(tetris);
+		console.log(map);
 		return tetris;
 	}
 
 	tetris3x3Generator(){
-		var tetris = tetrisGenerator();
+		var tetris = this.tetrisGenerator();
 
 		var tetris3 = [];
 		var row3 = [];
@@ -178,8 +247,8 @@ class MyMaze extends THREE.Object3D {
 		for(let i = 0; i < 10; i++){
 			for(let j = 0; j < 5; j++){
 
-				var up = tetris[i][j].x;
-				var right = tetris[i][j].y;
+				var up = tetris[i][j][0];
+				var right = tetris[i][j][1];
 
 				for(let k = 0; k <3; k++){
 					tetris3[i*3][j*3 + k] = up;
@@ -196,7 +265,7 @@ class MyMaze extends THREE.Object3D {
 					var rightCell = tetris[i].at(j+1);
 					if(upCell != undefined && rightCell != undefined ){
 						upCell = upCell[j];
-						tetris3[i*3][j*3 + 2] = upCell.y | rightCell.x;
+						tetris3[i*3][j*3 + 2] = upCell[1] | rightCell[0];
 					}
 				}
 			}
@@ -254,7 +323,7 @@ class MyMaze extends THREE.Object3D {
 				maze.push([...row]);
 		}
 
-		for(let i = 0; i < tetris.length ; i++){
+		for(let i = 0; i < tetris3.length ; i++){
 			maze[i+1] = ([...tetris3[i]].reverse()).concat(tetris3[i]);
 		}
 
