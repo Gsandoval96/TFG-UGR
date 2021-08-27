@@ -103,16 +103,8 @@ class MyMaze extends THREE.Object3D {
 		var mapRow = [];
 
 		for(let i = 0; i < 5; i++){
-			mapRow.push(i);
+			mapRow.push(true);
 		}
-
-		[
-			[0,1,2,3,4],
-			[0,1,2,3,4],
-			[0,1,2,3,4],
-			[0,1,2,3,4],
-			[0,1,2,3,4]
-		]
 
 		for(let j = 0; j < 10; j++){
 			map.push([...mapRow]);
@@ -121,10 +113,12 @@ class MyMaze extends THREE.Object3D {
 		//Obligamos a que el centro deje espacio para los fantasmas
 		tetris[3][0] = [...cellUp];
 		tetris[3][1] = [...cell];
-		map[3].splice(0,2);
+		map[3][0] = false;
+		map[3][1] = false;
 		tetris[4][0] = [...empty];
 		tetris[4][1] = [...cellRight];
-		map[4].splice(0,2);
+		map[4][0] = false;
+		map[4][1] = false;
 
 		//Seleccionamos una casilla de la primera columna libre más a la izquierda
 
@@ -144,13 +138,13 @@ class MyMaze extends THREE.Object3D {
 
 			//asignar pieza -- TODO
 			tetris[random][col] = [...empty];
-			map[random].splice(0,1);
+			map[random][col] = false;
 
 			//Pasamos a la siguiente columna cuando no nos queda nada más por explorar
 			if(to_explore.length == 0){
 				col++;
 				for(let l = 0; l < 9; l++){
-					if(map[l].includes(col))
+					if(map[l][col])
 						to_explore.push(l);
 				}
 			}
