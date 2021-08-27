@@ -3,6 +3,7 @@ class MyMaze extends THREE.Object3D {
 		super();
 
 		this.mazeData = this.mazeGenerator();
+		// Default Map 31x28
 		// [
 		// 	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
 		// 	[0,2,2,2,2,2,2,2,2,2,2,2,2,0,0,2,2,2,2,2,2,2,2,2,2,2,2,0],
@@ -156,6 +157,12 @@ class MyMaze extends THREE.Object3D {
 		tetris[9][3] = empty;
 		tetris[9][4] = cellUp;
 
+		return tetris;
+	}
+
+	tetris3x3Generator(){
+		var tetris = tetrisGenerator();
+
 		var tetris3 = [];
 		var row3 = [];
 
@@ -233,7 +240,7 @@ class MyMaze extends THREE.Object3D {
 		var row = [];
 		var wall = [];
 
-		var tetris = this.tetrisGenerator();
+		var tetris3 = this.tetris3x3Generator();
 
 		for(let i = 0; i < 30; i++){
 			row.push(1); //Fila llena de huecos en blanco
@@ -248,7 +255,7 @@ class MyMaze extends THREE.Object3D {
 		}
 
 		for(let i = 0; i < tetris.length ; i++){
-			maze[i+1] = ([...tetris[i]].reverse()).concat(tetris[i]);
+			maze[i+1] = ([...tetris3[i]].reverse()).concat(tetris3[i]);
 		}
 
 
