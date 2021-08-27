@@ -156,30 +156,6 @@ class MyMaze extends THREE.Object3D {
 		tetris[9][3] = empty;
 		tetris[9][4] = cellUp;
 
-		var adjustable = [];
-		var adjustableRow = [];
-		for(let i = 0; i < 9; i++){
-			adjustable.push([...adjustableRow]);
-			for(let j = 1; j < 5; j++){
-				var up = tetris[i][j].x;
-				var right = tetris[i][j].y;
-				var down = tetris[i+1][j].x;
-				var left = tetris[i][j-1].y;
-
-				var isAdjustable =
-					(up && right && down && !left) || //C invertida
-					(up && !right && down && left) || //C
-					(j == 4 && !right && left && ( down ? !up: up )); //última fila con L o L girada 90º (agujas reloj)
-
-				if(isAdjustable){
-					var par = new THREE.Vector2(i,j);
-					adjustable[i].push(par);
-				}
-			}
-		}
-
-		console.log(adjustable);
-
 		var tetris3 = [];
 		var row3 = [];
 
@@ -231,27 +207,7 @@ class MyMaze extends THREE.Object3D {
 		tetris3[10][1] = 1;
 
 
-		//Ajustes de tamaño para que sea 28x14
-
-		//Eliminamos una columna por celda, escogida entre las posibles ajustables
-
-		for(let i = 0; i < 9; i++){
-			var random = adjustable[i][Math.floor(Math.random()*adjustable[i].length)];
-			var max = 3;
-			if(i == 8) max = 4; //Si estamos en la última fila, tenemos que recorrer 1 más por el ajuste del borde de abajo
-			for(let j = 0; j < max; j++){
-				//Ajuste que hace en el ejemplo
-				// if(i<5){
-				// 	tetris3[i*3 + j].splice(adjustable[i][adjustable[i].length-1].y*3 , 1);
-				// }
-				// else{
-				// 	tetris3[i*3 + j].splice(adjustable[i][0].y*3, 1);
-				// }
-
-				//TODO: Revisar el ajuste
-				tetris3[random.x*3 + j].splice(random.y*3, 1); //Elimina la columna central de una casilla
-			}
-		}
+		//Ajustes de tamaño para que sea 28x15
 
 		//Eliminamos la primera columna
 		for(let i = 0; i < 30; i++){
@@ -269,7 +225,7 @@ class MyMaze extends THREE.Object3D {
 
 		console.log(tetris3);
 
-		return tetris3; //Devolvemos una matriz 28x14
+		return tetris3; //Devolvemos una matriz 28x15
 	}
 
 	mazeGenerator(){
@@ -279,7 +235,7 @@ class MyMaze extends THREE.Object3D {
 
 		var tetris = this.tetrisGenerator();
 
-		for(let i = 0; i < 28; i++){
+		for(let i = 0; i < 30; i++){
 			row.push(1); //Fila llena de huecos en blanco
 			wall.push(0); //Fila llena de muro
 		}
@@ -291,7 +247,7 @@ class MyMaze extends THREE.Object3D {
 				maze.push([...row]);
 		}
 
-		for(let i = 0; i < 28 ; i++){
+		for(let i = 0; i < tetris.length ; i++){
 			maze[i+1] = ([...tetris[i]].reverse()).concat(tetris[i]);
 		}
 
