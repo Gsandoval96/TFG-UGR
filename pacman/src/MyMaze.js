@@ -198,6 +198,11 @@ class MyMaze extends THREE.Object3D {
 			for(var part of piece){
 				tetris[random + part[0]][col + part[1]] = part[2];
 				map[random + part[0]][col + part[1]] = false;
+				//Si una pieza elimina varias casillas de la columna, tenemos que actualizar to_explore
+				if(to_explore.includes(random + part[0]) && col + part[1] == col){
+					let index = to_explore.indexOf(random + part[0]);
+					to_explore.splice(index,1);
+				}
 			}
 
 			//Pasamos a la siguiente columna cuando no nos queda nada más por explorar
