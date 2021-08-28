@@ -113,10 +113,10 @@ class MyMaze extends THREE.Object3D {
 					valid = false
 				}
 			}
-			if(valid) valid_pieces.push([...p]);
+			if(valid) {
+				valid_pieces.push([...p]);
+			}
 		}
-
-		console.log(valid_pieces);
 
 		if(valid_pieces.length != 0){
 			piece = valid_pieces[Math.floor(Math.random()*valid_pieces.length)];
@@ -170,9 +170,7 @@ class MyMaze extends THREE.Object3D {
 		var clear = false;
 		var col = 0;
 
-		var positions = [0, 1, 2, 3, 4, 5, 6, 7, 8];
-		var to_explore = [...positions];
-		to_explore.splice(3,2);
+		var to_explore = [0, 1, 2, 5, 6, 7, 8];
 
 		while(col < 5){
 
