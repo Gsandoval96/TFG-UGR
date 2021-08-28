@@ -97,7 +97,7 @@ class MyMaze extends THREE.Object3D {
 			[	[0,0,[...cellUp]],[0,1,[...cellRight]],[-1,1,[...cell]]		], //L3
 			[	[0,0,[...cellUp]],[0,1,[...cell]],		[1,1,[...cellRight]]	], //L4
 			[	[0,0,[...cellUp]],[0,1,[...cell]]									],    //[][] 1
-			[	[0,0,[...cellUp]],[1,0,[...cellRight]]								],		//[][] 2
+			[	[0,0,[...cell]],[1,0,[...cellRight]]								]		//[][] 2
 		];
 
 		var valid_pieces = [];
