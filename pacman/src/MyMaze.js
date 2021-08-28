@@ -88,21 +88,21 @@ class MyMaze extends THREE.Object3D {
 		var cellUp = [1,0];
 		var cellRight = [0,1];
 
-		var piece = [[0,0,[...cell]]]; //Pieza [] por defecto
+		var piece = MyPiece.O1; //Pieza [] por defecto
 
 		//TODO: convertirlas en constantes
-		var pieces = [
-			[	[0,0,[...empty]],	[0,1,[...cell]],		[-1,0,[...cell]]		], //L1
-			[	[0,0,[...cellUp]],[0,1,[...cell]],		[1,0,[...cellRight]]	], //L2
-			[	[0,0,[...cellUp]],[0,1,[...cellRight]],[-1,1,[...cell]]		], //L3
-			[	[0,0,[...cellUp]],[0,1,[...cell]],		[1,1,[...cellRight]]	], //L4
-			[	[0,0,[...cellUp]],[0,1,[...cell]]									],    //[][] 1
-			[	[0,0,[...cell]],[1,0,[...cellRight]]								]		//[][] 2
-		];
+		// var pieces = [
+		// 	[	[0,0,[...empty]],	[0,1,[...cell]],		[-1,0,[...cell]]		], //L1
+		// 	[	[0,0,[...cellUp]],[0,1,[...cell]],		[1,0,[...cellRight]]	], //L2
+		// 	[	[0,0,[...cellUp]],[0,1,[...cellRight]],[-1,1,[...cell]]		], //L3
+		// 	[	[0,0,[...cellUp]],[0,1,[...cell]],		[1,1,[...cellRight]]	], //L4
+		// 	[	[0,0,[...cellUp]],[0,1,[...cell]]									],    //[][] 1
+		// 	[	[0,0,[...cell]],[1,0,[...cellRight]]								]		//[][] 2
+		// ];
 
 		var valid_pieces = [];
 
-		for(var p of pieces){
+		for(var p of MyPiece.allPieces){
 			var valid = true;
 			for(var i = 1; i < p.length && valid; i++){
 				if(row + p[i][0] >=0 && row + p[i][0] <=8 &&
@@ -118,6 +118,7 @@ class MyMaze extends THREE.Object3D {
 			}
 		}
 
+		//Seleccionar una pieza de las válidas
 		if(valid_pieces.length != 0){
 			piece = valid_pieces[Math.floor(Math.random()*valid_pieces.length)];
 		}
@@ -134,10 +135,9 @@ class MyMaze extends THREE.Object3D {
 		var empty = [0,0];
 		var cellUp = [1,0];
 		var cellRight = [0,1];
-		var aux = ["*", "*"];
 
 		for(let i = 0; i < 5; i++){
-			row.push([...aux]);
+			row.push("*");
 		}
 
 		for(let j = 0; j < 10; j++){
@@ -179,11 +179,11 @@ class MyMaze extends THREE.Object3D {
 			var random = to_explore[pos];
 			to_explore.splice(pos, 1);
 
-			//Asignar pieza -- TODO
+			//Asignar pieza
 
 			var piece = this.pieceGenerator(random, col, map);
 
-			// Ejemplo de rellenado solo usando piezas del estilo [][] y []
+			// Ejemplo de rellenado solo usando piezas del estilo [][] 1 y []
 			// piece = [
 			// 	[0,0,[...cellUp]],[0,1,[...cell]]
 			// ];
