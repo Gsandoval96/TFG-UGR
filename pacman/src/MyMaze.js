@@ -417,6 +417,20 @@ class MyMaze extends THREE.Object3D {
 			maze[pos][0] = 4;
 		}
 
+		//Rellenamos el mapa de puntos dejando el centro en blanco
+
+		for(let i = 0; i < MyConstant.MAZE_HEIGHT - 1; i++){
+			for(let j = 0; j < MyConstant.MAZE_WIDTH - 1; j++){
+				if(j == 8 && i >= 8 && i <= 18){
+					j = 22;
+				}
+
+				if(maze[i][j] == 1){
+					maze[i][j] = 2;
+				}
+			}
+		}
+
 		return maze;
 	}
 
