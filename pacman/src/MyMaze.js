@@ -388,6 +388,7 @@ class MyMaze extends THREE.Object3D {
 			maze[i+1] = ([...tetris3[i]].reverse()).concat(tetris3[i]);
 		}
 
+		//Generar portales
 		var n_portals = 0;
 		for(let i = 1; i < MyConstant.MAZE_HEIGHT - 1; i++){
 			if(maze[i][MyConstant.MAZE_WIDTH-2] == 1){
@@ -398,6 +399,22 @@ class MyMaze extends THREE.Object3D {
 						n_portals++;
 				}
 			}
+		}
+		//Si no hay posiciones de portal obligatorio, generamos uno
+		if(n_portals == 0){
+			var can_portal = [];
+			for(let i = 1; i < MyConstant.MAZE_HEIGHT - 1; i++){
+				if(maze[i][MyConstant.MAZE_WIDTH-2] == 1){
+					if(maze[i-1][MyConstant.MAZE_WIDTH-2] == 1 &&
+						maze[i+1][MyConstant.MAZE_WIDTH-2] == 1 &&
+						maze[i][MyConstant.MAZE_WIDTH-3] == 1){
+							can_portal.push(i);
+					}
+				}
+			}
+			var pos = can_portal[Math.floor(Math.random()*can_portal.length)];
+			maze[pos][MyConstant.MAZE_WIDTH-1] = 4;
+			maze[pos][0] = 4;
 		}
 
 		return maze;
@@ -437,7 +454,7 @@ class MyMaze extends THREE.Object3D {
 		else{
 			newPos = new THREE.Vector2(this.teleportPositions[index-1].x, this.teleportPositions[index-1].y);
 		}
-		
+
 		return newPos;
 	}
 
