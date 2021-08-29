@@ -91,15 +91,18 @@ class MyMaze extends THREE.Object3D {
 		var piece = [	[0,0,[...cell]]	]; //Pieza [] por defecto, se crea a mano por tema de problemas al copiarlo
 
 		console.log(piece);
-		//Posible BUG al generar dos [] juntos
+
+		//Añadimos variedad a la primera fila
 		if(row == 0 && col != 4) piece[0][2][0] = 0;
-		else if(row != 0 && col == 4) piece[0][2][1] = 0;
 
 		var valid_pieces = [];
 
 		var pieces;
 		if(col == 0){
 			pieces = [...MyPiece.startColPieces];
+		}
+		else if(col == 4){
+			pieces = [...MyPiece.lastColPieces];
 		}
 		else{
 			pieces = [...MyPiece.allPieces];
