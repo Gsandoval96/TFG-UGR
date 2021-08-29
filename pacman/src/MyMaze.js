@@ -431,6 +431,35 @@ class MyMaze extends THREE.Object3D {
 			}
 		}
 
+		//Añadimos las pastillas
+
+		var swapped = false;
+		var row1 = 4;
+		var row2 = 25;
+
+		while(!swapped){
+			if(maze[row1][1] == 2 && maze[row1][0] == 0){
+				maze[row1][1] = 3;
+				maze[row1][MyConstant.MAZE_WIDTH - 2] = 3;
+				swapped = true;
+			}
+			else{
+				row1++;
+			}
+		}
+
+		swapped = false;
+		while(!swapped){
+			if(maze[row2][1] == 2 && maze[row1][0] == 0){
+				maze[row2][1] = 3;
+				maze[row2][MyConstant.MAZE_WIDTH - 2] = 3;
+				swapped = true;
+			}
+			else{
+				row2--;
+			}
+		}
+
 		return maze;
 	}
 
