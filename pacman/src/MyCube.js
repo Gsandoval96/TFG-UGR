@@ -7,7 +7,7 @@ class MyCube extends THREE.Object3D {
     //var SIZE = 1;
 
     // Creamos la geometría y la colocamos en el 0,0,0
-    var boxGeom = new THREE.BoxGeometry (size-edgeSize,size-edgeSize,size-edgeSize);
+    var boxGeom = new THREE.BoxGeometry (size,size,size);
 
     // Ya podemos construir el Mesh
     this.box = new THREE.Mesh (boxGeom, material);
