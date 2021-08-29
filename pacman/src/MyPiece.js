@@ -46,6 +46,7 @@ class MyPiece{
 	static lastColPieces = [
 		[...MyPiece.i1], [...MyPiece.i2a],
 		[...MyPiece._i2a], [...MyPiece._i2b],
+		[...MyPiece.o1],
 		[...MyPiece._o1]
 	];
 
