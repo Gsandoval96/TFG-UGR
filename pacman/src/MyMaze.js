@@ -102,7 +102,15 @@ class MyMaze extends THREE.Object3D {
 
 		var valid_pieces = [];
 
-		for(var p of MyPiece.allPieces){
+		var pieces;
+		if(col == 0){
+			pieces = [...MyPiece.startColPieces];
+		}
+		else{
+			pieces = [...MyPiece.allPieces];
+		}
+
+		for(var p of pieces){
 			var valid = true;
 			for(var i = 1; i < p.length && valid; i++){
 				if(row + p[i][0] >=0 && row + p[i][0] <=8 &&

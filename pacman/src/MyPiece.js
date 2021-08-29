@@ -15,7 +15,15 @@ class MyPiece{
 	static O1 = [	[0,0,[...cell]]															];
 
 	static allPieces = [
-		[...MyPiece.L1], [...MyPiece.L2], [...MyPiece.L3], [...MyPiece.L4], [...MyPiece.I1], [...MyPiece.I2]
+		[...MyPiece.t1], [...MyPiece.t2], [...MyPiece.t3], [...MyPiece.t4],
+		[...MyPiece.l1], [...MyPiece.l2], [...MyPiece.l3], [...MyPiece.l4],
+		[...MyPiece.i1], [...MyPiece.i2a], [...MyPiece.i2b],
+		[...MyPiece.X1]
+	];
+
+	static startColPieces = [
+		[...MyPiece.l1], [...MyPiece.l2], [...MyPiece.l3], [...MyPiece.l4],
+		[...MyPiece.i1], [...MyPiece.i2a], [...MyPiece.i2b]
 	];
 
 }
