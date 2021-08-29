@@ -388,6 +388,17 @@ class MyMaze extends THREE.Object3D {
 			maze[i+1] = ([...tetris3[i]].reverse()).concat(tetris3[i]);
 		}
 
+		var n_portals = 0;
+		for(let i = 1; i < MyConstant.MAZE_HEIGHT - 1; i++){
+			if(maze[i][MyConstant.MAZE_WIDTH-2] == 1){
+				if(maze[i-1][MyConstant.MAZE_WIDTH-2] == 0 &&
+					maze[i+1][MyConstant.MAZE_WIDTH-2] == 0){
+						maze[i][MyConstant.MAZE_WIDTH-1] = 4;
+						maze[i][0] = 4;
+						n_portals++;
+				}
+			}
+		}
 
 		return maze;
 	}
@@ -411,13 +422,22 @@ class MyMaze extends THREE.Object3D {
 	getOtherTeleport(pos,dir){
 		var newPos;
 
-		//Comparamos al revés por la distribución de la matriz
-		if(pos.x + dir.x == this.teleportPositions[0].y && pos.y + dir.y == this.teleportPositions[0].x){
-			newPos = new THREE.Vector2(this.teleportPositions[1].x, this.teleportPositions[1].y);
+		var position = new THREE.Vector2(pos.y + dir.y, pos.x + dir.x);
+		var index = -1;
+		for(let i = 0; i < this.teleportPositions.length && index == -1; i++){
+			if(this.teleportPositions[i].x == position.x &&
+				this.teleportPositions[i].y == position.y){
+					index = i;
+				}
+		}
+
+		if(index %2 == 0){
+			newPos = new THREE.Vector2(this.teleportPositions[index+1].x, this.teleportPositions[index+1].y);
 		}
 		else{
-			newPos = new THREE.Vector2(this.teleportPositions[0].x, this.teleportPositions[0].y);
+			newPos = new THREE.Vector2(this.teleportPositions[index-1].x, this.teleportPositions[index-1].y);
 		}
+		
 		return newPos;
 	}
 
