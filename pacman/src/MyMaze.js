@@ -90,8 +90,6 @@ class MyMaze extends THREE.Object3D {
 
 		var piece = [	[0,0,[...cell]]	]; //Pieza [] por defecto, se crea a mano por tema de problemas al copiarlo
 
-		console.log(piece);
-
 		//Añadimos variedad a la primera fila
 		if(row == 0 && col != 4) piece[0][2][0] = 0;
 
@@ -296,8 +294,6 @@ class MyMaze extends THREE.Object3D {
 		tetris[9][3] = [...cellUp];
 		tetris[9][4] = [...cellUp];
 
-		console.log(tetris);
-		console.log(map);
 		return tetris;
 	}
 
@@ -371,28 +367,21 @@ class MyMaze extends THREE.Object3D {
 		tetris3.pop();
 		tetris3.pop();
 
-		console.log(tetris3);
-
 		return tetris3; //Devolvemos una matriz 28x15
 	}
 
 	mazeGenerator(){
 		var maze = [];
-		var row = [];
 		var wall = [];
 
 		var tetris3 = this.tetris3x3Generator();
 
 		for(let i = 0; i < 30; i++){
-			row.push(1); //Fila llena de huecos en blanco
 			wall.push(0); //Fila llena de muro
 		}
 
 		for(let j = 0; j < 30; j++){
-			if(j == 0 || j == 29)
 				maze.push([...wall]);
-			else
-				maze.push([...row]);
 		}
 
 		for(let i = 0; i < tetris3.length ; i++){
