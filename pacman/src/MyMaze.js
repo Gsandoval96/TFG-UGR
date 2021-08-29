@@ -88,17 +88,12 @@ class MyMaze extends THREE.Object3D {
 		var cellUp = [1,0];
 		var cellRight = [0,1];
 
-		var piece = MyPiece.o1; //Pieza [] por defecto
+		var piece = [	[0,0,[...cell]]	]; //Pieza [] por defecto, se crea a mano por tema de problemas al copiarlo
 
-		//TODO: convertirlas en constantes
-		// var pieces = [
-		// 	[	[0,0,[...empty]],	[0,1,[...cell]],		[-1,0,[...cell]]		], //L1
-		// 	[	[0,0,[...cellUp]],[0,1,[...cell]],		[1,0,[...cellRight]]	], //L2
-		// 	[	[0,0,[...cellUp]],[0,1,[...cellRight]],[-1,1,[...cell]]		], //L3
-		// 	[	[0,0,[...cellUp]],[0,1,[...cell]],		[1,1,[...cellRight]]	], //L4
-		// 	[	[0,0,[...cellUp]],[0,1,[...cell]]									],    //[][] 1
-		// 	[	[0,0,[...cell]],[1,0,[...cellRight]]								]		//[][] 2
-		// ];
+		console.log(piece);
+		//Posible BUG al generar dos [] juntos
+		if(row == 0 && col != 4) piece[0][2][0] = 0;
+		else if(row != 0 && col == 4) piece[0][2][1] = 0;
 
 		var valid_pieces = [];
 
