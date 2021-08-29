@@ -131,7 +131,9 @@ class MyGame extends THREE.Object3D {
 		for(var i = 1; i < this.characters.length; i++){
 			var character = this.characters[i];
 			if(character.path == null){
-				this.maze.clearColor(character.material);
+				if(MyConstant.SHOW_PATH){
+					this.maze.clearColor(character.material);
+				}
 
 				let pos = new THREE.Vector2(character.getPosition().x / MyConstant.BOX_SIZE, character.getPosition().z / MyConstant.BOX_SIZE);
 				let dir = new THREE.Vector2(character.dirX, character.dirZ);
@@ -166,7 +168,9 @@ class MyGame extends THREE.Object3D {
 						var posA = path.x;
 						var posB = path.y;
 						var pos_check = posA * (MyConstant.MAZE_WIDTH) + posB;
-						this.maze.children[pos_check].square.material = character.material; //Draw ghost path
+						if(MyConstant.SHOW_PATH){
+							this.maze.children[pos_check].square.material = character.material; //Draw ghost path
+						}
 					}
 				}
 

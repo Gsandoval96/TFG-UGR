@@ -7,4 +7,5 @@ class MyConstant{
 
 	static SHOW_HITBOX = false;
 	static SHOW_MAZE_HITBOX = true;
+	static SHOW_PATH = false;
 }
