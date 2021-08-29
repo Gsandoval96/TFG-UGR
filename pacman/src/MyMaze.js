@@ -88,7 +88,7 @@ class MyMaze extends THREE.Object3D {
 		var cellUp = [1,0];
 		var cellRight = [0,1];
 
-		var piece = MyPiece.O1; //Pieza [] por defecto
+		var piece = MyPiece.o1; //Pieza [] por defecto
 
 		//TODO: convertirlas en constantes
 		// var pieces = [
