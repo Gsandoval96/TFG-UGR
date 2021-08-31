@@ -51,8 +51,8 @@ class MyGame extends THREE.Object3D {
 		var direction = new THREE.Vector2(0,1);
 		for (var i = 0; i < 4; i++) {
 			var ghost = new MyGhost(this.charactersPosition[i+1], MyConstant.CHARACTER_SIZE, direction, ghostMaterial[i]);
-			//ghost.rotate("u");
-		   this.characters.push(ghost);
+			this.characters.push(ghost);
+
 		}
 
 		for (var character of this.characters) {
