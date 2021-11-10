@@ -46,15 +46,15 @@ class MyTile extends THREE.Object3D {
           },
           color: {
             type: "c",
-            value: new THREE.Color(0x000000),
+            value: new THREE.Color(0x1919A6),
           },
           borderWidth: {
             type: "f",
-            value: 5.0
+            value: 4.25
           },
           borderColor: {
             type: "c",
-            value: new THREE.Color(0xaaaaaa),
+            value: new THREE.Color(0x888888),
           },
           blur: {
             type: "f",
