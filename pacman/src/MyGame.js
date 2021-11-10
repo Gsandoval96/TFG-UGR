@@ -52,7 +52,7 @@ class MyGame extends THREE.Object3D {
 		for (var i = 0; i < 4; i++) {
 			var ghost = new MyGhost(this.charactersPosition[i+1], MyConstant.CHARACTER_SIZE, direction, ghostMaterial[i]);
 			this.characters.push(ghost);
-
+			if(i!=0) this.characters[i+1].status = "freeze"; //BORRAR
 		}
 
 		for (var character of this.characters) {
@@ -142,7 +142,14 @@ class MyGame extends THREE.Object3D {
 
 				pos = character.adjustPosition(pos, dir);
 
-				var graph = new Graph(this.maze.mazeData);
+				// Copia en profundida de la info del laberinto
+				var ghostMaze = [...this.maze.mazeData];
+			  ghostMaze.forEach((row, rowIndex) => ghostMaze[rowIndex] = [...row]);
+
+				//Eliminamos la posición anterior de las rutas posibles
+				ghostMaze[pos.y - dir.y][pos.x - dir.x] = 0;
+
+				var graph = new Graph(ghostMaze);
 				var start = graph.grid[pos.y][pos.x];
 
 				var random = this.maze.getRandomValidPosition(); //random end
