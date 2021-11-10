@@ -131,6 +131,7 @@ class MyGhost extends MyCharacter {
 	}
 
 	update(){
+    //this.status = "freeze";
 		if(this.status != "freeze"){
 		  this.executePath();
 		  super.update();
