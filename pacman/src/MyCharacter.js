@@ -5,7 +5,7 @@ class MyCharacter extends THREE.Object3D {
 	this.dirX = 0;
 	this.dirZ = 0;
 
-	this.speed = 0.2;
+	this.speed = 0.1;
 
 	this.hitbox = new THREE.Box3();
 	var hitbox_pos = new THREE.Vector3( pos.x * MyConstant.BOX_SIZE, pos.y* MyConstant.BOX_SIZE, pos.z* MyConstant.BOX_SIZE );
@@ -57,6 +57,32 @@ class MyCharacter extends THREE.Object3D {
 	  this.model.position.z = pos2D.y;
   }
 
+  adjustPositionForPath(pos, dir){
+
+    var adjustedPosition = new THREE.Vector2(pos.x, pos.y);
+
+    if(dir.x == 1){
+      adjustedPosition.x = Math.floor(pos.x);
+    }
+    else if(dir.x == -1){
+      adjustedPosition.x = Math.ceil(pos.x);
+    }
+    else{
+      adjustedPosition.x = Math.round(pos.x);
+    }
+    if(dir.y == 1){
+      adjustedPosition.y = Math.floor(pos.y);
+    }
+    else if(dir.y == -1){
+      adjustedPosition.y = Math.ceil(pos.y);
+    }
+    else{
+      adjustedPosition.y = Math.round(pos.y);
+    }
+
+    return adjustedPosition;
+
+  }
 
   move(){
 	  switch (this.model.rotation.y) {

@@ -130,33 +130,6 @@ class MyGhost extends MyCharacter {
 		}
 	}
 
-	adjustPositionForPath(pos, dir){
-
-		var adjustedPosition = new THREE.Vector2(pos.x, pos.y);
-
-		if(dir.x == 1){
-			adjustedPosition.x = Math.floor(pos.x);
-		}
-		else if(dir.x == -1){
-			adjustedPosition.x = Math.ceil(pos.x);
-		}
-		else{
-			adjustedPosition.x = Math.round(pos.x);
-		}
-		if(dir.y == 1){
-			adjustedPosition.y = Math.floor(pos.y);
-		}
-		else if(dir.y == -1){
-			adjustedPosition.y = Math.ceil(pos.y);
-		}
-		else{
-			adjustedPosition.y = Math.round(pos.y);
-		}
-
-		return adjustedPosition;
-
-	}
-
 	update(){
 		if(this.status != "freeze"){
 		  this.executePath();
