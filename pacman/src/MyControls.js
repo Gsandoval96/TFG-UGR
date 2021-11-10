@@ -32,7 +32,7 @@ class MyControls{
 	 }
 
 	 if (dir.x != 0 || dir.y != 0){
-		 game.characters[0].rotate(dir);
+		 game.characters[0].rotateBuffer(dir);
 	 }
   }
 }

@@ -4,6 +4,11 @@ class MyPacman extends MyCharacter {
 
 	this.status = "alive";
 
+  this.dirBuffer = new THREE.Vector2(0,0);
+
+  this.validRotationX = new THREE.Vector2(0,0);
+  this.validRotationY = new THREE.Vector2(0,0);
+
 	this.size = size;
 
 	this.dirX = dir.x;
@@ -96,9 +101,63 @@ class MyPacman extends MyCharacter {
 		this.downSphere.geometry = sphereGeom;
 		this.downCircle.rotation.y = rot;
 	}
+  setNeightbors(neighbors){
+    this.validRotationX = new THREE.Vector2(neighbors[0],neighbors[1]);
+    this.validRotationY = new THREE.Vector2(neighbors[2],neighbors[3]);
+  }
+  rotateBuffer(dir){
+      this.dirBuffer = dir;
+  }
+
+  setNeightbors(neighbors){
+    this.validRotationX = new THREE.Vector2(neighbors[0],neighbors[1]);
+    this.validRotationY = new THREE.Vector2(neighbors[2],neighbors[3]);
+  }
+
+  checkRotation(){
+
+    if(this.dirBuffer.x != this.dirX || this.dirBuffer.y != this.dirZ){
+      if((this.dirBuffer.x != 0 && this.dirBuffer.y == 0) ||
+         (this.dirBuffer.x == 0 && this.dirBuffer.y != 0)){
+
+           var validRotation = false;
+
+            if(this.dirBuffer.x != 0){
+                if( this.dirBuffer.x == this.validRotationX.x || this.dirBuffer.x == this.validRotationX.y)
+                  validRotation = true;
+            }
+            else if (this.dirBuffer.y != 0){
+                if( this.dirBuffer.y == this.validRotationY.x || this.dirBuffer.y == this.validRotationY.y)
+                  validRotation = true;
+            }
+
+            if(validRotation){
+
+              if(!(this.dirX == -this.dirBuffer.x || this.dirZ == -this.dirBuffer.y )){
+                let pos = new THREE.Vector2(this.getPosition().x / MyConstant.BOX_SIZE, this.getPosition().z / MyConstant.BOX_SIZE);
+           			let dir = new THREE.Vector2(this.dirX, this.dirZ);
+
+
+
+           			pos = this.adjustPositionForPath(pos, dir);
+
+                this.model.position.set(pos.x * MyConstant.BOX_SIZE, this.getPosition().y, pos.y* MyConstant.BOX_SIZE);
+                var hitbox_pos = new THREE.Vector3( this.model.position.x, this.model.position.y, this.model.position.z );
+            	  this.hitbox.setFromCenterAndSize(hitbox_pos, this.hitbox_size);
+              }
+
+              this.rotate(this.dirBuffer);
+              this.dirBuffer = new THREE.Vector2(0,0);
+              this.validRotationX = new THREE.Vector2(0,0);
+              this.validRotationY = new THREE.Vector2(0,0);
+            }
+      }
+    }
+  }
 
 	update(){
 	  super.update();
+    this.checkRotation();
 	  TWEEN.update();
 	}
 }

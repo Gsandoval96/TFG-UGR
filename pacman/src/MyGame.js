@@ -68,6 +68,10 @@ class MyGame extends THREE.Object3D {
 		let pos = new THREE.Vector2(this.characters[0].getPosition().x / MyConstant.BOX_SIZE, this.characters[0].getPosition().z / MyConstant.BOX_SIZE);
 		let dir = new THREE.Vector2(this.characters[0].dirX, this.characters[0].dirZ);
 
+
+		var pos_aux = this.characters[0].adjustPositionForPath(pos, dir);
+		this.characters[0].setNeightbors(this.maze.getNeighbors(pos_aux)); // Actualizamos los vecinos de pacman
+
 		pos = this.adjustPosition(pos, dir);
 
 		let tyleTipe = this.maze.getTileType(pos);

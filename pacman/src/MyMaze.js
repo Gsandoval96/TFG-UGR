@@ -511,6 +511,40 @@ class MyMaze extends THREE.Object3D {
 		return this.mazeData[pos_check.y][pos_check.x];
 	}
 
+	getNeighbors(pos){
+		var neighbors = [];
+
+		for(let i = 0; i < 4; i++){
+			neighbors.push(0);
+		}
+
+		var pos_aux = new THREE.Vector2(pos.x + 1, pos.y);
+		var tileType = this.getTileType(pos_aux);
+		if(tileType != 0){
+			neighbors[0] = 1;
+		}
+
+		pos_aux = new THREE.Vector2(pos.x - 1, pos.y);
+		tileType = this.getTileType(pos_aux);
+		if(tileType != 0){
+			neighbors[1] = -1;
+	 	}
+
+		pos_aux = new THREE.Vector2(pos.x, pos.y + 1);
+		tileType = this.getTileType(pos_aux);
+		if(tileType != 0){
+			neighbors[2] = 1;
+	 	}
+
+		pos_aux = new THREE.Vector2(pos.x, pos.y - 1);
+		tileType = this.getTileType(pos_aux);
+		if(tileType != 0){
+			neighbors[3] = -1;
+	 	}
+
+		return neighbors;
+	}
+
 	removeDot(pos){
 		var pos_check = pos.y * (MyConstant.MAZE_WIDTH) + pos.x;
 
