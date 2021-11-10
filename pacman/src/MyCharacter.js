@@ -57,7 +57,7 @@ class MyCharacter extends THREE.Object3D {
 	  this.model.position.z = pos2D.y;
   }
 
-  adjustPositionForPath(pos, dir){
+  adjustPosition(pos, dir){
 
     var adjustedPosition = new THREE.Vector2(pos.x, pos.y);
 

@@ -139,7 +139,7 @@ class MyPacman extends MyCharacter {
 
 
 
-           			pos = this.adjustPositionForPath(pos, dir);
+           			pos = this.adjustPosition(pos, dir);
 
                 this.model.position.set(pos.x * MyConstant.BOX_SIZE, this.getPosition().y, pos.y* MyConstant.BOX_SIZE);
                 var hitbox_pos = new THREE.Vector3( this.model.position.x, this.model.position.y, this.model.position.z );

@@ -99,7 +99,7 @@ class MyGhost extends MyCharacter {
 			let pos = new THREE.Vector2(this.getPosition().x / MyConstant.BOX_SIZE, this.getPosition().z / MyConstant.BOX_SIZE);
 			let dir = new THREE.Vector2(this.dirX, this.dirZ);
 
-			pos = this.adjustPositionForPath(pos, dir);
+			pos = this.adjustPosition(pos, dir);
 
 			if(pos.x == this.path[0].y && pos.y == this.path[0].x){
 				this.path.shift();

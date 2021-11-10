@@ -69,10 +69,8 @@ class MyGame extends THREE.Object3D {
 		let dir = new THREE.Vector2(this.characters[0].dirX, this.characters[0].dirZ);
 
 
-		var pos_aux = this.characters[0].adjustPositionForPath(pos, dir);
-		this.characters[0].setNeightbors(this.maze.getNeighbors(pos_aux)); // Actualizamos los vecinos de pacman
-
-		pos = this.adjustPosition(pos, dir);
+		pos = this.characters[0].adjustPosition(pos, dir);
+		this.characters[0].setNeightbors(this.maze.getNeighbors(pos)); // Actualizamos los vecinos de pacman
 
 		let tyleTipe = this.maze.getTileType(pos);
 
@@ -99,7 +97,7 @@ class MyGame extends THREE.Object3D {
 			let pos = new THREE.Vector2(character.getPosition().x / MyConstant.BOX_SIZE, character.getPosition().z / MyConstant.BOX_SIZE);
 			let dir = new THREE.Vector2(character.dirX, character.dirZ);
 
-			pos = this.adjustPosition(pos, dir);
+			pos = character.adjustPosition(pos, dir);
 
 			if(this.maze.checkCollision(character.getCollisionBox(), pos, dir)){
 				let collisionType = this.maze.collisionType(pos, dir);
@@ -142,7 +140,7 @@ class MyGame extends THREE.Object3D {
 				let pos = new THREE.Vector2(character.getPosition().x / MyConstant.BOX_SIZE, character.getPosition().z / MyConstant.BOX_SIZE);
 				let dir = new THREE.Vector2(character.dirX, character.dirZ);
 
-				pos = character.adjustPositionForPath(pos, dir);
+				pos = character.adjustPosition(pos, dir);
 
 				var graph = new Graph(this.maze.mazeData);
 				var start = graph.grid[pos.y][pos.x];
@@ -153,7 +151,7 @@ class MyGame extends THREE.Object3D {
 				var pPos = new THREE.Vector2(this.characters[0].getPosition().x / MyConstant.BOX_SIZE, this.characters[0].getPosition().z / MyConstant.BOX_SIZE);
 				var pDir = new THREE.Vector2(this.characters[0].dirX, this.characters[0].dirZ);
 
-				pPos = this.adjustPosition(pPos, pDir);
+				pPos = this.characters[0].adjustPosition(pPos, pDir);
 
 				//choose end
 				var end;
@@ -181,33 +179,6 @@ class MyGame extends THREE.Object3D {
 				character.path = result;
 			}
 		}
-
-	}
-
-	adjustPosition(pos, dir){
-
-		var adjustedPosition = new THREE.Vector2(pos.x, pos.y);
-
-		if(dir.x == 1){
-			adjustedPosition.x = Math.floor(pos.x);
-		}
-		else if(dir.x == -1){
-			adjustedPosition.x = Math.ceil(pos.x);
-		}
-		else{
-			adjustedPosition.x = Math.round(pos.x);
-		}
-		if(dir.y == 1){
-			adjustedPosition.y = Math.floor(pos.y);
-		}
-		else if(dir.y == -1){
-			adjustedPosition.y = Math.ceil(pos.y);
-		}
-		else{
-			adjustedPosition.y = Math.round(pos.y);
-		}
-
-		return adjustedPosition;
 
 	}
 
