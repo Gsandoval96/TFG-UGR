@@ -37,7 +37,40 @@ class MyTile extends THREE.Object3D {
 			this.cube = new MyCube(position, MyMaterial.INVISIBLE, size);
 		break;
 		case "wall":
-			this.cube = new MyCube(position, MyMaterial.BLUE, size);
+      var material = MyMaterial.BLUE;
+      if(MyConstant.ACTIVE_SHADER){
+        var uniforms = {
+          amount: {
+            type: "f",
+            value: 0.5
+          },
+          color: {
+            type: "c",
+            value: new THREE.Color(0x000000),
+          },
+          borderWidth: {
+            type: "f",
+            value: 5.0
+          },
+          borderColor: {
+            type: "c",
+            value: new THREE.Color(0xaaaaaa),
+          },
+          blur: {
+            type: "f",
+            value: 0.0
+          }
+        };
+        var vertexShader = document.getElementById('vertexShader').text;
+        var fragmentShader = document.getElementById('fragmentShader').text;
+        material = new THREE.ShaderMaterial(
+          {
+            uniforms : uniforms,
+            vertexShader : vertexShader,
+            fragmentShader : fragmentShader,
+          });
+      }
+  		this.cube = new MyCube(position, material, size);
 		break;
 		case "teleport":
 			this.cube = new MyCube(position, MyMaterial.GREEN, size);
