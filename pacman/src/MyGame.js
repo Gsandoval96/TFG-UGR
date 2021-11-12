@@ -52,12 +52,27 @@ class MyGame extends THREE.Object3D {
 		for (var i = 0; i < 4; i++) {
 			var ghost = new MyGhost(this.charactersPosition[i+1], MyConstant.CHARACTER_SIZE, direction, ghostMaterial[i]);
 			this.characters.push(ghost);
-			if(i!=0) this.characters[i+1].status = "freeze"; //BORRAR
+			if(i!=0) this.characters[i+1].behaviour = "freeze"; //BORRAR
 		}
 
 		for (var character of this.characters) {
 			this.add(character);
 		}
+
+		var origin = { p : 1 } ;
+		var destiny = { p : 2 } ;
+		var val = 2;
+		var that = this;
+
+		this.leaveBox = new TWEEN.Tween(origin)
+			.to(destiny, 5000) //5 segundos
+			.onRepeat (function(){
+				that.characters[val].changeBehaviour("chase");
+				console.log(val);
+				val = val + 1;
+			})
+			.repeat(3)
+			.start();
 	}
 
 	startGame(){
@@ -121,7 +136,7 @@ class MyGame extends THREE.Object3D {
 			if(this.characters[i].hitbox.intersectsBox(this.characters[0].hitbox)){
 				haunted = true;
 				for(var j = 1; j<5; j++){
-					this.characters[j].status = "freeze";
+					this.characters[j].behaviour = "freeze";
 				}
 				this.characters[0].die();
 			}
@@ -132,7 +147,7 @@ class MyGame extends THREE.Object3D {
 	moveAI(){
 		for(var i = 1; i < this.characters.length; i++){
 			var character = this.characters[i];
-			if(character.path == null){
+			if(character.path == null && character.behaviour != "freeze"){
 				if(MyConstant.SHOW_PATH){
 					this.maze.clearColor(character.material);
 				}
@@ -147,7 +162,9 @@ class MyGame extends THREE.Object3D {
 			  ghostMaze.forEach((row, rowIndex) => ghostMaze[rowIndex] = [...row]);
 
 				//Eliminamos la posición anterior de las rutas posibles
-				ghostMaze[pos.y - dir.y][pos.x - dir.x] = 0;
+				if(character.behaviour == "chase"){
+					ghostMaze[pos.y - dir.y][pos.x - dir.x] = 0;
+				}
 
 				var graph = new Graph(ghostMaze);
 				var start = graph.grid[pos.y][pos.x];
@@ -190,6 +207,8 @@ class MyGame extends THREE.Object3D {
 	}
 
 	respawn(){
+
+		this.leaveBox.stop(); //Paramos la salida escalonada de los fantasmas
 
 		for(var i = 0; i < 5; i++){
 			this.remove(this.characters[0]);

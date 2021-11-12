@@ -130,9 +130,13 @@ class MyGhost extends MyCharacter {
 		}
 	}
 
+  changeBehaviour(status){
+    this.behaviour = status;
+  }
+
 	update(){
     //this.status = "freeze";
-		if(this.status != "freeze"){
+		if(this.behaviour != "freeze"){
 		  this.executePath();
 		  super.update();
 		  TWEEN.update();
