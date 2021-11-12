@@ -1,6 +1,9 @@
 class MyMaze extends THREE.Object3D {
+
 	constructor(cubeSize) {
 		super();
+
+		this.shaderMaterial = this.createShaderMaterial();
 
 		this.mazeData = this.mazeGenerator();
 		// Default Map 31x28
@@ -52,7 +55,7 @@ class MyMaze extends THREE.Object3D {
 
 				switch (this.mazeData[i][j]) {
 					case 0:
-						cube = new MyTile(position, "wall", cubeSize, true);
+						cube = new MyTile(position, "wall", cubeSize, true, this.shaderMaterial);
 					break;
 					case 1:
 						cube = new MyTile(position, "empty", cubeSize, false);
@@ -583,6 +586,45 @@ class MyMaze extends THREE.Object3D {
 
 		return collision;
 	}
+
+	createShaderMaterial(){
+    var color = new THREE.Color(0xBB6649);
+    var hsl = new THREE.Object3D();
+    color.getHSL(hsl);
+    color.setHSL(Math.random(), hsl.s, hsl.l);
+
+    var uniforms = {
+      amount: {
+        type: "f",
+        value: 0.45
+      },
+      color: {
+        type: "c",
+        value: color,
+      },
+      borderWidth: {
+        type: "f",
+        value: 4.25
+      },
+      borderColor: {
+        type: "c",
+        value: new THREE.Color(0xc6c6c6),
+      },
+      blur: {
+        type: "f",
+        value: 0.0
+      }
+    };
+    var vertexShader = document.getElementById('vertexShader').text;
+    var fragmentShader = document.getElementById('fragmentShader').text;
+    var shaderMaterial = new THREE.ShaderMaterial({
+      uniforms : uniforms,
+      vertexShader : vertexShader,
+      fragmentShader : fragmentShader,
+    });
+
+    return shaderMaterial;
+  }
 
 	update(){
 	}

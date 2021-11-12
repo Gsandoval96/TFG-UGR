@@ -54,14 +54,15 @@
 </body>
 
 <script id="vertexShader" type="x-shader/x-vertex">
+
 varying vec2 vUv;
 void main() {
   vUv = uv;
   gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0);
 }
-  </script>
+</script>
 
-  <script id="fragmentShader" type="x-shader/x-fragment">
+<script id="fragmentShader" type="x-shader/x-fragment">
 
 // Created by inigo quilez - iq/2013
 // License Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License.
@@ -92,7 +93,7 @@ vec2 hash2( vec2 p )
   // procedural noise
 
   p = vec2(dot(p, vec2(127.1,311.7)), dot(p, vec2(113.5,271.9)));
-	return fract(sin(p) * 43758.5453123);
+	return fract(sin(p) * 10.5453123);
 }
 
 vec3 voronoi( in vec2 x )
@@ -145,6 +146,6 @@ void main() {
 }
 
 
-  </script>
+</script>
 
 </html>
