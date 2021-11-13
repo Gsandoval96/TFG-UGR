@@ -8,9 +8,6 @@ class MyGhost extends MyCharacter {
 
 	this.path = null;
 
-	this.dirX = dir.x;
-	this.dirZ = dir.y;
-
 	var sphereGeom = new THREE.SphereGeometry(size * 4/5, 20.0, 20.0, 0.0, Math.PI);
 	var eyeGeom = new THREE.SphereGeometry(size * 6/25, 20.0, 20.0, 0.0);
 	var pupilGeom = new THREE.SphereGeometry(size * 2/25, 20.0, 20.0, 0.0);
@@ -76,6 +73,7 @@ class MyGhost extends MyCharacter {
 	this.model.position.set(pos.x * MyConstant.BOX_SIZE, pos.y * MyConstant.BOX_SIZE, pos.z* MyConstant.BOX_SIZE);
 
 	this.add(this.model);
+	this.rotate(dir); //Colocamos al personaje en la dirección adecuada
 
     //Animaciones con TWEEN
     if(this.animated){
