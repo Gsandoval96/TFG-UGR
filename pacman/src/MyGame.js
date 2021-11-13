@@ -76,6 +76,10 @@ class MyGame extends THREE.Object3D {
 
 	startGame(){
 		this.start = true;
+
+		for (var i = 0; i < 4; i++) {
+			this.characters[i+1].startUpdatingPaths();
+		}
 	}
 
 	controlTile(){

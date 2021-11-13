@@ -4,6 +4,8 @@ class MyGhost extends MyCharacter {
 
 	this.behaviour = "chase";
 
+  this.updatePathTime = 7500;
+
 	this.speed = this.speed * 0.75; //los fantasmas se mueven más lento
 
 	this.path = null;
@@ -148,6 +150,22 @@ class MyGhost extends MyCharacter {
 
   changeBehaviour(status){
     this.behaviour = status;
+  }
+
+  startUpdatingPaths(){
+    var origin = { p : 1 } ;
+		var destiny = { p : 2 } ;
+		var that = this;
+
+		this.updatePaths = new TWEEN.Tween(origin)
+			.to(destiny, that.updatePathTime)
+			.onRepeat (function(){
+				if(that.behaviour == "chase"){
+					that.path = null;
+				}
+			})
+			.repeat(Infinity)
+			.start();
   }
 
 	update(){
