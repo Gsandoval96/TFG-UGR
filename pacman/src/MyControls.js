@@ -9,8 +9,7 @@ class MyControls{
     this.moveRightKey = 39; //Flecha Derecha
     this.moveDownKey = 40; //Flecha Abajo
 
-    this.hardDropKey = 32; //Espacio
-    this.savePieceKey = 87; //W
+    this.dieKey = 32; //Espacio
   }
 
   manager(keyCode, game){
@@ -26,7 +25,7 @@ class MyControls{
     if (keyCode == this.moveRightKey ){dir.x = 1;} //Flecha Derecha
     if (keyCode == this.moveDownKey ){dir.y = 1;} //Flecha Abajo
 	 if (keyCode == this.moveUpKey ){dir.y = -1;} //Flecha Arriba
-	 if (keyCode == this.hardDropKey ){
+	 if (keyCode == this.dieKey ){
 		 game.characters[0].die();
 		 console.log("RESPAWN");
 	 }
