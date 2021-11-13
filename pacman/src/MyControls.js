@@ -27,7 +27,7 @@ class MyControls{
 	 if (keyCode == this.moveUpKey ){dir.y = -1;} //Flecha Arriba
 	 if (keyCode == this.dieKey ){
 		 game.characters[0].die();
-		 console.log("RESPAWN");
+		 //console.log("RESPAWN");
 	 }
 
 	 if (dir.x != 0 || dir.y != 0){

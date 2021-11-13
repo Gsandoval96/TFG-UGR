@@ -114,7 +114,7 @@ class MyGhost extends MyCharacter {
 			}
       //Si ha acabado la ruta de volver a casa
       else if(this.behaviour == "return"){
-        console.log("REVIVIENDO", this.material);
+        //console.log("REVIVIENDO", this.material);
         this.revive();
       }
 		}

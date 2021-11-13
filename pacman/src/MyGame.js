@@ -68,7 +68,6 @@ class MyGame extends THREE.Object3D {
 			.to(destiny, 5000) //5 segundos
 			.onRepeat (function(){
 				that.characters[val].changeBehaviour("chase");
-				console.log(val);
 				val = val + 1;
 			})
 			.repeat(3)

@@ -162,7 +162,7 @@ class MyScene extends THREE.Scene {
 	onKeyDown(event){
 		var key = event.which || event.keyCode;
 
-		console.log("KEY PRESSED: ", key);
+		//console.log("KEY PRESSED: ", key); //TECLA PULSADA
 
 		if (key == 49 ){this.changeCamera(1);}
 		else if (key == 50 ){this.changeCamera(2);}
