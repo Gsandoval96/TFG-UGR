@@ -593,14 +593,16 @@ class MyMaze extends THREE.Object3D {
     color.getHSL(hsl);
     color.setHSL(Math.random(), hsl.s, hsl.l);
 
+		var amount = (Math.random() * (0.5 - 0.25) + 0.25);
+
     var uniforms = {
       amount: {
         type: "f",
-        value: 0.45
+        value: amount
       },
       color: {
         type: "c",
-        value: color,
+        value: color
       },
       borderWidth: {
         type: "f",
@@ -608,7 +610,7 @@ class MyMaze extends THREE.Object3D {
       },
       borderColor: {
         type: "c",
-        value: new THREE.Color(0xc6c6c6),
+        value: new THREE.Color(0xc6c6c6)
       },
       blur: {
         type: "f",
@@ -620,7 +622,7 @@ class MyMaze extends THREE.Object3D {
     var shaderMaterial = new THREE.ShaderMaterial({
       uniforms : uniforms,
       vertexShader : vertexShader,
-      fragmentShader : fragmentShader,
+      fragmentShader : fragmentShader
     });
 
     return shaderMaterial;
