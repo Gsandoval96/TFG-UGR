@@ -9,9 +9,6 @@ class MyGame extends THREE.Object3D {
 		this.title = new MyTitle(titlePos, 5, false);
 		//this.add(this.title);
 
-		// Score
-		this.score = 0;
-
 		// Ghost and Pacman
 
 		this.charactersSpawnPosition = [];
@@ -37,7 +34,7 @@ class MyGame extends THREE.Object3D {
 
 		// Score
 		this.score = 0;
-		//console.log("SCORE: ", this.score);
+		console.log("SCORE: ", this.score);
 
 	}
 
@@ -92,8 +89,8 @@ class MyGame extends THREE.Object3D {
 
 		if(tyleTipe == 2){ //Standing on dot
 			this.maze.removeDot(pos);
-			this.score += 1;
-			//console.log("SCORE: ", this.score);
+			this.score += 10;
+			console.log("SCORE: ", this.score);
 		}
 		else if(tyleTipe == 3){ //Standing on a pill
 			this.maze.removeDot(pos);
@@ -146,6 +143,8 @@ class MyGame extends THREE.Object3D {
 					}
 					else if(this.characters[i].behaviour == "scape"){
 						this.characters[i].returnHome();
+						this.score += 1000;
+						console.log("SCORE: ", this.score);
 					}
 				}
 			}
