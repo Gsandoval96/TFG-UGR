@@ -153,12 +153,10 @@ class MyGhost extends MyCharacter {
   }
 
   startUpdatingPaths(){
-    var origin = { p : 1 } ;
-		var destiny = { p : 2 } ;
 		var that = this;
 
 		this.updatePaths = new TWEEN.Tween(origin)
-			.to(destiny, that.updatePathTime)
+			.duration(that.updatePathTime)
 			.onRepeat (function(){
 				if(that.behaviour == "chase"){
 					that.path = null;

@@ -59,13 +59,11 @@ class MyGame extends THREE.Object3D {
 			this.add(character);
 		}
 
-		var origin = { p : 1 } ;
-		var destiny = { p : 2 } ;
 		var val = 2;
 		var that = this;
 
 		this.leaveBox = new TWEEN.Tween(origin)
-			.to(destiny, 5000) //5 segundos
+			.duration(5000) //5 segundos
 			.onRepeat (function(){
 				that.characters[val].changeBehaviour("chase");
 				val = val + 1;
