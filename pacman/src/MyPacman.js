@@ -134,16 +134,7 @@ class MyPacman extends MyCharacter {
             if(validRotation){
 
               if(!(this.dirX == -this.dirBuffer.x || this.dirZ == -this.dirBuffer.y )){
-                let pos = new THREE.Vector2(this.getPosition().x / MyConstant.BOX_SIZE, this.getPosition().z / MyConstant.BOX_SIZE);
-           			let dir = new THREE.Vector2(this.dirX, this.dirZ);
-
-
-
-           			pos = this.adjustPosition(pos, dir);
-
-                this.model.position.set(pos.x * MyConstant.BOX_SIZE, this.getPosition().y, pos.y* MyConstant.BOX_SIZE);
-                var hitbox_pos = new THREE.Vector3( this.model.position.x, this.model.position.y, this.model.position.z );
-            	  this.hitbox.setFromCenterAndSize(hitbox_pos, this.hitbox_size);
+                this.adjustPosition();
               }
 
               this.rotate(this.dirBuffer);

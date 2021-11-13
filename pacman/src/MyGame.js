@@ -14,14 +14,14 @@ class MyGame extends THREE.Object3D {
 
 		// Ghost and Pacman
 
-		this.charactersPosition = [];
+		this.charactersSpawnPosition = [];
 
 		var pacmanPos = new THREE.Vector3(14, 0, 22);
-		this.charactersPosition.push(pacmanPos);
+		this.charactersSpawnPosition.push(pacmanPos);
 
 		for (var i = 0; i < 4; i++) {
 			var position = new THREE.Vector3(13+i, 0, 13);
-			this.charactersPosition.push(position);
+			this.charactersSpawnPosition.push(position);
 		}
 
 		this.characters = [];
@@ -43,14 +43,14 @@ class MyGame extends THREE.Object3D {
 
 	createCharacters(){
 		var pacmanDir = new THREE.Vector2(1,0);
-		var pacman = new MyPacman(this.charactersPosition[0], MyConstant.CHARACTER_SIZE, pacmanDir);
+		var pacman = new MyPacman(this.charactersSpawnPosition[0], MyConstant.CHARACTER_SIZE, pacmanDir);
 		this.characters.push(pacman);
 
 		var ghostMaterial = [MyMaterial.RED_GHOST, MyMaterial.PINK_GHOST, MyMaterial.BLUE_GHOST, MyMaterial.ORANGE_GHOST];
 
 		var direction = new THREE.Vector2(0,1);
 		for (var i = 0; i < 4; i++) {
-			var ghost = new MyGhost(this.charactersPosition[i+1], MyConstant.CHARACTER_SIZE, direction, ghostMaterial[i]);
+			var ghost = new MyGhost(this.charactersSpawnPosition[i+1], MyConstant.CHARACTER_SIZE, direction, ghostMaterial[i]);
 			this.characters.push(ghost);
 			if(i!=0) this.characters[i+1].behaviour = "freeze";
 		}
@@ -84,7 +84,7 @@ class MyGame extends THREE.Object3D {
 		let dir = new THREE.Vector2(this.characters[0].dirX, this.characters[0].dirZ);
 
 
-		pos = this.characters[0].adjustPosition(pos, dir);
+		pos = this.characters[0].adjustedPosition(pos, dir);
 		this.characters[0].setNeightbors(this.maze.getNeighbors(pos)); // Actualizamos los vecinos de pacman
 
 		let tyleTipe = this.maze.getTileType(pos);
@@ -112,7 +112,7 @@ class MyGame extends THREE.Object3D {
 			let pos = new THREE.Vector2(character.getPosition().x / MyConstant.BOX_SIZE, character.getPosition().z / MyConstant.BOX_SIZE);
 			let dir = new THREE.Vector2(character.dirX, character.dirZ);
 
-			pos = character.adjustPosition(pos, dir);
+			pos = character.adjustedPosition(pos, dir);
 
 			if(this.maze.checkCollision(character.getCollisionBox(), pos, dir)){
 				let collisionType = this.maze.collisionType(pos, dir);
@@ -162,7 +162,7 @@ class MyGame extends THREE.Object3D {
 				let pos = new THREE.Vector2(character.getPosition().x / MyConstant.BOX_SIZE, character.getPosition().z / MyConstant.BOX_SIZE);
 				let dir = new THREE.Vector2(character.dirX, character.dirZ);
 
-				pos = character.adjustPosition(pos, dir);
+				pos = character.adjustedPosition(pos, dir);
 
 				// Copia en profundida de la info del laberinto
 				var ghostMaze = [...this.maze.mazeData];
@@ -182,7 +182,7 @@ class MyGame extends THREE.Object3D {
 				var pPos = new THREE.Vector2(this.characters[0].getPosition().x / MyConstant.BOX_SIZE, this.characters[0].getPosition().z / MyConstant.BOX_SIZE);
 				var pDir = new THREE.Vector2(this.characters[0].dirX, this.characters[0].dirZ);
 
-				pPos = this.characters[0].adjustPosition(pPos, pDir);
+				pPos = this.characters[0].adjustedPosition(pPos, pDir);
 
 				//choose end
 				var end;
