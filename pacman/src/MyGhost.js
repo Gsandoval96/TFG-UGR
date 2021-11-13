@@ -112,8 +112,12 @@ class MyGhost extends MyCharacter {
 				var newDir = new THREE.Vector2(newDirX, newDirZ);
 				this.rotate(newDir);
 			}
+      //Si ha acabado la ruta de volver a casa
+      else if(this.behaviour == "return"){
+        console.log("REVIVIENDO", this.material);
+        this.revive();
+      }
 		}
-
 	}
 
 	scare(){
@@ -121,6 +125,12 @@ class MyGhost extends MyCharacter {
 		this.behaviour = "scape";
 		this.path = null;
 	}
+
+  revive(){
+    this.changeColor(this.material);
+    this.behaviour = "chase";
+    this.path = null;
+  }
 
   returnHome(){
 		this.changeColor(MyMaterial.INVISIBLE);
@@ -142,7 +152,7 @@ class MyGhost extends MyCharacter {
 
 	update(){
     //this.status = "freeze";
-		if(this.behaviour != "freeze"){
+		if(this.behaviour != "freeze" && this.behaviour != "home"){
 		  this.executePath();
 		  super.update();
 		  TWEEN.update();

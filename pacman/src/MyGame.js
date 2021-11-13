@@ -52,7 +52,7 @@ class MyGame extends THREE.Object3D {
 		for (var i = 0; i < 4; i++) {
 			var ghost = new MyGhost(this.charactersSpawnPosition[i+1], MyConstant.CHARACTER_SIZE, direction, ghostMaterial[i]);
 			this.characters.push(ghost);
-			if(i!=0) this.characters[i+1].behaviour = "freeze";
+			if(i!=0) this.characters[i+1].behaviour = "home";
 		}
 
 		for (var character of this.characters) {
@@ -97,9 +97,10 @@ class MyGame extends THREE.Object3D {
 		else if(tyleTipe == 3){ //Standing on a pill
 			this.maze.removeDot(pos);
 
-			for(let character of this.characters){
-				if(character != this.characters[0] && character.behaviour != "freeze")
-					character.scare();
+			for (var i = 1; i < 5; i++) {
+				if(this.characters[i].behaviour != "home" && this.characters[i].behaviour != "return"){
+					this.characters[i].scare();
+				}
 			}
 		}
 	}
@@ -132,19 +133,19 @@ class MyGame extends THREE.Object3D {
 		}
 
 		//Colisión de los fantasmas con Pacman
-		var collided = false;
-		for(var i = 1; i<5 && !collided; i++){
-			if(this.characters[i].hitbox.intersectsBox(this.characters[0].hitbox)){
-				collided = true;
-				if(this.characters[i].behaviour == "chase"){
-					for(var j = 1; j<5; j++){
-						this.characters[j].behaviour = "freeze";
+		for(var i = 1; i<5; i++){
+			if(this.characters[i].behaviour != "return"){
+				if(this.characters[i].hitbox.intersectsBox(this.characters[0].hitbox)){
+					//console.log(i, " -- ", this.characters[i].behaviour);
+					if(this.characters[i].behaviour == "chase"){
+						for(var j = 1; j<5; j++){
+							this.characters[j].behaviour = "freeze";
+						}
+						this.characters[0].die();
 					}
-					this.characters[0].die();
-				}
-				else if(this.characters[i].behaviour == "scape"){
-					console.log(i);
-					this.characters[i].returnHome();
+					else if(this.characters[i].behaviour == "scape"){
+						this.characters[i].returnHome();
+					}
 				}
 			}
 		}
@@ -154,7 +155,7 @@ class MyGame extends THREE.Object3D {
 	moveAI(){
 		for(var i = 1; i < this.characters.length; i++){
 			var character = this.characters[i];
-			if(character.path == null && character.behaviour != "freeze"){
+			if(character.path == null && (character.behaviour != "freeze" && character.behaviour != "home")){
 				if(MyConstant.SHOW_PATH){
 					this.maze.clearColor(character.material);
 				}
@@ -194,8 +195,7 @@ class MyGame extends THREE.Object3D {
 					end = graph.grid[random.x][random.y];
 				}
 				else if (character.behaviour == "return") {
-					let home = this.charactersPosition[i];
-					end = graph.grid[home.x][home.z];
+					end = graph.grid[this.charactersSpawnPosition[i].z][this.charactersSpawnPosition[i].x];
 				}
 
 				var result = astar.search(graph, start, end);
