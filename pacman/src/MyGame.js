@@ -55,22 +55,12 @@ class MyGame extends THREE.Object3D {
 		for (var character of this.characters) {
 			this.add(character);
 		}
-
-		var val = 2;
-		var that = this;
-
-		this.leaveBox = new TWEEN.Tween(origin)
-			.duration(5000) //5 segundos
-			.onRepeat (function(){
-				that.characters[val].changeBehaviour("chase");
-				val = val + 1;
-			})
-			.repeat(3)
-			.start();
 	}
 
 	startGame(){
 		this.start = true;
+
+		this.startLeaveBoxAnimation();
 
 		for (var i = 0; i < 4; i++) {
 			this.characters[i+1].startUpdatingPaths();
@@ -220,7 +210,7 @@ class MyGame extends THREE.Object3D {
 
 	respawn(){
 
-		this.leaveBox.stop(); //Paramos la salida escalonada de los fantasmas
+		this.leaveBoxAnimation.stop(); //Paramos la salida escalonada de los fantasmas
 
 		for(var i = 0; i < 5; i++){
 			this.remove(this.characters[0]);
@@ -228,6 +218,21 @@ class MyGame extends THREE.Object3D {
 		}
 
 		this.createCharacters();
+		this.startLeaveBoxAnimation();
+	}
+
+	startLeaveBoxAnimation(){
+		var val = 2;
+		var that = this;
+
+		this.leaveBoxAnimation = new TWEEN.Tween(origin)
+			.duration(5000) //5 segundos
+			.onRepeat (function(){
+				that.characters[val].changeBehaviour("chase");
+				val = val + 1;
+			})
+			.repeat(3)
+			.start();
 	}
 
 	update(){
