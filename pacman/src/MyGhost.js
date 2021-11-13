@@ -178,10 +178,15 @@ class MyGhost extends MyCharacter {
   }
 
   startInvencibleAnimation(){
+    if(this.invencibleStartingAnimation != undefined){
+      this.invencibleStartingAnimation.stop();
+      this.invencibleEndingAnimation.stop();
+    }
+
 		var that = this;
 
 		this.invencibleStartingAnimation = new TWEEN.Tween(origin)
-			.duration(10000) //10 segundos
+			.duration(15000) //15 segundos
 			.onComplete (function(){
 				that.invencibleEndingAnimation.start();
       })
