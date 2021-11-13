@@ -52,7 +52,7 @@ class MyGame extends THREE.Object3D {
 		for (var i = 0; i < 4; i++) {
 			var ghost = new MyGhost(this.charactersPosition[i+1], MyConstant.CHARACTER_SIZE, direction, ghostMaterial[i]);
 			this.characters.push(ghost);
-			if(i!=0) this.characters[i+1].behaviour = "freeze"; //BORRAR
+			if(i!=0) this.characters[i+1].behaviour = "freeze";
 		}
 
 		for (var character of this.characters) {
@@ -98,7 +98,7 @@ class MyGame extends THREE.Object3D {
 			this.maze.removeDot(pos);
 
 			for(let character of this.characters){
-				if(character != this.characters[0])
+				if(character != this.characters[0] && character.behaviour != "freeze")
 					character.scare();
 			}
 		}
@@ -131,14 +131,21 @@ class MyGame extends THREE.Object3D {
 			}
 		}
 
-		var haunted = false;
-		for(var i = 1; i<5 && !haunted; i++){
+		//Colisión de los fantasmas con Pacman
+		var collided = false;
+		for(var i = 1; i<5 && !collided; i++){
 			if(this.characters[i].hitbox.intersectsBox(this.characters[0].hitbox)){
-				haunted = true;
-				for(var j = 1; j<5; j++){
-					this.characters[j].behaviour = "freeze";
+				collided = true;
+				if(this.characters[i].behaviour == "chase"){
+					for(var j = 1; j<5; j++){
+						this.characters[j].behaviour = "freeze";
+					}
+					this.characters[0].die();
 				}
-				this.characters[0].die();
+				else if(this.characters[i].behaviour == "scape"){
+					console.log(i);
+					this.characters[i].returnHome();
+				}
 			}
 		}
 
@@ -186,6 +193,11 @@ class MyGame extends THREE.Object3D {
 				else if (character.behaviour == "scape") {
 					end = graph.grid[random.x][random.y];
 				}
+				else if (character.behaviour == "return") {
+					let home = this.charactersPosition[i];
+					end = graph.grid[home.x][home.z];
+				}
+
 				var result = astar.search(graph, start, end);
 
 				if(result.length == 0) result = null;

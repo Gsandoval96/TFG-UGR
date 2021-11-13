@@ -122,6 +122,12 @@ class MyGhost extends MyCharacter {
 		this.path = null;
 	}
 
+  returnHome(){
+		this.changeColor(MyMaterial.INVISIBLE);
+		this.behaviour = "return";
+		this.path = null;
+	}
+
 	changeColor(material){
 		this.cylinder.material = material;
 		this.sphere.material = material;
