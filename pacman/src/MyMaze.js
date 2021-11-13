@@ -594,6 +594,13 @@ class MyMaze extends THREE.Object3D {
     color.setHSL(Math.random(), hsl.s, hsl.l);
 
 		var amount = (Math.random() * (0.5 - 0.25) + 0.25);
+		let a1 = (Math.random() * (150.0 - 75.0) + 150.0);
+		let a2 = (Math.random() * (350.0 - 200.0) + 350.0);
+		let b1 = (Math.random() * (150.0 - 75.0) + 150.0);
+		let b2 = (Math.random() * (350.0 - 200.0) + 350.0);
+		var vecA = new THREE.Vector2(a1, a2);
+		var vecB = new THREE.Vector2(b1, b2);
+
 
     var uniforms = {
       amount: {
@@ -615,8 +622,16 @@ class MyMaze extends THREE.Object3D {
       blur: {
         type: "f",
         value: 0.0
-      }
-    };
+      },
+			vecA:{
+				type: "f",
+				value: vecA
+			},
+			vecB:{
+				type: "f",
+				value: vecB
+			}
+		};
     var vertexShader = document.getElementById('vertexShader').text;
     var fragmentShader = document.getElementById('fragmentShader').text;
     var shaderMaterial = new THREE.ShaderMaterial({

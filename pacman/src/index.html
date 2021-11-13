@@ -87,13 +87,15 @@ uniform vec3 borderColor;
 uniform float borderWidth;
 uniform float blur;
 uniform float amount;
+uniform vec2 vecA;
+uniform vec2 vecB;
 
 vec2 hash2( vec2 p )
 {
   // procedural noise
 
-  p = vec2(dot(p, vec2(127.1,311.7)), dot(p, vec2(113.5,271.9)));
-	return fract(sin(p) * 10.5453123);
+  p = vec2(dot(p, vecA), dot(p, vecB));
+	return fract(sin(p) * 43758.5453);
 }
 
 vec3 voronoi( in vec2 x )
