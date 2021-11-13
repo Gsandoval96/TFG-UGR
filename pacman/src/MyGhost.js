@@ -127,12 +127,14 @@ class MyGhost extends MyCharacter {
 	}
 
   revive(){
+    this.speed = this.speed / 2;
     this.changeColor(this.material);
     this.behaviour = "chase";
     this.path = null;
   }
 
   returnHome(){
+    this.speed = this.speed * 2;
 		this.changeColor(MyMaterial.INVISIBLE);
 		this.behaviour = "return";
 		this.path = null;
