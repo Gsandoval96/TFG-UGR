@@ -121,6 +121,7 @@ class MyGhost extends MyCharacter {
 	}
 
 	scare(){
+    this.startInvencibleAnimation();
 		this.changeColor(MyMaterial.BLUE);
 		this.behaviour = "scape";
 		this.path = null;
@@ -128,12 +129,17 @@ class MyGhost extends MyCharacter {
 
   revive(){
     this.speed = this.speed / 2;
+    this.chase();
+  }
+
+  chase(){
     this.changeColor(this.material);
     this.behaviour = "chase";
     this.path = null;
   }
 
   returnHome(){
+    this.stopInvencibleAnimation();
     this.speed = this.speed * 2;
 		this.changeColor(MyMaterial.INVISIBLE);
 		this.behaviour = "return";
@@ -165,6 +171,41 @@ class MyGhost extends MyCharacter {
 			.repeat(Infinity)
 			.start();
   }
+
+  stopInvencibleAnimation(){
+    this.invencibleStartingAnimation.stop();
+    this.invencibleEndingAnimation.stop();
+  }
+
+  startInvencibleAnimation(){
+		var that = this;
+
+		this.invencibleStartingAnimation = new TWEEN.Tween(origin)
+			.duration(10000) //10 segundos
+			.onComplete (function(){
+				that.invencibleEndingAnimation.start();
+      })
+			.start();
+
+		var that = this;
+    var val = 1;
+
+		this.invencibleEndingAnimation = new TWEEN.Tween(origin)
+			.duration(500) //0.5 segundos
+			.onRepeat (function(){
+        if(val % 2 == 0){
+          that.changeColor(MyMaterial.BLUE);
+        }
+        else{
+          that.changeColor(MyMaterial.WHITE);
+        }
+				val = val + 1;
+      })
+			.onComplete (function(){
+				that.chase();
+      })
+      .repeat(9);
+	}
 
 	update(){
     //this.status = "freeze";
