@@ -4,6 +4,7 @@ class MyMaze extends THREE.Object3D {
 		super();
 
 		this.shaderMaterial = this.createShaderMaterial();
+		this.dotNumber = 0;
 
 		this.mazeData = this.mazeGenerator();
 		// Default Map 31x28
@@ -66,11 +67,13 @@ class MyMaze extends THREE.Object3D {
 						cube = new MyTile(position, "dot", cubeSize, false);
 						validPosition = new THREE.Vector2(i, j);
 						this.validPositions.push(validPosition);
+						this.dotNumber += 1;
 					break;
 					case 3:
 						cube = new MyTile(position, "pill", cubeSize, false);
 						validPosition = new THREE.Vector2(i, j);
 						this.validPositions.push(validPosition);
+						this.dotNumber += 1;
 					break;
 					case 4:
 						cube = new MyTile(position, "teleport", cubeSize, true);
@@ -471,6 +474,10 @@ class MyMaze extends THREE.Object3D {
 		return this.validPositions[random];
 	}
 
+	getDotNumber(){
+		return this.dotNumber;
+	}
+
 	clearColor(material){
 		for(var i = 0; i < MyConstant.MAZE_HEIGHT; i++){
 			for(var j = 0; j < MyConstant.MAZE_WIDTH; j++){
@@ -555,6 +562,7 @@ class MyMaze extends THREE.Object3D {
 		var cubeSize = this.children[pos_check].size;
 		this.children[pos_check].remove(this.children[pos_check].dot); //Elimina el punto
 		this.mazeData[pos.y][pos.x] = 1;
+		this.dotNumber -= 1;
 	}
 
 	checkCollision(hitbox, pos, dir){

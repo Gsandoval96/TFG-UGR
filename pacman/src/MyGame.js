@@ -31,8 +31,9 @@ class MyGame extends THREE.Object3D {
 		this.maze = new MyMaze(MyConstant.BOX_SIZE);
 		this.add(this.maze);
 
-		// Score
+		// Score & Level
 		this.score = 0;
+		this.level = 1;
 
     this.fontURL = '../fonts/helvetiker_regular.typeface.json';
 
@@ -43,6 +44,14 @@ class MyGame extends THREE.Object3D {
     this.scoreValueTextPosition = new THREE.Vector3(40,27,-100);
     this.scoreValueText = new MyText(this.scoreValueTextPosition,this.score.toString(),2,MyMaterial.WHITE,this.fontURL);
 		this.camera.add(this.scoreValueText);
+
+		var levelTextPosition = new THREE.Vector3(40,37,-100);
+    this.levelText = new MyText(levelTextPosition,'LEVEL',2,MyMaterial.WHITE,this.fontURL);
+		this.camera.add(this.levelText);
+
+    this.levelValueTextPosition = new THREE.Vector3(40,34,-100);
+    this.levelValueText = new MyText(this.levelValueTextPosition,this.level.toString(),2,MyMaterial.WHITE,this.fontURL);
+		this.camera.add(this.levelValueText);
 	}
 
 	createCharacters(){
@@ -223,6 +232,12 @@ class MyGame extends THREE.Object3D {
 		this.camera.add(this.scoreValueText);
 	}
 
+	updateLevelValueText(){
+		this.camera.remove(this.levelValueText);
+		this.levelValueText = new MyText(this.levelValueTextPosition,this.level.toString(),2,MyMaterial.WHITE,this.fontURL);
+		this.camera.add(this.levelValueText);
+	}
+
 	respawn(){
 
 		this.leaveBoxAnimation.stop(); //Paramos la salida escalonada de los fantasmas
@@ -250,11 +265,24 @@ class MyGame extends THREE.Object3D {
 			.start();
 	}
 
+	nextLevel(){
+		this.level += 1;
+		this.updateLevelValueText();
+		this.remove(this.maze);
+		this.maze = new MyMaze(MyConstant.BOX_SIZE);
+		this.add(this.maze);
+		this.respawn();
+	}
+
 	update(){
 		if(this.start && this.characters[0].status == "alive"){
 			this.moveAI();
 			this.collisionManager();
 			this.controlTile();
+
+			if(this.maze.getDotNumber() == 0){
+				this.nextLevel();
+			}
 		}
 		else if(this.characters[0].status == "dead"){
 			this.respawn();
