@@ -13,7 +13,7 @@ class MyScene extends THREE.Scene {
 		this.camera = 1;
 
 		// Creamos el tablero y lo añadimos a la escena
-		this.game = new MyGame();
+		this.game = new MyGame(this.topCam);
 		//this.add (this.game);
 
 		this.menu = new MyMenu();

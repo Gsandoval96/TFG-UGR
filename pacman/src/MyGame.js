@@ -1,6 +1,8 @@
 class MyGame extends THREE.Object3D {
-	constructor(){
+	constructor(camera){
 		super();
+
+		this.camera = camera;
 
 		this.start = false;
 
@@ -24,9 +26,6 @@ class MyGame extends THREE.Object3D {
 		this.characters = [];
 		this.createCharacters();
 
-
-
-
 		// Maze
 
 		this.maze = new MyMaze(MyConstant.BOX_SIZE);
@@ -34,8 +33,16 @@ class MyGame extends THREE.Object3D {
 
 		// Score
 		this.score = 0;
-		console.log("SCORE: ", this.score);
 
+    this.fontURL = '../fonts/helvetiker_regular.typeface.json';
+
+		var scoreTextPosition = new THREE.Vector3(40,30,-100);
+    this.scoreText = new MyText(scoreTextPosition,'SCORE',2,MyMaterial.WHITE,this.fontURL);
+		this.camera.add(this.scoreText);
+
+    this.scoreValueTextPosition = new THREE.Vector3(40,27,-100);
+    this.scoreValueText = new MyText(this.scoreValueTextPosition,this.score.toString(),2,MyMaterial.WHITE,this.fontURL);
+		this.camera.add(this.scoreValueText);
 	}
 
 	createCharacters(){
@@ -80,7 +87,7 @@ class MyGame extends THREE.Object3D {
 		if(tyleTipe == 2){ //Standing on dot
 			this.maze.removeDot(pos);
 			this.score += 10;
-			console.log("SCORE: ", this.score);
+			this.updateScoreValueText();
 		}
 		else if(tyleTipe == 3){ //Standing on a pill
 			this.maze.removeDot(pos);
@@ -116,6 +123,8 @@ class MyGame extends THREE.Object3D {
 
 				if(character != this.characters[0]){ //No debería ocurrir nunca, pero para prevenir errores
     				character.path = null;
+						//character.adjustPosition();
+						console.log("BLOQUEADO");
 				}
 			}
 		}
@@ -134,7 +143,7 @@ class MyGame extends THREE.Object3D {
 					else if(this.characters[i].behaviour == "scape"){
 						this.characters[i].returnHome();
 						this.score += 1000;
-						console.log("SCORE: ", this.score);
+						this.updateScoreValueText();
 					}
 				}
 			}
@@ -206,6 +215,12 @@ class MyGame extends THREE.Object3D {
 			}
 		}
 
+	}
+
+	updateScoreValueText(){
+		this.camera.remove(this.scoreValueText);
+		this.scoreValueText = new MyText(this.scoreValueTextPosition,this.score.toString(),2,MyMaterial.WHITE,this.fontURL);
+		this.camera.add(this.scoreValueText);
 	}
 
 	respawn(){
