@@ -22,8 +22,8 @@ class MyTile extends THREE.Object3D {
 
     }
 
-    var geometry = new THREE.PlaneGeometry( size-edgeSize, size - edgeSize )
-    this.square = new THREE.Mesh(geometry, MyMaterial.INVISIBLE);
+    this.pathGeom = new THREE.PlaneGeometry( size-edgeSize, size - edgeSize )
+    this.square = new THREE.Mesh(this.pathGeom, MyMaterial.INVISIBLE);
     this.square.rotation.x = -Math.PI/2;
     this.square.position.set(position.x, position.y-size/2, position.z);
     this.add (this.square);
@@ -50,18 +50,27 @@ class MyTile extends THREE.Object3D {
     this.dot;
     switch (type) {
       case "dot":
-        var sphereGeom = new THREE.SphereGeometry( size/6, 20.0, 20.0);
-        this.dot = new THREE.Mesh (sphereGeom, MyMaterial.WHITE);
+        this.sphereGeom = new THREE.SphereGeometry( size/6, 20.0, 20.0);
+        this.dot = new THREE.Mesh (this.sphereGeom, MyMaterial.WHITE);
         this.dot.position.set(position.x, position.y, position.z);
         this.add(this.dot);
       break;
       case "pill":
-        var sphereGeom = new THREE.SphereGeometry( size/3, 20.0, 20.0);
-        this.dot = new THREE.Mesh (sphereGeom, MyMaterial.WHITE);
+        this.sphereGeom = new THREE.SphereGeometry( size/3, 20.0, 20.0);
+        this.dot = new THREE.Mesh (this.sphereGeom, MyMaterial.WHITE);
         this.dot.position.set(position.x, position.y, position.z);
         this.add(this.dot);
       break;
     }
+  }
+
+  dispose(){
+    //console.log(this.children);
+    this.pathGeom.dispose();
+    if(this.sphereGeom != undefined){
+      this.sphereGeom.dispose();
+    }
+    this.cube.dispose();
   }
 
   getCollisionBox(){

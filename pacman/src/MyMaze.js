@@ -88,6 +88,13 @@ class MyMaze extends THREE.Object3D {
 		}
 	}
 
+	dispose(){
+		var val = 0;
+		for (var children of this.children) {
+			children.dispose();
+		}
+	}
+
 	pieceGenerator(row, col, map){
 
 		var cell = [1,1];

@@ -7,10 +7,10 @@ class MyCube extends THREE.Object3D {
     //var SIZE = 1;
 
     // Creamos la geometría y la colocamos en el 0,0,0
-    var boxGeom = new THREE.BoxGeometry (size,size,size);
+    this.boxGeom = new THREE.BoxGeometry (size,size,size);
 
     // Ya podemos construir el Mesh
-    this.box = new THREE.Mesh (boxGeom, material);
+    this.box = new THREE.Mesh (this.boxGeom, material);
 
 	 this.box.position.set(pos.x, pos.y, pos.z);
 
@@ -18,5 +18,9 @@ class MyCube extends THREE.Object3D {
     this.add (this.box);
 
 
+  }
+
+  dispose(){
+    this.boxGeom.dispose();
   }
 }

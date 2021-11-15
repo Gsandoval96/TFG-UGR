@@ -275,9 +275,12 @@ class MyGame extends THREE.Object3D {
 	nextLevel(){
 		this.level += 1;
 		this.updateLevelValueText();
+
 		this.remove(this.maze);
+		this.maze.dispose();
 		this.maze = new MyMaze(MyConstant.BOX_SIZE);
 		this.add(this.maze);
+		
 		this.respawn();
 	}
 
