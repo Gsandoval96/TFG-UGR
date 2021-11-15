@@ -227,15 +227,21 @@ class MyGame extends THREE.Object3D {
 	}
 
 	updateScoreValueText(){
-		this.camera.remove(this.scoreValueText);
-		this.scoreValueText = new MyText(this.scoreValueTextPosition,this.score.toString(),2,MyMaterial.WHITE,this.fontURL);
-		this.camera.add(this.scoreValueText);
+		if(this.scoreValueText != undefined){
+			this.camera.remove(this.scoreValueText);
+			this.scoreValueText.dispose();
+			this.scoreValueText = new MyText(this.scoreValueTextPosition,this.score.toString(),2,MyMaterial.WHITE,this.fontURL);
+			this.camera.add(this.scoreValueText);
+		}
 	}
 
 	updateLevelValueText(){
-		this.camera.remove(this.levelValueText);
-		this.levelValueText = new MyText(this.levelValueTextPosition,this.level.toString(),2,MyMaterial.WHITE,this.fontURL);
-		this.camera.add(this.levelValueText);
+		if(this.levelValueText != undefined){
+			this.camera.remove(this.levelValueText);
+			this.levelValueText.dispose();
+			this.levelValueText = new MyText(this.levelValueTextPosition,this.level.toString(),2,MyMaterial.WHITE,this.fontURL);
+			this.camera.add(this.levelValueText);
+		}
 	}
 
 	respawn(){
