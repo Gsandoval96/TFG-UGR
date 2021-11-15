@@ -16,16 +16,16 @@ class MyPacman extends MyCharacter {
 
 	this.sphereGeom = new THREE.SphereGeometry(size, 20.0, 20.0, 0.0, Math.PI);
 	this.circleGeom = new THREE.CircleGeometry(size, 20.0, 0.0, Math.PI);
-  var material = MyMaterial.YELLOW;
-	//material.side = THREE.DoubleSide;
+  this.material = MyMaterial.YELLOW;
+	//this.material.side = THREE.DoubleSide;
 
   // Ya podemos construir el Mesh de la parte superior
-  this.upSphere = new THREE.Mesh (this.sphereGeom, material);
+  this.upSphere = new THREE.Mesh (this.sphereGeom, this.material);
 	this.upSphere.rotation.y = Math.PI ;
 	this.upSphere.rotation.x = Math.PI /2 ;
 	this.upSphere.rotation.z = Math.PI;
 
-	this.upCircle = new THREE.Mesh (this.circleGeom, material);
+	this.upCircle = new THREE.Mesh (this.circleGeom, this.material);
 	this.upCircle.rotation.x = Math.PI / 2;
 	this.upCircle.rotation.z = -Math.PI / 2;
 
@@ -34,10 +34,10 @@ class MyPacman extends MyCharacter {
 	this.upHalf.add(this.upCircle);
 
 	// // Ya podemos construir el Mesh
-	this.downSphere = new THREE.Mesh (this.sphereGeom, material);
+	this.downSphere = new THREE.Mesh (this.sphereGeom, this.material);
 	this.downSphere.rotation.x = Math.PI /2 ;
 
-	this.downCircle = new THREE.Mesh (this.circleGeom, material);
+	this.downCircle = new THREE.Mesh (this.circleGeom, this.material);
 	this.downCircle.rotation.x = 3 * Math.PI / 2;
 	this.downCircle.rotation.z = -Math.PI / 2;
 
@@ -55,6 +55,9 @@ class MyPacman extends MyCharacter {
 
     //Animaciones con TWEEN
     if(this.animated){
+      if(this.moveAnimation != undefined){
+        this.moveAnimation.stop();
+      }
       var origin = { p : 0 } ;
       var destiny = { p : Math.PI/4 } ;
       var that = this;
@@ -62,7 +65,10 @@ class MyPacman extends MyCharacter {
       this.moveAnimation = new TWEEN.Tween(origin)
         .to(destiny, 200) //0.2 segundo
         .onUpdate (function(){
-			  that.crearNuevo(size,origin.p);
+          that.upSphere.rotation.y = origin.p + Math.PI;
+          that.upCircle.rotation.y = origin.p;
+          that.downSphere.rotation.y = -origin.p;
+          that.downCircle.rotation.y = origin.p;
         })
         .repeat(Infinity)
         .yoyo(true)
@@ -70,7 +76,7 @@ class MyPacman extends MyCharacter {
     }
   }
 
-	deathAnimation(){
+	startDeathAnimation(){
 		var origin = { p : 0 } ;
 		var destiny = { p : Math.PI } ;
 		var that = this;
@@ -89,22 +95,22 @@ class MyPacman extends MyCharacter {
    dispose(){
      this.sphereGeom.dispose();
    	 this.circleGeom.dispose();
+     this.material.dispose();
    }
 
 	die(){
 		if(this.status != "dying"){
 			this.moveAnimation.stop();
 			this.status = "dying";
-			this.deathAnimation();
+			this.startDeathAnimation();
 		}
 	}
 
 	crearNuevo(size,rot){
+    this.sphereGeom.dispose();
 		this.sphereGeom = new THREE.SphereGeometry(size, 20.0, 20.0, 0.0, Math.PI - rot);
-		this.upSphere.geometry.dispose();
     this.upSphere.geometry = this.sphereGeom;
 		this.upCircle.rotation.y = rot;
-    this.downSphere.geometry.dispose();
 		this.downSphere.geometry = this.sphereGeom;
 		this.downCircle.rotation.y = rot;
 	}
