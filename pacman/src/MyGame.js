@@ -227,6 +227,7 @@ class MyGame extends THREE.Object3D {
 	}
 
 	updateScoreValueText(){
+<<<<<<< HEAD
 		if(this.scoreValueText != undefined){
 			this.camera.remove(this.scoreValueText);
 			this.scoreValueText.dispose();
@@ -242,6 +243,19 @@ class MyGame extends THREE.Object3D {
 			this.levelValueText = new MyText(this.levelValueTextPosition,this.level.toString(),2,MyMaterial.WHITE,this.fontURL);
 			this.camera.add(this.levelValueText);
 		}
+=======
+		this.camera.remove(this.scoreValueText);
+		this.scoreValueText.dispose();
+		this.scoreValueText = new MyText(this.scoreValueTextPosition,this.score.toString(),2,MyMaterial.WHITE,this.fontURL);
+		this.camera.add(this.scoreValueText);
+	}
+
+	updateLevelValueText(){
+		this.camera.remove(this.levelValueText);
+		this.levelValueText.dispose();
+		this.levelValueText = new MyText(this.levelValueTextPosition,this.level.toString(),2,MyMaterial.WHITE,this.fontURL);
+		this.camera.add(this.levelValueText);
+>>>>>>> refs/remotes/origin/master
 	}
 
 	respawn(){
