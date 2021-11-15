@@ -250,6 +250,7 @@ class MyGame extends THREE.Object3D {
 
 		for(var i = 0; i < 5; i++){
 			this.remove(this.characters[0]);
+			this.characters[0].dispose();
 			this.characters.shift();
 		}
 
