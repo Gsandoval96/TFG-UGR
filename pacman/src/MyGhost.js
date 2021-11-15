@@ -10,31 +10,31 @@ class MyGhost extends MyCharacter {
 
 	this.path = null;
 
-	var sphereGeom = new THREE.SphereGeometry(size * 4/5, 20.0, 20.0, 0.0, Math.PI);
-	var eyeGeom = new THREE.SphereGeometry(size * 6/25, 20.0, 20.0, 0.0);
-	var pupilGeom = new THREE.SphereGeometry(size * 2/25, 20.0, 20.0, 0.0);
-	var cylinderGeom = new THREE.CylinderGeometry(size * 4/5, size * 4/5, size*4/3, 20.0);
-   this.material = material;
+	this.sphereGeom = new THREE.SphereGeometry(size * 4/5, 20.0, 20.0, 0.0, Math.PI);
+	this.eyeGeom = new THREE.SphereGeometry(size * 6/25, 20.0, 20.0, 0.0);
+	this.pupilGeom = new THREE.SphereGeometry(size * 2/25, 20.0, 20.0, 0.0);
+	this.cylinderGeom = new THREE.CylinderGeometry(size * 4/5, size * 4/5, size*4/3, 20.0);
+  this.material = material;
 	//material.side = THREE.DoubleSide;
 
-   // Ya podemos construir el Mesh de la parte superior
-   this.cylinder = new THREE.Mesh (cylinderGeom, this.material);
+  // Ya podemos construir el Mesh de la parte superior
+  this.cylinder = new THREE.Mesh (this.cylinderGeom, this.material);
 
-	this.sphere = new THREE.Mesh (sphereGeom, this.material);
+	this.sphere = new THREE.Mesh (this.sphereGeom, this.material);
 	this.sphere.position.y = size*2/3 - 0.1 ;
 	this.sphere.rotation.x = -Math.PI / 2 ;
 
 	this.rightEye = new THREE.Object3D();
-	var rightEyeball = new THREE.Mesh (eyeGeom, MyMaterial.WHITE);
-	var rightPupil = new THREE.Mesh (pupilGeom, MyMaterial.BLACK);
+	var rightEyeball = new THREE.Mesh (this.eyeGeom, MyMaterial.WHITE);
+	var rightPupil = new THREE.Mesh (this.pupilGeom, MyMaterial.BLACK);
 	rightPupil.position.x = size * 6/25 - 0.05;
 	this.rightEye.add(rightEyeball);
 	this.rightEye.add(rightPupil);
 	this.rightEye.position.z = - size * 2/5 ;
 
 	this.leftEye = new THREE.Object3D();
-	var leftEyeball = new THREE.Mesh (eyeGeom, MyMaterial.WHITE);
-	var leftPupil = new THREE.Mesh (pupilGeom, MyMaterial.BLACK);
+	var leftEyeball = new THREE.Mesh (this.eyeGeom, MyMaterial.WHITE);
+	var leftPupil = new THREE.Mesh (this.pupilGeom, MyMaterial.BLACK);
 	leftPupil.position.x = size * 6/25 - 0.05;
 	this.leftEye.add(leftEyeball);
 	this.leftEye.add(leftPupil);
@@ -54,13 +54,13 @@ class MyGhost extends MyCharacter {
       depth: size * 1/3, bevelEnabled: true, bevelSegments: 1, steps: 5, bevelSize: 0.5, bevelThickness: 0.5, bevelSegments: 5
     };
 
-	var geometry = new THREE.ExtrudeGeometry( shape, options );
-	geometry.scale(0.1,0.1,0.1);
-	geometry.translate(0, 0, size * 4/5 - size/10);
+	this.feetGeom = new THREE.ExtrudeGeometry( shape, options );
+	this.feetGeom.scale(0.1,0.1,0.1);
+	this.feetGeom.translate(0, 0, size * 4/5 - size/10);
 
 	this.feet = new THREE.Object3D();
 	for(var i=0; i<16; i++){
-		var mesh = new THREE.Mesh (geometry, this.material);
+		var mesh = new THREE.Mesh (this.feetGeom, this.material);
 		mesh.rotation.y = i * (Math.PI / 8);
 		this.feet.add(mesh);
 	}
@@ -92,6 +92,14 @@ class MyGhost extends MyCharacter {
         .yoyo(true)
         .start();
     }
+  }
+
+  dispose(){
+    this.sphereGeom.dispose(); 
+  	this.eyeGeom.dispose();
+  	this.pupilGeom.dispose();
+  	this.cylinderGeom.dispose();
+    this.feetGeom.dispose();
   }
 
 	executePath(){

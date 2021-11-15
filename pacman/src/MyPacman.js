@@ -14,18 +14,18 @@ class MyPacman extends MyCharacter {
 	this.dirX = dir.x;
 	this.dirZ = dir.y;
 
-	var sphereGeom = new THREE.SphereGeometry(size, 20.0, 20.0, 0.0, Math.PI);
-	var circleGeom = new THREE.CircleGeometry(size, 20.0, 0.0, Math.PI);
-   var material = MyMaterial.YELLOW;
+	this.sphereGeom = new THREE.SphereGeometry(size, 20.0, 20.0, 0.0, Math.PI);
+	this.circleGeom = new THREE.CircleGeometry(size, 20.0, 0.0, Math.PI);
+  var material = MyMaterial.YELLOW;
 	//material.side = THREE.DoubleSide;
 
-   // Ya podemos construir el Mesh de la parte superior
-   this.upSphere = new THREE.Mesh (sphereGeom, material);
+  // Ya podemos construir el Mesh de la parte superior
+  this.upSphere = new THREE.Mesh (this.sphereGeom, material);
 	this.upSphere.rotation.y = Math.PI ;
 	this.upSphere.rotation.x = Math.PI /2 ;
 	this.upSphere.rotation.z = Math.PI;
 
-	this.upCircle = new THREE.Mesh (circleGeom, material);
+	this.upCircle = new THREE.Mesh (this.circleGeom, material);
 	this.upCircle.rotation.x = Math.PI / 2;
 	this.upCircle.rotation.z = -Math.PI / 2;
 
@@ -33,11 +33,11 @@ class MyPacman extends MyCharacter {
 	this.upHalf.add(this.upSphere);
 	this.upHalf.add(this.upCircle);
 
-	// Ya podemos construir el Mesh
-	this.downSphere = new THREE.Mesh (sphereGeom, material);
+	// // Ya podemos construir el Mesh
+	this.downSphere = new THREE.Mesh (this.sphereGeom, material);
 	this.downSphere.rotation.x = Math.PI /2 ;
 
-	this.downCircle = new THREE.Mesh (circleGeom, material);
+	this.downCircle = new THREE.Mesh (this.circleGeom, material);
 	this.downCircle.rotation.x = 3 * Math.PI / 2;
 	this.downCircle.rotation.z = -Math.PI / 2;
 
@@ -86,6 +86,11 @@ class MyPacman extends MyCharacter {
 		.start();
    }
 
+   dispose(){
+     this.sphereGeom.dispose();
+   	 this.circleGeom.dispose();
+   }
+
 	die(){
 		if(this.status != "dying"){
 			this.moveAnimation.stop();
@@ -95,10 +100,12 @@ class MyPacman extends MyCharacter {
 	}
 
 	crearNuevo(size,rot){
-		var sphereGeom = new THREE.SphereGeometry(size, 20.0, 20.0, 0.0, Math.PI - rot);
-		this.upSphere.geometry = sphereGeom;
+		this.sphereGeom = new THREE.SphereGeometry(size, 20.0, 20.0, 0.0, Math.PI - rot);
+		this.upSphere.geometry.dispose();
+    this.upSphere.geometry = this.sphereGeom;
 		this.upCircle.rotation.y = rot;
-		this.downSphere.geometry = sphereGeom;
+    this.downSphere.geometry.dispose();
+		this.downSphere.geometry = this.sphereGeom;
 		this.downCircle.rotation.y = rot;
 	}
   setNeightbors(neighbors){
