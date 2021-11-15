@@ -5,7 +5,7 @@ class MyCharacter extends THREE.Object3D {
 	this.dirX = 0;
 	this.dirZ = 0;
 
-	this.speed = 0.1;
+	this.speed = 0.15;
 
 	this.hitbox = new THREE.Box3();
 	var hitbox_pos = new THREE.Vector3( pos.x * MyConstant.BOX_SIZE, pos.y* MyConstant.BOX_SIZE, pos.z* MyConstant.BOX_SIZE );

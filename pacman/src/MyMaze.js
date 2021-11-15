@@ -3,8 +3,9 @@ class MyMaze extends THREE.Object3D {
 	constructor(cubeSize) {
 		super();
 
-		this.shaderMaterial = this.createShaderMaterial();
 		this.dotNumber = 0;
+
+		this.shaderMaterial = MyMaterial.BLUE;//this.createShaderMaterial();
 
 		this.mazeData = this.mazeGenerator();
 		// Default Map 31x28

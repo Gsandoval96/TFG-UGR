@@ -27,6 +27,7 @@ class MyControls{
 
     if (keyCode == this.memoryKey ){
     	console.log(renderer.info);
+      game.nextLevel();
     }
 
     if (dir.x != 0 || dir.y != 0){
