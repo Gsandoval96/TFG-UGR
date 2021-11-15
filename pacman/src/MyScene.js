@@ -168,7 +168,7 @@ class MyScene extends THREE.Scene {
 		else if (key == 50 ){this.changeCamera(2);}
 		else if (key == 51 ){this.changeCamera(3);}
 
-		else {this.controls.manager(key, this.game);}
+		else {this.controls.manager(key, this.game, this.renderer);}
 	}
 
 	onMouseMove(event){
