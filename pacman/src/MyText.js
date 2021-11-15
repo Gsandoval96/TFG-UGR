@@ -28,11 +28,7 @@ class MyText extends THREE.Object3D {
   }
 
   dispose(){
-<<<<<<< HEAD
     if(this.geometry != undefined)
       this.geometry.dispose();
-=======
-    this.geometry.dispose();
->>>>>>> refs/remotes/origin/master
   }
 }
