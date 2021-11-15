@@ -228,12 +228,14 @@ class MyGame extends THREE.Object3D {
 
 	updateScoreValueText(){
 		this.camera.remove(this.scoreValueText);
+		this.scoreValueText.dispose();
 		this.scoreValueText = new MyText(this.scoreValueTextPosition,this.score.toString(),2,MyMaterial.WHITE,this.fontURL);
 		this.camera.add(this.scoreValueText);
 	}
 
 	updateLevelValueText(){
 		this.camera.remove(this.levelValueText);
+		this.levelValueText.dispose();
 		this.levelValueText = new MyText(this.levelValueTextPosition,this.level.toString(),2,MyMaterial.WHITE,this.fontURL);
 		this.camera.add(this.levelValueText);
 	}

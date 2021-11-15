@@ -7,8 +7,7 @@ class MyText extends THREE.Object3D {
     var loader = new THREE.FontLoader();
 
     loader.load(fontURL, function ( font ) {
-
-    	var geometry = new THREE.TextGeometry( text, {
+    	that.geometry = new THREE.TextGeometry( text, {
     		font: font,
     		size: size,
     		height: size/5,
@@ -20,11 +19,15 @@ class MyText extends THREE.Object3D {
     		bevelSegments: 2
     	});
 
-      var mesh = new THREE.Mesh(geometry, mat);
+      var mesh = new THREE.Mesh(that.geometry, mat);
       mesh.userData = that;
       mesh.position.set(pos.x, pos.y, pos.z);
 
       that.add(mesh);
     });
+  }
+
+  dispose(){
+    this.geometry.dispose();
   }
 }
