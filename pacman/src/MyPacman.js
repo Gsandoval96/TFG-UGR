@@ -96,6 +96,9 @@ class MyPacman extends MyCharacter {
      this.sphereGeom.dispose();
    	 this.circleGeom.dispose();
      this.material.dispose();
+     if(this.helper != undefined){
+       this.helper.geometry.dispose();
+     }
    }
 
 	die(){

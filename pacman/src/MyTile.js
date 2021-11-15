@@ -16,8 +16,8 @@ class MyTile extends THREE.Object3D {
       this.hitbox.setFromCenterAndSize( hitbox_pos, hitbox_size );
 
       if(MyConstant.SHOW_MAZE_HITBOX){
-        var helper = new THREE.Box3Helper( this.hitbox, 0x666666 );
-        this.add(helper);
+        this.helper = new THREE.Box3Helper( this.hitbox, 0x666666 );
+        this.add(this.helper);
       }
 
     }
@@ -69,6 +69,9 @@ class MyTile extends THREE.Object3D {
     this.pathGeom.dispose();
     if(this.sphereGeom != undefined){
       this.sphereGeom.dispose();
+    }
+    if(this.helper != undefined){
+      this.helper.geometry.dispose();
     }
     this.cube.dispose();
   }

@@ -95,11 +95,15 @@ class MyGhost extends MyCharacter {
   }
 
   dispose(){
-    this.sphereGeom.dispose(); 
+    this.sphereGeom.dispose();
   	this.eyeGeom.dispose();
   	this.pupilGeom.dispose();
   	this.cylinderGeom.dispose();
     this.feetGeom.dispose();
+
+    if(this.helper != undefined){
+      this.helper.geometry.dispose();
+    }
   }
 
 	executePath(){

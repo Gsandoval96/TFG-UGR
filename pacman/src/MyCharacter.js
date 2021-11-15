@@ -13,8 +13,8 @@ class MyCharacter extends THREE.Object3D {
 	this.hitbox.setFromCenterAndSize(hitbox_pos, this.hitbox_size);
 
 	if(MyConstant.SHOW_HITBOX){
-		var helper = new THREE.Box3Helper( this.hitbox, 0xff0000 );
-		this.add(helper);
+		this.helper = new THREE.Box3Helper( this.hitbox, 0xff0000 );
+		this.add(this.helper);
 	}
 
 	this.animated = true;
