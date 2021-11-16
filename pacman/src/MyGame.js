@@ -33,7 +33,7 @@ class MyGame extends THREE.Object3D {
 
 		// Score & Level
 		this.score = 0;
-		this.level = 1;
+		this.level = 0;
 
     this.fontURL = '../fonts/helvetiker_regular.typeface.json';
 
@@ -52,6 +52,34 @@ class MyGame extends THREE.Object3D {
     this.levelValueTextPosition = new THREE.Vector3(40,34,-100);
     this.levelValueText = new MyText(this.levelValueTextPosition,this.level.toString(),2,MyMaterial.WHITE,this.fontURL);
 		this.camera.add(this.levelValueText);
+
+		//Controls
+
+	 var textPos = new THREE.Vector3(-59,37,-100); -10,20
+	 var controlsText = new MyText(textPos,'CONTROLS',2,MyMaterial.WHITE,this.fontURL);
+	 this.camera.add(controlsText);
+
+	 textPos = new THREE.Vector3(-60,29.5,-99);
+	 var adjust = new THREE.Vector3(4.5,2,1);
+	 this.keyLEFT = new MyKeyObj(textPos,28,12,'LEFT', adjust);
+	 this.camera.add(this.keyLEFT);
+
+	 textPos = new THREE.Vector3(-47,29.5,-99);
+	 adjust = new THREE.Vector3(1.5,2,1);
+	 this.keyRIGHT = new MyKeyObj(textPos,28,12,'RIGHT', adjust);
+	 this.camera.add(this.keyRIGHT);
+
+	 textPos = new THREE.Vector3(-53.5,29.5,-99);
+	 adjust = new THREE.Vector3(1,2,1);
+	 this.keyDOWN = new MyKeyObj(textPos,28,12,'DOWN', adjust);
+	 this.camera.add(this.keyDOWN);
+
+	 textPos = new THREE.Vector3(-53.5,33,-99);
+	 adjust = new THREE.Vector3(9,2,1);
+	 this.keyUP = new MyKeyObj(textPos,28,12,'UP', adjust);
+	 this.camera.add(this.keyUP);
+
+
 	}
 
 	createCharacters(){
@@ -100,6 +128,8 @@ class MyGame extends THREE.Object3D {
 		}
 		else if(tyleTipe == 3){ //Standing on a pill
 			this.maze.removeDot(pos);
+			this.score += 50;
+			this.updateScoreValueText();
 
 			for (var i = 1; i < 5; i++) {
 				if(this.characters[i].behaviour != "home" && this.characters[i].behaviour != "return"){
@@ -132,7 +162,7 @@ class MyGame extends THREE.Object3D {
 
 				if(character != this.characters[0]){ //No debería ocurrir nunca, pero para prevenir errores
     				character.path = null;
-						//character.adjustPosition();
+						character.adjustPosition();
 						console.log("BLOQUEADO");
 				}
 			}
@@ -151,7 +181,7 @@ class MyGame extends THREE.Object3D {
 					}
 					else if(this.characters[i].behaviour == "scape"){
 						this.characters[i].returnHome();
-						this.score += 1000;
+						this.score += 100;
 						this.updateScoreValueText();
 					}
 				}
@@ -280,7 +310,7 @@ class MyGame extends THREE.Object3D {
 		this.maze.dispose();
 		this.maze = new MyMaze(MyConstant.BOX_SIZE);
 		this.add(this.maze);
-		
+
 		this.respawn();
 	}
 
