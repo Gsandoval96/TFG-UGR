@@ -290,10 +290,12 @@ class MyGame extends THREE.Object3D {
 
 	startLeaveBoxAnimation(){
 		var val = 2;
+		var duration = 5000 - this.level * 100;
+		if(duration < 3000) duration = 3000;
 		var that = this;
 
 		this.leaveBoxAnimation = new TWEEN.Tween(origin)
-			.duration(5000) //5 segundos
+			.duration(duration)
 			.onRepeat (function(){
 				that.characters[val].changeBehaviour("chase");
 				val = val + 1;
@@ -312,6 +314,17 @@ class MyGame extends THREE.Object3D {
 		this.add(this.maze);
 
 		this.respawn();
+		var time = this.characters[1].updatePathTime - this.level * 250;
+		if(time < 2500) time = 2500;
+		for(var i = 1; i < 5; i++){
+			this.characters[i].setUpdatePathTime(time);
+		}
+
+		var duration = this.characters[1].scareTime - this.level * 500;
+		if(duration < 100) duration = 100;
+		for(var i = 1; i < 5; i++){
+			this.characters[i].setScareTime(duration);
+		}
 	}
 
 	update(){

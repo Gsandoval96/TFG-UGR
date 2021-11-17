@@ -5,6 +5,7 @@ class MyGhost extends MyCharacter {
 	this.behaviour = "chase";
 
   this.updatePathTime = 7500;
+  this.scareTime = 10000;
 
 	this.speed = this.speed * 0.75; //los fantasmas se mueven más lento
 
@@ -184,6 +185,21 @@ class MyGhost extends MyCharacter {
 			.start();
   }
 
+  stopUpdatingPaths(){
+    if(this.updatePaths != undefined)
+    this.updatePaths.stop();
+  }
+
+  setUpdatePathTime(time){
+    this.stopUpdatingPaths();
+    this.updatePathTime = time;
+    this.startUpdatingPaths
+  }
+
+  setScareTime(time){
+    this.scareTime = time;
+  }
+
   stopInvencibleAnimation(){
     this.invencibleStartingAnimation.stop();
     this.invencibleEndingAnimation.stop();
@@ -197,8 +213,10 @@ class MyGhost extends MyCharacter {
 
 		var that = this;
 
+
+
 		this.invencibleStartingAnimation = new TWEEN.Tween(origin)
-			.duration(15000) //15 segundos
+			.duration(that.scareTime) //10 segundos
 			.onComplete (function(){
 				that.invencibleEndingAnimation.start();
       })
@@ -208,7 +226,7 @@ class MyGhost extends MyCharacter {
     var val = 1;
 
 		this.invencibleEndingAnimation = new TWEEN.Tween(origin)
-			.duration(500) //0.5 segundos
+			.duration(500) //0.5 segundos * 10 veces
 			.onRepeat (function(){
         if(val % 2 == 0){
           that.changeColor(MyMaterial.BLUE);

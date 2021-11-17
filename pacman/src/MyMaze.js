@@ -426,7 +426,12 @@ class MyMaze extends THREE.Object3D {
 					}
 				}
 			}
-			var pos = can_portal[Math.floor(Math.random()*can_portal.length)];
+			if(can_portal.length != 0){
+				var pos = can_portal[Math.floor(Math.random()*can_portal.length)];
+			}
+			else{
+				var pos = 1;
+			}
 			maze[pos][MyConstant.MAZE_WIDTH-1] = 4;
 			maze[pos][0] = 4;
 		}
@@ -526,7 +531,9 @@ class MyMaze extends THREE.Object3D {
 
 	getTileType(pos){
 		var pos_check = new THREE.Vector2(pos.x, pos.y);
-		return this.mazeData[pos_check.y][pos_check.x];
+		var type = this.mazeData[pos_check.y][pos_check.x];
+		if(type == undefined) type = 0;
+		return type;
 	}
 
 	getNeighbors(pos){
