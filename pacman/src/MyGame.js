@@ -314,8 +314,8 @@ class MyGame extends THREE.Object3D {
 		this.add(this.maze);
 
 		this.respawn();
-		var time = this.characters[1].updatePathTime - this.level * 250;
-		if(time < 2500) time = 2500;
+		var time = this.characters[1].updatePathTime - this.level * 200;
+		if(time < 2500) time = 2000;
 		for(var i = 1; i < 5; i++){
 			this.characters[i].setUpdatePathTime(time);
 		}
