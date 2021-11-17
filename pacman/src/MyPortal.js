@@ -4,10 +4,8 @@ class MyPortal extends THREE.Object3D {
 
     // Creamos la geometría y la colocamos en el 0,0,0
     this.torusGeom = new THREE.TorusGeometry(size/3,size/20,20,50);
-    const loader = new THREE.TextureLoader();
-    var material = new THREE.MeshBasicMaterial({
-      map: loader.load('../img/portal.jpg'),
-    });
+    this.texture = new THREE.TextureLoader().load('../img/portal.jpg');
+    var material = new THREE.MeshBasicMaterial( { map: this.texture } );
 
     // Ya podemos construir el Mesh
     this.portal = new THREE.Mesh (this.torusGeom, material);
@@ -26,6 +24,9 @@ class MyPortal extends THREE.Object3D {
 
   dispose(){
     this.torusGeom.dispose();
+    this.sphereGeom.dispose();
+    this.texture.dispose();
+
   }
 
   update(){
