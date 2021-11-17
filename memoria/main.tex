@@ -1,0 +1,156 @@
+ \documentclass[11pt, a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}	%Idioma
+
+%Añadir imágenes
+\usepackage{graphicx} 	
+\usepackage{caption}
+\usepackage{subcaption}
+
+%Añadir figuras
+\usepackage{float}
+
+%Ajustar márgenes
+\usepackage{geometry}	
+
+%Listas
+\usepackage{listings}
+\usepackage{enumerate}
+\usepackage{enumitem}
+
+%Hipervínculos y referencias cruzadas
+\usepackage[hidelinks]{hyperref} 
+
+%Opciones de fuente:
+\usepackage[default]{sourcesanspro}
+\usepackage{sourcecodepro}
+\usepackage[T1]{fontenc}
+
+\setlength{\parindent}{15pt}
+\setlength{\headheight}{15pt}
+\setlength{\voffset}{10mm}
+
+%Opciones de encabezado y pie de página:
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\renewcommand{\sectionmark}[1]{\markright{#1}{}}
+\lhead{\nouppercase\rightmark}
+\rhead{Trabajo Fin de Grado}
+\lfoot{Grado en Ingeniería Informática}
+\cfoot{}
+\rfoot{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+% Custom colors
+\usepackage{xcolor}
+\definecolor{verdeDGE}{HTML}{00573D}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    urlcolor=blue,
+    citecolor=blue
+}
+
+%Subrayar párrafos
+
+\definecolor{shadecolor}{HTML}{ddf6dd}
+\newcommand{\mybox}[1]{\par\noindent\colorbox{shadecolor}
+{\parbox{\dimexpr\textwidth-2\fboxsep\relax}{#1}}}
+
+% Eliminar nombre del apartado referencias
+\usepackage{etoolbox}
+\patchcmd{\thebibliography}{\section*{\refname}}{}{}{}
+
+% Paquete para crear el glosario.
+\usepackage[style=super,nonumberlist,toc, acronym, 
+    section=section,numberedsection=false
+    ]{glossaries}
+
+\makeglossaries
+
+\loadglsentries{glosario.tex}
+
+% Paquete para añadir citas literales
+\usepackage{dirtytalk}
+
+% Títulos de párrafos personalizados
+
+\usepackage{titlesec}
+\setcounter{secnumdepth}{4}
+\setcounter{tocdepth}{4}
+
+\titleformat{\paragraph}
+{\normalfont\normalsize\bfseries}{\theparagraph}{1em}{}
+\titlespacing*{\paragraph}
+{0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
+
+%Nombre de las tablas
+\renewcommand\spanishtablename{Tabla}
+
+%Notas al pie de página
+%\renewcommand*\footnoterule{}
+
+\begin{document}
+    \sloppy
+    
+    % Portada
+    \input{portada/portada}
+    
+    % Prefacio
+    \input{prefacio/prefacio}
+    
+    \setcounter{page}{6} % Establece el contador para ajustarse al número de páginas del PDF (6 es el número de página del índice menos 1)
+    
+    % Índice
+    \newpage
+    \tableofcontents
+    
+    % Índice de figuras
+    \newpage
+    \addcontentsline{toc}{section}{\listfigurename}
+    \listoffigures
+    
+    % Índice de tablas
+    \newpage
+    \renewcommand{\listtablename}{Índice de tablas}
+    \addcontentsline{toc}{section}{\listtablename}
+    \listoftables
+    
+    % Introducción 
+    \newpage
+    \input{secciones/01_introduccion.tex}
+    
+    % Planificación
+    \newpage
+    \input{secciones/02_planificacion}
+    
+    % Estado del arte
+    \newpage
+    \input{secciones/03_estado_del_arte}
+    
+    
+    
+    \newpage
+    \input{secciones/04_analisis}
+    
+    \newpage
+    \input{secciones/05_diseño}
+    
+    \newpage
+    \input{secciones/06_implementacion}
+    
+    % Conclusiones
+    \newpage
+    \input{secciones/07_conclusiones_y_trabajos_futuros}
+    
+    % Referencias
+    \newpage
+    \input{secciones/08_referencias}
+    
+    % Anexos
+    \newpage
+    \input{secciones/09_anexos}
+
+
+\end{document}

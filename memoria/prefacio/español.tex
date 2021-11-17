@@ -1,0 +1,21 @@
+\thispagestyle{empty}
+
+\begin{center}
+{\Large\bfseries Reimplementación de videojuegos clásicos en Three.js utilizando técnicas de generación procedimental}\\
+\end{center}
+
+\begin{center}
+Guillermo Sandoval Schmidt\\
+\end{center}
+
+\vspace{0.5cm}
+\noindent{\textbf{Palabras clave:} \textit{generación procedimental de contenido}, \textit{Pac-Man}, \textit{generación de laberintos}, \textit{generación de texturas}, \textit{taxonomía}, \textit{generación procedimental en videojuegos}, \textit{Three.js}, \textit{videojuegos clásicos}, \textit{Teselación de Voronoi}.}
+
+\vspace{0.7cm}
+\noindent{\textbf{Resumen:}}\\
+
+En 1980 se publicó \textit{Rogue}, padre de los juegos \textit{rogue-like} y precursor de los que hoy en día conocemos como generación procedimental de contenido. Estas técnicas se han aplicado en multitud de campos pero especialmente en la industria del videojuego. Con el fin de aprender sobre generación procedimental, realizaremos una introducción a la misma primero entendiendo qué es y dónde se usa, para a continuación adentrarnos en las taxonomías propuestas para clasificar tanto el contenido como los métodos utilizados para generarlo. Además veremos las propiedades deseables de estos algoritmos y veremos su uso a lo largo de los años en la industria del videojuego.\\
+
+Por otra parte, este proyecto pretende reimplementar el videojuego clásico \textit{Pac-Man} aplicando generación procedimental a la creación de laberintos, generando tanto la disposición de los mismos como las texturas de los muros. Para la generación del laberinto se ha implementado un algoritmo basado en generadores de números pseudo-aleatorios y en piezas estilo \textit{Tetris} para componer el laberinto. Para las texturas se ha implementado un shader basado en \textit{Teselación de Voronoi}. A esto se le ha unido el reto de utilizar una biblioteca gráfica llamada \textit{Three.js} en vez de un motor de videojuegos.\\
+
+El proyecto ha resultado exitoso ya que los laberintos generados cumplen prácticamente con la totalidad de las propiedades deseables para métodos de generación procedimental de contenido, generando una amplia gama de laberintos válidos y jugables rápidamente que podrían haber sido diseñados por una persona.
