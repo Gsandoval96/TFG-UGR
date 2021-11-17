@@ -42,7 +42,9 @@ class MyTile extends THREE.Object3D {
         }
       break;
       case "teleport":
-        this.cube = new MyCube(position, MyMaterial.GREEN, size);
+        this.cube = new MyCube(position, MyMaterial.INVISIBLE, size);
+        this.portal = new MyPortal(position, size);
+        this.add(this.portal);
       break;
     }
     this.add(this.cube);
@@ -65,7 +67,6 @@ class MyTile extends THREE.Object3D {
   }
 
   dispose(){
-    //console.log(this.children);
     this.pathGeom.dispose();
     if(this.sphereGeom != undefined){
       this.sphereGeom.dispose();
@@ -73,10 +74,17 @@ class MyTile extends THREE.Object3D {
     if(this.helper != undefined){
       this.helper.geometry.dispose();
     }
+    if(this.portal != undefined){
+      this.portal.dispose();
+    }
     this.cube.dispose();
   }
 
   getCollisionBox(){
 	  return this.hitbox;
+  }
+
+  update(){
+
   }
 }

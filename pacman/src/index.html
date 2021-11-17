@@ -25,6 +25,7 @@
 	 <script type="text/javascript" src="MyGhost.js"></script>
 	 <script type="text/javascript" src="MyMaze.js"></script>
 	 <script type="text/javascript" src="MyCube.js"></script>
+   <script type="text/javascript" src="MyPortal.js"></script>
 	 <script type="text/javascript" src="MyTile.js"></script>
     <script type="text/javascript" src="MyMaterial.js"></script>
     <script type="text/javascript" src="MyText.js"></script>
@@ -63,23 +64,6 @@ void main() {
 </script>
 
 <script id="fragmentShader" type="x-shader/x-fragment">
-
-// Created by inigo quilez - iq/2013
-// License Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License.
-
-
-// I've not seen anybody out there computing correct cell interior distances for Voronoi
-// patterns yet. That's why they cannot shade the cell interior correctly, and why you've
-// never seen cell boundaries rendered correctly.
-
-// However, here's how you do mathematically correct distances (note the equidistant and non
-// degenerated grey isolines inside the cells) and hence edges (in yellow):
-
-// http://www.iquilezles.org/www/articles/voronoilines/voronoilines.html
-
-// Altered for a Three.js ShaderMaterial demo by Chris Brown - blog.2pha.com
-
-
 
 varying vec2 vUv;
 uniform vec3 color;
@@ -142,7 +126,6 @@ vec3 voronoi( in vec2 x )
 
 void main() {
   vec3 c = voronoi( 8.0*(vUv*vec2(amount)) );
-  // borders
   vec3 col = mix( borderColor, color, smoothstep( borderWidth/100.0, (borderWidth/100.0)+(blur/100.0), c.x ) );
   gl_FragColor = vec4(col,1.0);
 }

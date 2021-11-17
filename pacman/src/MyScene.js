@@ -225,7 +225,7 @@ class MyScene extends THREE.Scene {
 		this.cameraControl.update();
 
 		this.game.title.lookAt(this.getCamera().position); // el titulo mira a la camara
-
+		this.game.maze.update();
 
 		if(this.status == "PACMAN") this.game.update();
 		else if(this.status == "MENU") this.menu.update();

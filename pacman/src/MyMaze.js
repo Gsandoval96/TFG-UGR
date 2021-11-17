@@ -607,7 +607,8 @@ class MyMaze extends THREE.Object3D {
     var color = new THREE.Color(0xBB6649);
     var hsl = new THREE.Object3D();
     color.getHSL(hsl);
-    color.setHSL(Math.random(), hsl.s, hsl.l);
+		var hue = (Math.random());
+    color.setHSL(hue, hsl.s, hsl.l);
 
 		var amount = (Math.random() * (0.5 - 0.25) + 0.25);
 		let a1 = (Math.random() * (150.0 - 75.0) + 150.0);
@@ -660,6 +661,11 @@ class MyMaze extends THREE.Object3D {
   }
 
 	update(){
+		for(var child of this.children){
+			if(child.portal != undefined){
+				child.portal.update();
+			}
+		}
 	}
 
 }
