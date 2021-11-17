@@ -78,7 +78,7 @@ class MyPacman extends MyCharacter {
 
 	startDeathAnimation(){
 		var origin = { p : 0 } ;
-		var destiny = { p : Math.PI } ;
+		var destiny = { p : 3.12414 } ;
 		var that = this;
 
 		var deathAnimation = new TWEEN.Tween(origin)
