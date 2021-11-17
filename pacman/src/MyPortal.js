@@ -4,8 +4,11 @@ class MyPortal extends THREE.Object3D {
 
     // Creamos la geometría y la colocamos en el 0,0,0
     this.torusGeom = new THREE.TorusGeometry(size/3,size/20,20,50);
+<<<<<<< HEAD
 
     this.torusGeom.rotateY(Math.PI/2);
+=======
+>>>>>>> refs/remotes/origin/master
     this.texture = new THREE.TextureLoader().load('../img/portal.jpg');
     var material = new THREE.MeshBasicMaterial( { map: this.texture } );
 
