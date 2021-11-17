@@ -23,7 +23,7 @@ class MyScene extends THREE.Scene {
 
 		// Y unos ejes. Imprescindibles para orientarnos sobre dónde están las cosas
    	this.axis = new THREE.AxesHelper (10);
-   	this.add (this.axis);
+   	//this.add (this.axis);
 
 		this.pickableObjects = [];
 		this.pickableObjects.push(this.menu.keyPLAY);
